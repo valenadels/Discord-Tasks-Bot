@@ -12,7 +12,8 @@
     "typescript": "^5.0.4"
   },
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "start": "ts-node src/Bot.ts"
   },
   "repository": {
     "type": "git",
