@@ -13,7 +13,7 @@
   },
   "scripts": {
     "test": "test",
-    "start": "ts-node bot/src/Bot.ts"
+    "start": "ts-node src/Bot.ts"
   },
   "repository": {
     "type": "git",
