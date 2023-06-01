@@ -1,7 +1,9 @@
 {
   "dependencies": {
     "discord.js": "^14.11.0",
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.3.16"
   },
   "name": "fiubito",
   "version": "1.0.0",
@@ -15,7 +17,8 @@
   },
   "scripts": {
     "test": "test",
-    "start": "ts-node src/Bot.ts"
+    "start": "ts-node src/Bot.ts",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",

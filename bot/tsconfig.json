@@ -18,7 +18,8 @@
             "node_modules/@types"
         ],
         "sourceMap": false,
-        "baseUrl": "./"
+        "baseUrl": "./",
+        "emitDecoratorMetadata": true
     },
     "files": [
         "src/Bot.ts"
