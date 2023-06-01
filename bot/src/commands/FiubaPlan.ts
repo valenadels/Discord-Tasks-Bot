@@ -7,6 +7,8 @@ export const Fiubaplan: Command = {
     type: ApplicationCommandType.ChatInput,
     run: async (client: Client, interaction: CommandInteraction) => {
         const url = "https://fede.dm/FIUBA-Plan/";
-        await interaction.reply(`Aquí tienes FIUBA Plan: ${url}`);
+        await interaction.followUp({
+            content: `Aquí tienes FIUBA Plan: ${url}`,
+            ephemeral: true});
     }
 };

@@ -7,6 +7,8 @@ export const Dollyfiuba: Command = {
     type: ApplicationCommandType.ChatInput,
     run: async (client: Client, interaction: CommandInteraction) => {
         const url = "https://dollyfiuba.com/";
-        await interaction.reply(`Aquí tienes Dolly Fiuba: ${url}`);
+        await interaction.followUp({
+            content: `Aquí tienes Dolly Fiuba: ${url}`,
+            ephemeral: true});
     }
 };

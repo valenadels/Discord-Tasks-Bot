@@ -7,7 +7,9 @@ export const Calendario: Command = {
     type: ApplicationCommandType.ChatInput,
     run: async (client: Client, interaction: CommandInteraction) => {
         const url = "https://www.fi.uba.ar/estudiantes/calendario-academico";
-        await interaction.reply(`Aquí tienes el calendario académico de la FIUBA: ${url}`);
+        await interaction.followUp({
+            content: `Aquí tienes el calendario académico de la FIUBA: ${url}`,
+            ephemeral: true});
     }
 };
 

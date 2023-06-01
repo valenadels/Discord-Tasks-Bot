@@ -7,8 +7,11 @@ export const Fiubamap: Command = {
     type: ApplicationCommandType.ChatInput,
     run: async (client: Client, interaction: CommandInteraction) => {
         const url = "https://fede.dm/FIUBA-Map/";
-        await interaction.reply(`Aquí tienes FIUBA Map: ${url}`);
+        await interaction.followUp({
+        content: `Aquí tienes FIUBA Map: ${url}`,
+        ephemeral: true});
     }
 };
+
 
 
