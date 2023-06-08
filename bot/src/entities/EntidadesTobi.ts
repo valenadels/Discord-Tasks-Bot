@@ -1,36 +1,36 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from "typeorm";
+import { Entity, PrimaryColumn, Column, OneToMany, ManyToMany, JoinTable } from "typeorm";
 
 @Entity()
 export class Alumno {
-  @PrimaryGeneratedColumn()
-    padron!: string;
-
-  @Column()
-    nombre!: string;
-
-  @Column()
-    apellido!: string;
-
-  @Column()
-    edad!: number;
-}
-
-@Entity()
-export class Carreras {
-  @PrimaryGeneratedColumn()
-  id!: number;
+  @PrimaryColumn()
+  padron!: number;
 
   @Column()
   nombre!: string;
 
   @Column()
+  apellido!: string;
+
+  @Column()
+  edad!: number;
+}
+
+@Entity()
+export class Carreras {
+  @PrimaryColumn()
+  id!: number;
+
+  @Column()
+  nombre!: string;
+
+  @Column({ type: "float" })
   duracion!: number;
 }
 
 @Entity()
 export class Materia {
-  @PrimaryGeneratedColumn()
-  codigo!: number;
+  @PrimaryColumn()
+  codigo!: string;
 
   @Column()
   nombre!: string;
@@ -39,32 +39,34 @@ export class Materia {
   creditos!: number;
 
   @Column()
-  carreraId!: number;
+  carrera_id!: number;
 }
 
 @Entity()
 export class AlumnoCarrera {
-  @Column()
-  alumnoPadron!: number;
+  @PrimaryColumn()
+  alumno_padron!: number;
 
-  @Column()
-  carreraId!: number;
+  @PrimaryColumn()
+  carrera_id!: number;
 }
 
 @Entity()
 export class AlumnoMateria {
-  @Column()
-  alumnoPadron!: number;
+  @PrimaryColumn()
+  alumno_padron!: number;
 
-  @Column()
-  materiaCodigo!: string;
+  @PrimaryColumn()
+  materia_codigo!: string;
 }
 
 @Entity()
 export class Correlativas {
-  @Column()
-  materiaCodigo!: string;
+  @PrimaryColumn()
+  materia_codigo!: string;
 
-  @Column()
-  correlativaCodigo!: string;
+  @PrimaryColumn()
+  correlativa_codigo!: string;
 }
+
+

@@ -11,9 +11,9 @@ export class DatabaseConnection {
       port: 3306,
       username: "root",
       password: "fiubito",
-      database: "fiubito_base_de_datos",
+      database: "FIUBITO",
       synchronize: true,
-      logging: false,
+      logging: true,
       entities: ["src/entities/*.ts"],
     });
   }
