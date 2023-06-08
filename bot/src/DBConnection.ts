@@ -6,14 +6,14 @@ export class DatabaseConnection {
 
   constructor() {
     this.dataSource = new DataSource({
-      type: "mariadb",
+      type: "mysql",
       host: "localhost",
       port: 3306,
       username: "root",
       password: "fiubito",
       database: "FIUBITO",
       synchronize: true,
-      logging: true,
+      logging: false,
       entities: ["src/entities/*.ts"],
     });
   }

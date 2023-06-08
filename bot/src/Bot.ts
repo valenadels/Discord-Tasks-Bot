@@ -11,9 +11,9 @@ console.log("Bot is starting...");
 const dbConnection = new DatabaseConnection();
 dbConnection
   .connect()
-  .then(() => {
+  //.then(() => {
     // Aquí puedes comenzar a trabajar con la base de datos
-  })
+  //})
   .catch((error) => console.log(error));
 const client = new Client({
     intents: []

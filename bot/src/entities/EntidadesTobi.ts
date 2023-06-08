@@ -1,72 +1,85 @@
-import { Entity, PrimaryColumn, Column, OneToMany, ManyToMany, JoinTable } from "typeorm";
+import { Entity, PrimaryColumn, Column, ManyToOne, OneToMany } from 'typeorm';
 
 @Entity()
 export class Alumno {
-  @PrimaryColumn()
+  @PrimaryColumn({ type: 'bigint' })
   padron!: number;
 
-  @Column()
+  @Column({ type: 'varchar', length: 100 })
   nombre!: string;
 
-  @Column()
+  @Column({ type: 'varchar', length: 100 })
   apellido!: string;
 
-  @Column()
+  @Column({type: 'int', nullable: true})
   edad!: number;
 }
 
 @Entity()
 export class Carreras {
-  @PrimaryColumn()
+  @PrimaryColumn({ type: 'int', generated: true })
   id!: number;
 
-  @Column()
+  @Column({ type: 'varchar', length: 100 })
   nombre!: string;
 
-  @Column({ type: "float" })
+  @Column({ type: 'float', nullable: true })
   duracion!: number;
 }
 
 @Entity()
 export class Materia {
-  @PrimaryColumn()
+  @PrimaryColumn({ type: 'varchar', length: 10 })
   codigo!: string;
 
-  @Column()
+  @Column({ type: 'varchar', length: 100 })
   nombre!: string;
 
-  @Column()
+  @Column({ type: 'int', nullable: true })
   creditos!: number;
 
-  @Column()
-  carrera_id!: number;
+  @ManyToOne(() => Carreras, carreras => carreras.id)
+  carrera!: Carreras;
 }
 
 @Entity()
 export class AlumnoCarrera {
-  @PrimaryColumn()
-  alumno_padron!: number;
+  @PrimaryColumn({ type: 'bigint' })
+  alumnoPadron!: number;
 
-  @PrimaryColumn()
-  carrera_id!: number;
+  @PrimaryColumn({ type: 'int' })
+  carreraId!: number;
+
+  @ManyToOne(() => Alumno, alumno => alumno.padron)
+  alumno!: Alumno;
+
+  @ManyToOne(() => Carreras, carreras => carreras.id)
+  carrera!: Carreras;
 }
 
 @Entity()
 export class AlumnoMateria {
-  @PrimaryColumn()
-  alumno_padron!: number;
+  @PrimaryColumn({ type: 'bigint' })
+  alumnoPadron!: number;
 
-  @PrimaryColumn()
-  materia_codigo!: string;
+  @PrimaryColumn({ type: 'varchar', length: 10 })
+  materiaCodigo!: string;
+
+  @ManyToOne(() => Alumno, alumno => alumno.padron)
+  alumno!: Alumno;
+
+  @ManyToOne(() => Materia, materia => materia.codigo)
+  materia!: Materia;
 }
 
 @Entity()
 export class Correlativas {
-  @PrimaryColumn()
-  materia_codigo!: string;
+  @PrimaryColumn({ type: 'varchar', length: 10 })
+  materiaCodigo!: string;
 
-  @PrimaryColumn()
-  correlativa_codigo!: string;
+  @PrimaryColumn({ type: 'varchar', length: 10 })
+  correlativaCodigo!: string;
+
+  @ManyToOne(() => Materia, materia => materia.codigo)
+  materia!: Materia;
 }
-
-
