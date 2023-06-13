@@ -1,30 +1,27 @@
-import { createConnection } from 'typeorm';
+import { DataSource, createConnection } from 'typeorm';
 import csvParser from 'csv-parser';
 import * as fs from 'fs';
 
 import { Materia } from './entities/EntidadesTobi';
 
-async function loadData() {
-  const connection = await createConnection();
-  
+export async function loadData(connection: Promise<DataSource> ) {  
   // Ruta y nombre del archivo CSV a cargar
-  const csvFilePath = 'INFORMATICA.csv';
+  const csvFilePath = '/home/valentinaadelsflugel/fiuba/FIUBITO_TDL/informatica.csv';
 
   const stream = fs.createReadStream(csvFilePath)
-    .pipe(csvParser({ separator: '\t' })); // Si el separador es distinto de tabulación, ajusta el valor
+    .pipe(csvParser({ separator: ';' })); // Si el separador es distinto de tabulación, ajusta el valor
 
+  // Carga de datos
   for await (const row of stream) {
     const materia = new Materia();
-    materia.codigo = row['Código'];
-    materia.nombre = row['Nombre'];
-    materia.creditos = parseInt(row['Créditos']);
+    materia.codigo = row.codigo;
+    materia.nombre = row.nombre;
+    materia.creditos = row.creditos;
+    materia.carrera = row.carrera;
 
-    await connection.manager.save(materia);
-    console.log('Materia insertada exitosamente');
+    await (await connection).manager.save(materia);
+    console.log(`Materia ${materia.nombre} cargada`);
   }
 
-  await connection.close();
   console.log('Proceso de carga finalizado');
 }
-
-loadData().catch(error => console.error('Error:', error));
