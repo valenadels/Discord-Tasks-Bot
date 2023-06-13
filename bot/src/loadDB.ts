@@ -6,7 +6,7 @@ import { Materia } from './entities/EntidadesTobi';
 
 export async function loadData(connection: Promise<DataSource> ) {  
   // Ruta y nombre del archivo CSV a cargar
-  const csvFilePath = '/home/valentinaadelsflugel/fiuba/FIUBITO_TDL/informatica.csv';
+  const csvFilePath = '/home/brandon/FIUBITO_TDL/informatica.csv';
 
   const stream = fs.createReadStream(csvFilePath)
     .pipe(csvParser({ separator: ';' })); // Si el separador es distinto de tabulación, ajusta el valor
