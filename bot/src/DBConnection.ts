@@ -5,17 +5,8 @@ export class DatabaseConnection {
   private dataSource: DataSource;
 
   constructor() {
-    this.dataSource = new DataSource({
-      type: "mariadb",
-      host: "localhost",
-      port: 3306,
-      username: "root",
-      password: "fiubito",
-      database: "FIUBITO",
-      synchronize: true,
-      logging: false,
-      entities: ["src/entities/*.ts"],
-    });
+    let config = require("../config.json").database;
+    this.dataSource = new DataSource(config);
   }
 
   connect(): Promise<DataSource> {
