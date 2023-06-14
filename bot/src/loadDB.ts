@@ -2,24 +2,23 @@ import { DataSource, createConnection } from 'typeorm';
 import csvParser from 'csv-parser';
 import * as fs from 'fs';
 
-import { Materia } from './entities/EntidadesTobi';
+import { Materia } from './entities/Entities';
 
-export async function loadData(connection: Promise<DataSource> ) {  
+export async function loadData(connection: DataSource) {  
   // Ruta y nombre del archivo CSV a cargar
-  const csvFilePath = '/home/brandon/FIUBITO_TDL/informatica.csv';
+  const csvFilePath = './src/data/informatica.csv';
 
   const stream = fs.createReadStream(csvFilePath)
-    .pipe(csvParser({ separator: ';' })); // Si el separador es distinto de tabulación, ajusta el valor
-
+    .pipe(csvParser({ separator: ';' })); 
   // Carga de datos
   for await (const row of stream) {
     const materia = new Materia();
     materia.codigo = row.codigo;
     materia.nombre = row.nombre;
     materia.creditos = row.creditos;
-    materia.carrera = row.carrera;
+    materia.carrera = row.carreraid;
 
-    await (await connection).manager.save(materia);
+    await connection.manager.save(materia);
     console.log(`Materia ${materia.nombre} cargada`);
   }
 

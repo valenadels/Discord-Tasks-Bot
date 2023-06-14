@@ -71,15 +71,3 @@ export class AlumnoMateria {
   @ManyToOne(() => Materia, materia => materia.codigo)
   materia!: Materia;
 }
-
-@Entity()
-export class Correlativas {
-  @PrimaryColumn({ type: 'varchar', length: 10 })
-  materiaCodigo!: string;
-
-  @PrimaryColumn({ type: 'varchar', length: 10 })
-  correlativaCodigo!: string;
-
-  @ManyToOne(() => Materia, materia => materia.codigo)
-  materia!: Materia;
-}
