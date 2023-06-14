@@ -4,15 +4,6 @@ import { Entity, PrimaryColumn, Column, ManyToOne, OneToMany } from 'typeorm';
 export class Alumno {
   @PrimaryColumn({ type: 'bigint' })
   padron!: number;
-
-  @Column({ type: 'varchar', length: 100 })
-  nombre!: string;
-
-  @Column({ type: 'varchar', length: 100 })
-  apellido!: string;
-
-  @Column({type: 'int', nullable: true})
-  edad!: number;
 }
 
 @Entity()
