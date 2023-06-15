@@ -16,8 +16,13 @@ export async function loadData(connection: DataSource) {
     carrera.nombre = row.nombre;
     carrera.duracion = row.duracion;
 
-    await connection.manager.save(carrera);
-    console.log(`Carrera ${carrera.nombre} cargada`);
+    const existingCarrera = await connection.manager.findOne(Carreras, {where: { nombre: carrera.nombre }});
+    if (existingCarrera) {
+      console.log(`La carrera ${carrera.nombre} ya existe en la base de datos.`);
+    } else {
+      await connection.manager.save(carrera);
+      console.log(`Carrera ${carrera.nombre} cargada`);
+    }    
   }
 
   for await (const row of streamMaterias) {
@@ -31,9 +36,6 @@ export async function loadData(connection: DataSource) {
     await connection.manager.save(materia);
     console.log(`Materia ${materia.nombre} cargada`);
   }
-
-
-
 
   console.log('Proceso de carga finalizado');
 }
