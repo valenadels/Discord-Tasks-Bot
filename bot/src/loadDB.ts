@@ -30,7 +30,7 @@ export async function loadData(connection: DataSource) {
     materia.codigo = row.codigo;
     materia.nombre = row.nombre;
     materia.creditos = row.creditos;
-    materia.carrera = row.carreraid;
+    materia.carrera = row.carrera;
     materia.correlativas = row.correlativas;
 
     await connection.manager.save(materia);
