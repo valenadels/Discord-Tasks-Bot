@@ -1,10 +1,10 @@
-import { DataSource, createConnection } from 'typeorm';
+import { DataSource } from 'typeorm';
 import csvParser from 'csv-parser';
 import * as fs from 'fs';
 
 import { Carreras, Materia } from './entities/Entities';
 export async function loadData(connection: DataSource) {  
-  // Ruta y nombre del archivo CSV a cargar
+
   const carrerasCsvFilePath = './src/data/CARRERAS.csv';
   const materiasInformaticaCsvFilePath = './src/data/INFORMATICA.csv';
 
