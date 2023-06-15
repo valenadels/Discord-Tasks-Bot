@@ -29,6 +29,9 @@ export class Materia {
   @Column({ type: 'int', nullable: true })
   creditos!: number;
 
+  @Column({ type: 'varchar', length: 200, nullable: true })
+  correlativas!: string;
+
   @ManyToOne(() => Carreras, carreras => carreras.id)
   carrera!: Carreras;
 }

@@ -4,10 +4,7 @@ USE FIUBITO;
 
 -- Tabla ALUMNO
 CREATE TABLE IF NOT EXISTS ALUMNO (
-    padron BIGINT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    apellido VARCHAR(100) NOT NULL,
-    edad INT
+    padron BIGINT PRIMARY KEY
 );
 
 -- Tabla CARRERAS
@@ -23,6 +20,7 @@ CREATE TABLE IF NOT EXISTS MATERIA (
     nombre VARCHAR(100) NOT NULL,
     creditos INT,
     carrera_id INT,
+    correlativas VARCHAR(200),
     FOREIGN KEY (carrera_id) REFERENCES CARRERAS(id)
 );
 
@@ -42,13 +40,4 @@ CREATE TABLE IF NOT EXISTS ALUMNO_MATERIA (
     FOREIGN KEY (alumno_padron) REFERENCES ALUMNO(padron),
     FOREIGN KEY (materia_codigo) REFERENCES MATERIA(codigo),
     PRIMARY KEY (alumno_padron, materia_codigo)
-);
-
--- Tabla CORRELATIVAS
-CREATE TABLE IF NOT EXISTS CORRELATIVAS (
-    materia_codigo VARCHAR(10),
-    correlativa_codigo VARCHAR(10),
-    FOREIGN KEY (materia_codigo) REFERENCES MATERIA(codigo),
-    FOREIGN KEY (correlativa_codigo) REFERENCES MATERIA(codigo),
-    PRIMARY KEY (materia_codigo, correlativa_codigo)
 );
