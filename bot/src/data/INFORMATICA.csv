@@ -96,8 +96,8 @@ codigo;nombre;creditos;carrera;correlativas
 75.71;Seminario de Ingeniería en Informática I;3;1;75.07
 75.72;Seminario de Ingeniería en Informática II;3;1;75.06-75.44
 75.73;Arquitectura de Software;4;1;75.07-75.09
-78.01;Idioma Inglés (*);4;1;NULL
-78.02;Idioma Alemán (*);4;1;NULL
-78.03;Idioma Francés (*);4;1;NULL
-78.04;Idioma Italiano (*);4;1;NULL
-78.05;Idioma Portugués (*);4;1;NULL
+78.01;Idioma Inglés;4;1;NULL
+78.02;Idioma Alemán;4;1;NULL
+78.03;Idioma Francés;4;1;NULL
+78.04;Idioma Italiano;4;1;NULL
+78.05;Idioma Portugués;4;1;NULL

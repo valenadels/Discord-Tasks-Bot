@@ -1,4 +1,4 @@
-import { Entity, PrimaryColumn, Column, ManyToOne, OneToMany } from 'typeorm';
+import { Entity, PrimaryColumn, Column, ManyToOne, OneToMany, Unique } from 'typeorm';
 
 @Entity()
 export class Alumno {
@@ -7,6 +7,7 @@ export class Alumno {
 }
 
 @Entity()
+@Unique(['nombre'])
 export class Carreras {
   @PrimaryColumn({ type: 'int', generated: true })
   id!: number;

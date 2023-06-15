@@ -26,6 +26,7 @@ export async function loadData(connection: DataSource) {
     materia.nombre = row.nombre;
     materia.creditos = row.creditos;
     materia.carrera = row.carreraid;
+    materia.correlativas = row.correlativas;
 
     await connection.manager.save(materia);
     console.log(`Materia ${materia.nombre} cargada`);
