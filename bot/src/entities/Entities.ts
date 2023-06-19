@@ -66,3 +66,18 @@ export class AlumnoMateria {
   @ManyToOne(() => Materia, materia => materia.codigo)
   materia!: Materia;
 }
+
+@Entity()
+export class MateriaAprobada {
+  @PrimaryColumn({ type: 'bigint' })
+  alumnoPadron!: number;
+
+  @PrimaryColumn({ type: 'varchar', length: 10 })
+  materiaCodigo!: string;
+
+  @ManyToOne(() => Alumno, alumno => alumno.padron)
+  alumno!: Alumno;
+
+  @ManyToOne(() => Materia, materia => materia.codigo)
+  materia!: Materia;
+}
