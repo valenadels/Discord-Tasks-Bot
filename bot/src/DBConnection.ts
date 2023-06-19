@@ -3,13 +3,31 @@ import { DataSource } from "typeorm";
 
 export class DatabaseConnection {
   private dataSource: DataSource;
+  name: string | undefined;
 
-  constructor() {
-    let config = require("../config.json").database;
-    this.dataSource = new DataSource(config);
+  constructor(name: string) {
+    this.name = name;
+    this.dataSource = new DataSource({
+      type: "mariadb",
+      host: "localhost",
+      port: 3306,
+      username: "root",
+      password: "fiubito",
+      database: "FIUBITO",
+      synchronize: true,
+      logging: false,
+      entities: ["src/entities/*.ts"],
+      name: "dbConnection",
+    });
   }
 
   connect(): Promise<DataSource> {
     return this.dataSource.initialize();
   }
+
+  // async close(): Promise<void> {
+  //   return await this.dataSource.close();
+  // }
+
+
 }

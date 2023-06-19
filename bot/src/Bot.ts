@@ -9,11 +9,12 @@ const token = require("../config.json").token;
 console.log("Bot is starting...");
 
 // Uso de la clase DatabaseConnection
-const dbConnection = new DatabaseConnection();
+const dbConnection = new DatabaseConnection("dbConnection");
 dbConnection
   .connect()
   .then((c) => loadData(c).catch(error => console.error('Error:', error)))
   .catch((error) => console.log(error));
+
 const client = new Client({
     intents: []
 })
@@ -21,5 +22,10 @@ ready(client);
 interactionCreate(client);
 
 client.login(token);
+
+//dbConnection.close();
+
+
+
 
 
