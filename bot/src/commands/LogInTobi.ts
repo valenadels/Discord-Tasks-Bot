@@ -3,11 +3,11 @@ import { Command } from "../Command";
 import { createConnection, getRepository } from 'typeorm';
 import { Alumno } from '../entities/Entities';
 import { DatabaseConnection } from '../DBConnection';
+import { dbConnection } from '../Bot';
 
 
 let loggedPadron: number | null = null;
-const dbConnection = new DatabaseConnection("dbConnection");
-dbConnection.connect().catch(error => console.error('Error:', error));
+
 
 
 export const Logintobi: Command = {
@@ -28,7 +28,7 @@ export const Logintobi: Command = {
       const padron = padronOption.value as number;
 
       // Verificar si el alumno ya existe en la base de datos
-      const alumnoRepository = getRepository(Alumno, dbConnection.name);
+      const alumnoRepository = getRepository(Alumno);
       const alumnoExistente = await alumnoRepository.findOne({ where: { padron: padron } });
 
       if (!alumnoExistente) {

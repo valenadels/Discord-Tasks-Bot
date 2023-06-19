@@ -1,12 +1,13 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
+import { Alumno } from "./entities/Entities";
 
 export class DatabaseConnection {
+  
   private dataSource: DataSource;
   name: string | undefined;
 
-  constructor(name: string) {
-    this.name = name;
+  constructor() {
     this.dataSource = new DataSource({
       type: "mariadb",
       host: "localhost",
@@ -17,7 +18,6 @@ export class DatabaseConnection {
       synchronize: true,
       logging: false,
       entities: ["src/entities/*.ts"],
-      name: "dbConnection",
     });
   }
 
