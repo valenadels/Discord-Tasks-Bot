@@ -44,3 +44,13 @@ CREATE TABLE IF NOT EXISTS ALUMNO_MATERIA (
     FOREIGN KEY (materia_codigo) REFERENCES MATERIA(codigo),
     PRIMARY KEY (alumno_padron, materia_codigo)
 );
+
+-- Tabla ALUMNO_APROBADA (Tabla intermedia para materias aprobadas)
+CREATE TABLE IF NOT EXISTS ALUMNO_APROBADA (
+    alumno_padron BIGINT,
+    materia_codigo VARCHAR(10),
+    FOREIGN KEY (alumno_padron) REFERENCES ALUMNO(padron),
+    FOREIGN KEY (materia_codigo) REFERENCES MATERIA(codigo),
+    PRIMARY KEY (alumno_padron, materia_codigo)
+);
+
