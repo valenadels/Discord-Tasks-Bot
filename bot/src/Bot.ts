@@ -15,6 +15,9 @@ dbConnection
   .then((c) => loadData(c).catch(error => console.error('Error:', error)))
   .catch((error) => console.log(error));
 
+// Exporta la instancia de DatabaseConnection
+export const dbConnectionInstance = dbConnection;
+
 const client = new Client({
     intents: []
 })

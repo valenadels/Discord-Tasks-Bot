@@ -2,8 +2,8 @@ import { ApplicationCommandOptionType, Client, CommandInteraction, InteractionRe
 import { Command } from "../Command";
 import { createConnection, getRepository } from 'typeorm';
 import { Alumno } from '../entities/Entities';
-import { DatabaseConnection } from '../DBConnection';
-import { dbConnection } from '../Bot';
+import { dbConnectionInstance } from '../bot'; // Importa la instancia de DatabaseConnection
+
 
 
 let loggedPadron: number | null = null;
@@ -28,8 +28,9 @@ export const Logintobi: Command = {
       const padron = padronOption.value as number;
 
       // Verificar si el alumno ya existe en la base de datos
-      const alumnoRepository = getRepository(Alumno);
-      const alumnoExistente = await alumnoRepository.findOne({ where: { padron: padron } });
+      const alumnoRepository = getRepository(Alumno);//, connection: dbConnectionInstance);
+      const alumnoExistente = await alumnoRepository.findOne({ where: { padron: padron }, connection: dbConnectionInstance });
+
 
       if (!alumnoExistente) {
         // Si el alumno no existe, crear y guardar el nuevo alumno
@@ -62,3 +63,4 @@ export const Logintobi: Command = {
 };
 
 export { loggedPadron };
+
