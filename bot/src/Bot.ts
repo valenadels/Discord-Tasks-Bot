@@ -4,19 +4,14 @@ import ready from "./listeners/ready";
 import { DatabaseConnection } from "./DBConnection";
 import { loadData } from "./loadDB";
 
-
 const token = require("../config.json").token;
 console.log("Bot is starting...");
 
-// Uso de la clase DatabaseConnection
-let dbConnection = new DatabaseConnection();
+const dbConnection = DatabaseConnection.getInstance();
 dbConnection
   .connect()
   .then((c) => loadData(c).catch(error => console.error('Error:', error)))
   .catch((error) => console.log(error));
-
-// Exporta la instancia de DatabaseConnection
-export const dbConnectionInstance = dbConnection;
 
 const client = new Client({
     intents: []
@@ -28,7 +23,6 @@ client.login(token);
 
 //dbConnection.close();
 
-export { dbConnection};
 
 
 

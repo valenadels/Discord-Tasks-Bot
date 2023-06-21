@@ -2,13 +2,10 @@ import { ApplicationCommandOptionType, Client, CommandInteraction, InteractionRe
 import { Command } from "../Command";
 import { createConnection, getRepository } from 'typeorm';
 import { Alumno } from '../entities/Entities';
-import { dbConnectionInstance } from '../bot'; // Importa la instancia de DatabaseConnection
+import { DatabaseConnection } from 'src/DBConnection';
 
 
-
-let loggedPadron: number | null = null;
-
-
+const db = DatabaseConnection.getInstance();
 
 export const Logintobi: Command = {
   name: 'login-tobi',
@@ -23,44 +20,23 @@ export const Logintobi: Command = {
   run: async (client: Client, interaction: CommandInteraction) => {
     const user = interaction.user;
     const padronOption = interaction.options.get('padron');
-
     if (padronOption) {
       const padron = padronOption.value as number;
 
-      // Verificar si el alumno ya existe en la base de datos
-      const alumnoRepository = getRepository(Alumno);//, connection: dbConnectionInstance);
-      const alumnoExistente = await alumnoRepository.findOne({ where: { padron: padron }, connection: dbConnectionInstance });
+    
+      const nuevoAlumno = new Alumno();
+      nuevoAlumno.padron = padron;
+      db.saveAlumno(nuevoAlumno);
 
+      const reply: InteractionReplyOptions = {
+        content: `¡Bienvenido, ${user.username}! has iniciado sesión correctamente.`,
+        ephemeral: true,
+      };
 
-      if (!alumnoExistente) {
-        // Si el alumno no existe, crear y guardar el nuevo alumno
-        const nuevoAlumno = new Alumno();
-        nuevoAlumno.padron = padron;
-        loggedPadron = padron;
-        await alumnoRepository.save(nuevoAlumno);
-        loggedPadron = padron;
-
-        const reply: InteractionReplyOptions = {
-          content: `¡Bienvenido, ${user.username}! Tu padron (${padron}) ha sido guardado correctamente y has iniciado sesión.`,
-          ephemeral: true,
-        };
-
-        await interaction.followUp(reply);
-      } else {
-        // Si el alumno ya existe, dar la bienvenida indicando que ya está logueado
-        loggedPadron = padron;
-        const reply: InteractionReplyOptions = {
-          content: `¡Bienvenido, ${user.username}! Iniciaste sesión con tu padron (${padron}).`,
-          ephemeral: true,
-        };
-
-        await interaction.followUp(reply);
-      }
+      await interaction.followUp(reply);
     } else {
       await interaction.followUp('Se requiere proporcionar el padron.');
     }
-  },
+  }
 };
-
-export { loggedPadron };
 
