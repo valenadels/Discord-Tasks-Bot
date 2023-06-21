@@ -6,13 +6,8 @@ import { loadData } from "./loadDB";
 
 const token = require("../config.json").token;
 console.log("Bot is starting...");
-
-const dbConnection = DatabaseConnection.getInstance();
-dbConnection
-  .connect()
-  .then((c) => loadData(c).catch(error => console.error('Error:', error)))
-  .catch((error) => console.log(error));
-
+DatabaseConnection.initializeDB();
+DatabaseConnection.loadDBData();
 const client = new Client({
     intents: []
 })

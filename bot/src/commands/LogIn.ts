@@ -1,60 +1,39 @@
-import { CommandInteraction, Client, ApplicationCommandType, ApplicationCommandOptionType } from "discord.js";
+import { ApplicationCommandOptionType, Client, CommandInteraction, InteractionReplyOptions } from 'discord.js';
 import { Command } from "../Command";
-import { Alumno, AlumnoCarrera } from "../entities/Entities";
-
+import { createConnection, getRepository } from 'typeorm';
+import { Alumno } from '../entities/Entities';
+import { DatabaseConnection } from '../DBConnection';
 
 export const Login: Command = {
-  name: "login",
-  description: "Log in to the bot",
-  type: ApplicationCommandType.ChatInput,
+  name: 'login',
+  description: 'Log in to the bot',
   options: [
     {
       name: "padron",
       description: "tu padron",
       type: ApplicationCommandOptionType.Integer,
       required: true,
-    },
-    {
-      name: "carrera",
-      description: "tu carrera",
-      type: ApplicationCommandOptionType.String,
-      required: true,
-    },
-  ],
+    }],
   run: async (client: Client, interaction: CommandInteraction) => {
     const user = interaction.user;
-    const padronOption = interaction.options.get("padron");
-    const carreraOption = interaction.options.get("carrera");
-
-    if (padronOption && carreraOption) {
+    const padronOption = interaction.options.get('padron');
+    if (padronOption) {
       const padron = padronOption.value as number;
-      const carrera = carreraOption.value as string;
 
-      // Guardar el padrón en la tabla alumno
-      const alumno = new Alumno();
-      alumno.padron = padron;
-      //guardar en base de datos
-      
-      //await dbConnection.getRepository(Alumno).save(alumno);
+    
+      const nuevoAlumno = new Alumno();
+      nuevoAlumno.padron = padron;
+      DatabaseConnection.saveAlumno(nuevoAlumno);
 
-      // Guardar la carrera en la tabla alumno_carrera
-    //   const carreraObject = await dbConnection.getRepository(Carreras).findOne({ nombre: carrera });
-    //   if (carreraObject) {
-    //     const alumnoCarrera = new AlumnoCarrera();
-    //     alumnoCarrera.alumnoPadron = alumno.padron;
-    //     alumnoCarrera.carreraId = carreraObject.id;
-    //     await dbConnection.getRepository(AlumnoCarrera).save(alumnoCarrera);
+      const reply: InteractionReplyOptions = {
+        content: `¡Bienvenido, ${user.username}! has iniciado sesión correctamente.`,
+        ephemeral: true,
+      };
 
-    await interaction.followUp({
-            content: `¡Bienvenido, ${user.username}! Has iniciado sesión correctamente.`,
-            ephemeral: true}
-        );
-    //   } else {
-    //     await interaction.reply("La carrera especificada no existe.");
-    //   }
-    // } else {
-    //   await interaction.reply("Se requiere proporcionar el padrón y la carrera.");
-    // }
+      await interaction.followUp(reply);
+    } else {
+      await interaction.followUp('Se requiere proporcionar el padron.');
     }
   }
 };
+
