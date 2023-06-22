@@ -81,7 +81,7 @@ export class DatabaseConnection {
     try {
       const ds = await this.dataSrcPromise;
       const existingAlumnoMateria = await ds.manager.findOne(AlumnoMateria, {
-      where: { alumnoPadron: alumnoMateria.alumnoPadron }});
+      where: { alumnoPadron: alumnoMateria.alumnoPadron , materiaCodigo: alumnoMateria.materiaCodigo}});
 
       if(!existingAlumnoMateria){
         ds.manager.save(alumnoMateria);
