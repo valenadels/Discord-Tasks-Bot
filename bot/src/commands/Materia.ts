@@ -2,6 +2,7 @@ import { CommandInteraction, Client, ApplicationCommandType, ApplicationCommandO
 import { Command } from "../Command";
 import { Alumno, AlumnoCarrera, AlumnoMateria, Carreras } from "../entities/Entities";
 import { DatabaseConnection } from "../DBConnection";
+import { padron } from '../commands/LogIn';
 
 const db = DatabaseConnection.initializeDB();
 
@@ -27,7 +28,7 @@ export const Materia: Command = {
   
         
         const nuevoAlumno = new AlumnoMateria();
-        //nuevoAlumno.alumnoPadron = user.padron;
+        nuevoAlumno.alumnoPadron = padron;
         //db.saveAlumnoMateria(nuevoAlumno); 
   
       await interaction.followUp({
