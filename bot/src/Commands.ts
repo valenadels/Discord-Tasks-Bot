@@ -8,8 +8,9 @@ import { Fiubamap } from "./commands/FiubaMap";
 import { Fiubaplan } from "./commands/FiubaPlan";
 import { Hello } from "./commands/Hello";
 import { Login } from "./commands/LogIn";
+import { MateriasAprobadas } from "./commands/MateriasAprobadas";
 import { Materia } from "./commands/Materia";
 
 
 
-export const Commands: Command[] = [Hello, Calendario, Fiubamap, Dollyfiuba, Fiubaplan, Ayuda, Login, Carrera, Materia]; 
+export const Commands: Command[] = [Hello, Calendario, Fiubamap, Dollyfiuba, Fiubaplan, Ayuda, Login, Carrera, Materia, MateriasAprobadas]; 

@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
-import { Alumno, AlumnoCarrera, AlumnoMateria } from "./entities/Entities";
-import { loadData } from "./loadDB";
+import { Alumno, AlumnoCarrera, AlumnoMateria, Materia, MateriaAprobada } from "./entities/Entities";
+import { loadData } from "./LoadDB";
 
 export class DatabaseConnection {
   private static instance: DatabaseConnection;
@@ -93,4 +93,64 @@ export class DatabaseConnection {
       console.error("Se produjo un error al guardar el alumnoCarrera:", error);
     }
   }
+
+  public static async saveMateriaAprobada(materiaAprobada: MateriaAprobada) {
+    try {
+      const ds = await this.dataSrcPromise;
+      const existingMateriaAprobada = await ds.manager.findOne(AlumnoMateria, {
+      where: { alumnoPadron: materiaAprobada.alumnoPadron }});
+
+      if(!existingMateriaAprobada){
+        ds.manager.save(materiaAprobada);
+        console.log("Materia aprobada guardado en la base de datos.");
+      } else {
+        console.log("La materia aprobada ya existe en la base de datos.");
+      }
+    }catch (error) {
+      console.error("Se produjo un error al guardar la materia aprobada:", error);
+    }
+  }
+
+  // Obtiene la carrera del alumnoMateria con el padron y
+  // luego todas las materias de la tabla Materias correspondientes a esa carrera
+  public static async getMateriasPorCarrera(padron: number): Promise<Materia[] | undefined> {
+    try {
+      const ds = await this.dataSrcPromise;
+      const alumnoCarreras = await ds.manager.find(AlumnoCarrera, { where: { alumnoPadron: padron } });
+      
+      if (!alumnoCarreras || alumnoCarreras.length === 0) {
+        return undefined; 
+      }
+      
+      const carreraIds = alumnoCarreras.map((ac) => ac.carreraId);
+      
+      const materias = await ds.manager
+        .createQueryBuilder(Materia, "materia")
+        .where("materia.carreraId IN (:...carreraIds)", { carreraIds })
+        .getMany();
+        
+      return materias;
+    } catch (error) {
+      console.error("Se produjo un error al obtener las materias:", error);
+    }
+  }
+  
+
+  public static async getCodigoMateriaPorNombre(nombre: string): Promise<string | null> {
+    try {
+      const ds = await this.dataSrcPromise;
+      const materia = await ds.manager.findOne(Materia, { where: { nombre } });
+  
+      if (materia) {
+        return materia.codigo;
+      } else {
+        console.log("No se encontró ninguna materia con ese nombre.");
+        return null;
+      }
+    } catch (error) {
+      console.error("Se produjo un error al obtener el código de la materia:", error);
+      return null;
+    }
+  }
+  
 }

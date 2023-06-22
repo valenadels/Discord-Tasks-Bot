@@ -2,7 +2,7 @@ import { CommandInteraction, Client, ApplicationCommandType, ApplicationCommandO
 import { Command } from "../Command";
 import { Alumno, AlumnoCarrera, AlumnoMateria, Carreras } from "../entities/Entities";
 import { DatabaseConnection } from "../DBConnection";
-import { padron } from '../commands/LogIn';
+import { padron } from './LogIn';
 
 const db = DatabaseConnection.initializeDB();
 
@@ -19,24 +19,21 @@ export const Materia: Command = {
       },
     ],
     run: async (client: Client, interaction: CommandInteraction) => {
-      const user = interaction.user;
+      if(!padron){
+        await interaction.followUp("Debe loguearse primero. use /login <padron>");
+        return;
+      }
       const materiaOption = interaction.options.get("materia");
   
       if (materiaOption) {
-        
-        const materia = materiaOption.value as String;
-  
-        
         const nuevoAlumno = new AlumnoMateria();
         nuevoAlumno.alumnoPadron = padron;
-        //db.saveAlumnoMateria(nuevoAlumno); 
+        DatabaseConnection.saveAlumnoMateria(nuevoAlumno); 
   
       await interaction.followUp({
               content: `Tu materia se ha guardado exitosamente.`,
               ephemeral: true}
           );
-    } else {
-          await interaction.reply("La materia especificada no existe.");
-        }
+        } 
     }
 };

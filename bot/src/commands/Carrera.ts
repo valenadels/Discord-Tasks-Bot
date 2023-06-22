@@ -1,13 +1,17 @@
 import { CommandInteraction, Client, ApplicationCommandType, ApplicationCommandOptionType } from "discord.js";
 import { Command } from "../Command";
-import { Alumno, AlumnoCarrera, Carreras } from "../entities/Entities";
+import { AlumnoCarrera } from "../entities/Entities";
 import { DatabaseConnection } from "../DBConnection";
+import { padron } from '../commands/LogIn';
 
+const INFORMATICA = "Informatica";
+const ELECTRONICA = "Electronica";
+const SISTEMAS = "Sistemas";
 const db = DatabaseConnection.initializeDB();
 const opcionesCarrera = [
-    { name: "Informatica", value: "Informatica" },
-    { name: "Electronica", value: "Electronica" },
-    { name: "Sistemas", value: "Sistemas" },
+    { name: INFORMATICA, value: INFORMATICA },
+    { name: ELECTRONICA, value: ELECTRONICA },
+    { name: SISTEMAS, value: SISTEMAS },
   ];
   
 
@@ -28,44 +32,39 @@ export const Carrera: Command = {
         },
       ],      
       run: async (client: Client, interaction: CommandInteraction) => {
-        const user = interaction.user;
-        const carreraOption = interaction.options.get("carrera");
+        if(!padron){
+          await interaction.followUp("Debe loguearse primero. use /login <padron>");
+          return;
+        }
+
+        const carreraOpcion = interaction.options.get("carrera");
       
-        if (carreraOption) {
-          const carrera = carreraOption.value as string;
+        if (carreraOpcion) {
+          const carrera = carreraOpcion.value as string;
           let id = 0;
         
           switch (carrera) {
-            case "Informatica":
+            case INFORMATICA:
               id = 1;
               break;
-            case "Electronica":
+            case  ELECTRONICA:
               id = 2;
               break;
-            case "Sistemas":
+            case SISTEMAS:
               id = 3;
               break;
-            // Agrega más casos según las opciones de carrera definidas
-            default:
-              await interaction.reply("La carrera seleccionada no es válida.");
-              return;
           }
       
-          // Continúa con el resto del código para guardar la carrera en AlumnoCarrera
           const nuevoAlumno = new AlumnoCarrera();
-          // Asigna el padrón del alumno al campo alumnoPadron de AlumnoCarrera
-          //nuevoAlumno.alumnoPadron = user.padron;
-          // Asigna la carrera seleccionada al campo carreraId de AlumnoCarrera
+          nuevoAlumno.alumnoPadron = padron;
           nuevoAlumno.carreraId = id;
-          //await db.saveAlumnoCarrera(nuevoAlumno);
+          await DatabaseConnection.saveAlumnoCarrera(nuevoAlumno);
       
           await interaction.followUp({
             content: `Tu carrera se ha guardado exitosamente.`,
             ephemeral: true,
           });
-        } else {
-          await interaction.reply("La carrera especificada no existe.");
-        }
+        } 
       }
       
 };
