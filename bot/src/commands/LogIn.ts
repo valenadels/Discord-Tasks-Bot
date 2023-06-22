@@ -4,6 +4,7 @@ import { createConnection, getRepository } from 'typeorm';
 import { Alumno } from '../entities/Entities';
 import { DatabaseConnection } from '../DBConnection';
 
+export let padron: number;
 export const Login: Command = {
   name: 'login',
   description: 'Log in to the bot',
@@ -17,9 +18,9 @@ export const Login: Command = {
   run: async (client: Client, interaction: CommandInteraction) => {
     const user = interaction.user;
     const padronOption = interaction.options.get('padron');
-    if (padronOption) {
-      const padron = padronOption.value as number;
 
+    if (padronOption) {
+      padron = padronOption.value as number;
     
       const nuevoAlumno = new Alumno();
       nuevoAlumno.padron = padron;
