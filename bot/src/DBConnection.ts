@@ -153,4 +153,16 @@ export class DatabaseConnection {
     }
   }
   
+  public static async getAllMaterias(): Promise<Materia[]> {
+    try {
+      const ds = await this.dataSrcPromise;
+      const materias = await ds.manager.find(Materia);
+      return materias;
+    } catch (error) {
+      console.error("Se produjo un error al obtener todas las materias:", error);
+      return [];
+    }
+  }
+  
+
 }
