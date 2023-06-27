@@ -1,23 +1,23 @@
 codigo;nombre;creditos;carrera;correlativas
-81.01;Análisis Matemático II;8;3;NULL
-81.02;Álgebra II;8;3;NULL            
+81.010;Análisis Matemático II;8;3;NULL
+81.020;Álgebra II;8;3;NULL            
 95.14;Algoritmos y Programación I;6;3;NULL          
 81.11;Matemática Discreta;6;3;NULL                             
 95.57;Organización del Computador;8;3;95.14                     
 95.15;Algoritmos y Programación II;6;3;95.14                    
-81.04;Probabilidad y Estadística B;6;3;81.01-81.02                    
+81.040;Probabilidad y Estadística B;6;3;81.010-81.020                    
 91.39;Estructuras y Procesos Organizacionales;6;3;22 créditos aprobados     
 95.58;Organización de Datos;6;3;95.15-95.57                             
 95.02;Algoritmos y Programación III;6;3;95.15                      
-91.41;Economía de las Organizaciones;4;3;81.04-91.39                    
+91.41;Economía de las Organizaciones;4;3;81.040-91.39                    
 95.03;Sistemas Operativos;6;3;95.58                              
 95.20;Métodos y Modelos en la Ingeniería de Software I;6;3;95.58-95.02
 95.08;Taller de Programación;4;3;95.57-95.02                           
-91.04;Modelos y Optimización I;6;3;81.01-81.02-81.11-95.15                        
+91.04;Modelos y Optimización I;6;3;81.010-81.020-81.11-95.15                        
 95.21;Métodos y Modelos en la Ingeniería de Software II;6;3;95.20
 95.05;Base de Datos;6;3;95.20                                                         
 91.42;Administración de las Organizaciones;4;3;91.41-95.20              
-91.05;Modelos y Optimización II;4;3;81.04-91.04             
+91.05;Modelos y Optimización II;4;3;81.040-91.04             
 95.24;Administración y Control de Proyectos Informáticos I;6;3;91.42-95.21             
 95.59;Diseño, Operación y Gestión de Servicios Informáticos;4;3;91.42-95.21              
 95.60;Redes y Aplicaciones Distribuidas;6;3;95.05-95.03            
@@ -29,9 +29,9 @@ codigo;nombre;creditos;carrera;correlativas
 91.06;Modelos y Optimización III;6;3;91.05
 91.37;Emprendimientos en Ingeniería;3;3;95.24
 91.35;Análisis de Casos;3;3;91.05
-95.04;Análisis Numérico I;6;3;81.01-81.02-95.14
+95.04;Análisis Numérico I;6;3;81.010-81.020-95.14
 95.06;Teoría de Algoritmos I;6;3;81.11-95.15
 95.07;Teoría de Lenguajes de Programación;4;3;95.15
-95.19;Simulación;6;3;81.04-95.15                 
+95.19;Simulación;6;3;81.040-95.15                 
 
 
