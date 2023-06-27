@@ -37,11 +37,11 @@ export class DatabaseConnection {
   public static loadDBData() {
     let newPromise: Promise<DataSource> | undefined;
     this.dataSrcPromise
-      .then((ds) => {
-        loadCarreras(ds);
-        loadData(ds, './src/data/INFORMATICA.csv');
-        loadData(ds, './src/data/ELECTRONICA.csv');
-        loadData(ds, './src/data/SISTEMAS.csv');
+      .then(async (ds) => {
+        await loadCarreras(ds);
+        await loadData(ds, './src/data/INFORMATICA.csv');
+        await loadData(ds, './src/data/ELECTRONICA.csv');
+        await loadData(ds, './src/data/SISTEMAS.csv');
         newPromise = Promise.resolve(ds); 
       })
       .finally(() => {
