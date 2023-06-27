@@ -32,6 +32,4 @@ codigo;nombre;creditos;carrera;correlativas
 95.04;Análisis Numérico I;6;3;81.010-81.020-95.14
 95.06;Teoría de Algoritmos I;6;3;81.11-95.15
 95.07;Teoría de Lenguajes de Programación;4;3;95.15
-95.19;Simulación;6;3;81.040-95.15                 
-
-
+95.19;Simulación;6;3;81.040-95.15;

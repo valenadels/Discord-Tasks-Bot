@@ -59,5 +59,5 @@ export async function loadData(connection: DataSource, materiasCarreraCsvFilePat
     console.log(`Materia ${materia.nombre} cargada`);
   }
 
-  console.log('Proceso de carga finalizado');
+  console.log(`Proceso de carga ${materiasCarreraCsvFilePath} finalizado`);
 }
