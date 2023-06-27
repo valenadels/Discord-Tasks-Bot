@@ -28,7 +28,7 @@ codigo;nombre;creditos;carrera;correlativas
 91.11;Legislación y Ejercicio Profesional de la Ingeniería Electrónica;4;2;90 créditos aprobados
 97.04;Seguridad Ambiental y del Trabajo;4;2;90 créditos aprobados
 86.00;Tesis de Ingeniería Electrónica;8;2;NULL
-86.99;Trabajo Profesional de Ingeniería Electrónica;NULL
+86.99;Trabajo Profesional de Ingeniería Electrónica;8;2;NULL
 81.07;Análisis Funcional;6;2;81.05
 81.08;Análisis Matricial y Métodos Numéricos;6;2;81.05-95.04
 82.04;Mecánica Racional;4;2;81.05-82.01
