@@ -1,11 +1,11 @@
-Codigo;Nombre;Creditos;Carrera;Correlativas
+codigo;nombre;creditos;carrera;correlativas
 81.01;Análisis Matemático II A;8;2;NULL
 82.01;Física I A;8;2;NULL
 95.11;Algoritmos y Programación I;6;2;NULL
 81.02;Álgebra II A;8;2;NULL
 82.02;Física II A;8;2;61.03-62.01
 86.02;Introducción a la Ingeniería Electrónica;6;2;782.01
-86.70;Introducción al Diseño Asistido por Computadora para Electrónica ;6;2;82.01
+86.70;Introducción al Diseño Asistido por Computadora para Electrónica;6;2;82.01
 81.05;Análisis Matemático III A;6;2;81.01-81.02
 81.04;Probabilidad y Estadística B;6;2;81.01-81.02
 86.01;Técnica Digital;6;2;86.02
@@ -55,7 +55,7 @@ Codigo;Nombre;Creditos;Carrera;Correlativas
 86.31;Servicios y Redes de Comunicaciones;6;2;86.12
 86.32;Sistemas Inalámbricos;6;2;86.12-86.29
 86.34;Transmisores y Receptores de Comunicaciones;6;2;86.10
-86.35;Video Digital;6;2;
+86.35;Video Digital;6;2;86.09
 86.36;Criptografía y Seguridad Informática;6;2;86.05-86.07
 86.37;Organización de Computadoras;6;2;86.07
 86.38;Arquitecturas Paralelas;6;2;86.37

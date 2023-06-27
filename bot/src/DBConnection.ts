@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
 import { Alumno, AlumnoCarrera, AlumnoMateria, Materia, MateriaAprobada } from "./entities/Entities";
-import { loadData } from "./LoadDB";
+import { loadCarreras, loadData } from "./LoadDB";
 
 interface MateriaOption {
   name: string;
@@ -38,10 +38,10 @@ export class DatabaseConnection {
     let newPromise: Promise<DataSource> | undefined;
     this.dataSrcPromise
       .then((ds) => {
-        //loadCarreras(ds);
+        loadCarreras(ds);
         loadData(ds, './src/data/INFORMATICA.csv');
-        //loadData(ds, './src/data/ELECTRONICA.csv');
-        //loadData(ds, './src/data/SISTEMAS.csv');
+        loadData(ds, './src/data/ELECTRONICA.csv');
+        loadData(ds, './src/data/SISTEMAS.csv');
         newPromise = Promise.resolve(ds); 
       })
       .finally(() => {
