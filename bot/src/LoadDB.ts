@@ -3,15 +3,37 @@ import csvParser from 'csv-parser';
 import * as fs from 'fs';
 
 import { Carreras, Materia } from './entities/Entities';
-export async function loadData(connection: DataSource) {  
+
+// export async function loadCarreras(connection: DataSource) {
+//   const carrerasCsvFilePath = './src/data/CARRERAS.csv';
+
+//   const streamCarreras = fs.createReadStream(carrerasCsvFilePath).pipe(csvParser({ separator: ';' }));
+ 
+//   for await (const row of streamCarreras) {
+//     const carrera = new Carreras();
+//     carrera.nombre = row.nombre;
+//     carrera.duracion = row.duracion;
+
+//     const existingCarrera = await connection.manager.findOne(Carreras, {where: { nombre: carrera.nombre }});
+//     if (existingCarrera) {
+//       console.log(`La carrera ${carrera.nombre} ya existe en la base de datos.`);
+//     } else {
+//       await connection.manager.save(carrera);
+//       console.log(`Carrera ${carrera.nombre} cargada`);
+//     }    
+//   }
+// }
+
+export async function loadData(connection: DataSource, materiasCarreraCsvFilePath:string) {  
 
   const carrerasCsvFilePath = './src/data/CARRERAS.csv';
   const materiasInformaticaCsvFilePath = './src/data/INFORMATICA.csv';
 
   const streamMaterias = fs.createReadStream(materiasInformaticaCsvFilePath).pipe(csvParser({ separator: ';' })); 
-  const streamCarreas = fs.createReadStream(carrerasCsvFilePath).pipe(csvParser({ separator: ';' }));
+  //const streamMaterias = fs.createReadStream(materiasCarreraCsvFilePath).pipe(csvParser({ separator: ';' }));
+  const streamCarreras = fs.createReadStream(carrerasCsvFilePath).pipe(csvParser({ separator: ';' }));
  
-  for await (const row of streamCarreas) {
+  for await (const row of streamCarreras) {
     const carrera = new Carreras();
     carrera.nombre = row.nombre;
     carrera.duracion = row.duracion;

@@ -3,6 +3,11 @@ import { DataSource } from "typeorm";
 import { Alumno, AlumnoCarrera, AlumnoMateria, Materia, MateriaAprobada } from "./entities/Entities";
 import { loadData } from "./LoadDB";
 
+interface MateriaOption {
+  name: string;
+  value: string;
+}
+
 export class DatabaseConnection {
   private static instance: DatabaseConnection;
   private dataSource: DataSource;
@@ -33,7 +38,10 @@ export class DatabaseConnection {
     let newPromise: Promise<DataSource> | undefined;
     this.dataSrcPromise
       .then((ds) => {
-        loadData(ds);
+        //loadCarreras(ds);
+        loadData(ds, './src/data/INFORMATICA.csv');
+        //loadData(ds, './src/data/ELECTRONICA.csv');
+        //loadData(ds, './src/data/SISTEMAS.csv');
         newPromise = Promise.resolve(ds); 
       })
       .finally(() => {
@@ -153,16 +161,34 @@ export class DatabaseConnection {
     }
   }
   
-  public static async getAllMaterias(): Promise<Materia[]> {
+  // public static async getAllMaterias(): Promise<Materia[]> {
+  //   try {
+  //     const ds = await this.dataSrcPromise;
+  //     const materias = await ds.manager.find(Materia);
+  //     return materias;
+  //   } catch (error) {
+  //     console.error("Se produjo un error al obtener todas las materias:", error);
+  //     return [];
+  //   }
+  // }
+
+  
+  
+  public static async getAllMaterias(): Promise<MateriaOption[]> {
     try {
       const ds = await this.dataSrcPromise;
       const materias = await ds.manager.find(Materia);
-      return materias;
+      const opcionesMateria = materias.map((opcion) => ({
+        name: opcion.nombre, 
+        value: opcion.nombre,
+      }));
+      return opcionesMateria;
     } catch (error) {
       console.error("Se produjo un error al obtener todas las materias:", error);
       return [];
     }
   }
+  
   
 
 }
