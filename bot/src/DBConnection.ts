@@ -112,12 +112,32 @@ export class DatabaseConnection {
         ds.manager.save(materiaAprobada);
         console.log("Materia aprobada guardado en la base de datos.");
       } else {
-        console.log("La materia aprobada ya existe en la base de datos.");
+        await ds.manager.remove(AlumnoMateria, existingMateriaAprobada);
+        console.log("Felicitaciones! Aprobaste la materia")
       }
     }catch (error) {
       console.error("Se produjo un error al guardar la materia aprobada:", error);
     }
   }
+
+  public static async darBajaMateria(materia: AlumnoMateria){
+    try {
+      const ds = await this.dataSrcPromise;
+      const existingMateria = await ds.manager.findOne(AlumnoMateria, {
+      where: { alumnoPadron: materia.alumnoPadron , materiaCodigo: materia.materiaCodigo }});
+
+      if(existingMateria){
+        await ds.manager.remove(AlumnoMateria, existingMateria);
+        console.log("Se ha dado de baja de la materia ingresada.");
+      } else {
+        console.log("La materia no fue cargada, por lo que no puede darse de baja.");
+      }
+    }catch (error) {
+      console.error("Se produjo un error al eliminar la materia:", error);
+    }
+
+  }
+
 
   // Obtiene la carrera del alumnoMateria con el padron y
   // luego todas las materias de la tabla Materias correspondientes a esa carrera

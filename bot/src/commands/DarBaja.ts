@@ -6,14 +6,14 @@ import { padron } from './LogIn';
 
 const db = DatabaseConnection.initializeDB();
 
-export const Materia: Command = {
-    name: "materia",
-    description: "Add your subject",
+export const Darbaja: Command = {
+    name: "dar-baja",
+    description: "dar de baja una materia",
     type: ApplicationCommandType.ChatInput,
     options: [
       {
         name: "materia",
-        description: "tu materia",
+        description: "materia a dar de baja",
         type: ApplicationCommandOptionType.String,
         required: true,
       },
@@ -31,11 +31,11 @@ export const Materia: Command = {
         const nuevoAlumno = new AlumnoMateria();
         nuevoAlumno.alumnoPadron = padron;
         nuevoAlumno.materiaCodigo = codigoMateria;
-        DatabaseConnection.saveAlumnoMateria(nuevoAlumno); 
+        DatabaseConnection.darBajaMateria(nuevoAlumno); 
       }
 
       await interaction.followUp({
-              content: `Tu materia se ha guardado exitosamente.`,
+              content: `Tu materia se ha dado de baja exitosamente.`,
               ephemeral: true});
     }
   } 
