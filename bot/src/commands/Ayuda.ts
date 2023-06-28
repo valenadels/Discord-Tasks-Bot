@@ -1,5 +1,5 @@
 import { CommandInteraction, Client, ApplicationCommandType } from "discord.js";
-import { Commands } from "../Commands";
+import { loadCommands } from "../Commands";
 import { Command } from "src/Command";
 
 export const Ayuda: Command = {
@@ -7,6 +7,7 @@ export const Ayuda: Command = {
   description: "Muestra todos los comandos disponibles",
   type: ApplicationCommandType.ChatInput,
   run: async (client: Client, interaction: CommandInteraction) => {
+    const Commands = await loadCommands();
     const commandsList = Commands.map((command) => command.name).join(", ");
     await interaction.followUp({
         ephemeral: true,

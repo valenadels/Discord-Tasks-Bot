@@ -1,10 +1,8 @@
 import { CommandInteraction, Client, ApplicationCommandType, ApplicationCommandOptionType } from "discord.js";
 import { Command } from "../Command";
-import { Alumno, AlumnoCarrera, AlumnoMateria, Carreras } from "../entities/Entities";
+import { AlumnoMateria } from "../entities/Entities";
 import { DatabaseConnection } from "../DBConnection";
 import { padron } from './LogIn';
-
-const db = DatabaseConnection.initializeDB();
 
 export const Materia: Command = {
     name: "materia",

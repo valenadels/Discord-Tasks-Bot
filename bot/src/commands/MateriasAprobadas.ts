@@ -13,7 +13,48 @@ import { padron } from './LogIn';
 
 
 // ESTE FUNCIONA PERO SIN LAS OPCIONES
-export const MateriasAprobadas: Command = {
+// export const MateriasAprobadas: Command = {
+//     name: "materia-aprobada",
+//     description: "Add your subject",
+//     type: ApplicationCommandType.ChatInput,
+//     options: [
+//       {
+//         name: "materia-aprobada",
+//         description: "materia aprobada",
+//         type: ApplicationCommandOptionType.String,
+//         required: true,
+//       },
+//     ],
+//     run: async (client: Client, interaction: CommandInteraction) => {
+//       if(!padron){
+//         await interaction.followUp("Debe loguearse primero. use /login <padron>");
+//         return;
+//       }
+//       const materiaOption = interaction.options.get("materia-aprobada");
+//       if (materiaOption) {
+//         const nombreMateria = materiaOption.value as string;
+//         const materiaAprobada = new MateriaAprobada();
+//         const codigoMateria = await DatabaseConnection.getCodigoMateriaPorNombre(nombreMateria);
+//         if(codigoMateria){
+//           materiaAprobada.materiaCodigo = codigoMateria;
+//           materiaAprobada.alumnoPadron = padron;
+//           DatabaseConnection.saveMateriaAprobada(materiaAprobada); 
+//         }
+  
+//         await interaction.followUp({
+//                 content: `Tu materia aprobada se ha guardado exitosamente.`,
+//                 ephemeral: true});
+//       }
+//     }
+// };
+
+//esto de aca no funciona, hay que ver por que no me lo borren es de tobi
+
+export async function createMateriasAprobadas(): Promise<Command> {
+  const materias = (await DatabaseConnection.getAllMaterias());
+ //only preserve 25 elements of materias
+  materias.splice(25, materias.length);
+  const MateriasAprobadas: Command = {
     name: "materia-aprobada",
     description: "Add your subject",
     type: ApplicationCommandType.ChatInput,
@@ -23,10 +64,11 @@ export const MateriasAprobadas: Command = {
         description: "materia aprobada",
         type: ApplicationCommandOptionType.String,
         required: true,
-      },
+        choices: materias,
+      }
     ],
     run: async (client: Client, interaction: CommandInteraction) => {
-      if(!padron){
+      if (!padron) {
         await interaction.followUp("Debe loguearse primero. use /login <padron>");
         return;
       }
@@ -35,68 +77,19 @@ export const MateriasAprobadas: Command = {
         const nombreMateria = materiaOption.value as string;
         const materiaAprobada = new MateriaAprobada();
         const codigoMateria = await DatabaseConnection.getCodigoMateriaPorNombre(nombreMateria);
-        if(codigoMateria){
+        if (codigoMateria) {
           materiaAprobada.materiaCodigo = codigoMateria;
           materiaAprobada.alumnoPadron = padron;
           DatabaseConnection.saveMateriaAprobada(materiaAprobada); 
         }
   
         await interaction.followUp({
-                content: `Tu materia aprobada se ha guardado exitosamente.`,
-                ephemeral: true});
+          content: `Tu materia aprobada se ha guardado exitosamente.`,
+          ephemeral: true
+        });
       }
     }
+  } 
+  return await MateriasAprobadas;
 };
 
-//esto de aca no funciona, hay que ver por que no me lo borren es de tobi
-
-
-// import { CommandInteraction, Client, ApplicationCommandType, ApplicationCommandOptionType } from "discord.js";
-// import { Command } from "../Command";
-// import { MateriaAprobada } from "../entities/Entities";
-// import { DatabaseConnection } from "../DBConnection";
-// import { padron } from './LogIn';
-
-// const db = DatabaseConnection.initializeDB();
-
-
-// async function obtenerYMostrarPrimerMateria() {
-//   const materias = await DatabaseConnection.getAllMaterias();
-// }
-
-// export const MateriasAprobadas: Command = {
-//   name: "materia-aprobada",
-//   description: "Add your subject",
-//   type: ApplicationCommandType.ChatInput,
-//   options: [
-//     {
-//       name: "materia-aprobada",
-//       description: "materia aprobada",
-//       type: ApplicationCommandOptionType.String,
-//       required: true,
-//       choices: materias,
-//     }
-//   ],
-//   run: async (client: Client, interaction: CommandInteraction) => {
-//     if (!padron) {
-//       await interaction.followUp("Debe loguearse primero. use /login <padron>");
-//       return;
-//     }
-//     const materiaOption = interaction.options.get("materia-aprobada");
-//     if (materiaOption) {
-//       const nombreMateria = materiaOption.value as string;
-//       const materiaAprobada = new MateriaAprobada();
-//       const codigoMateria = await DatabaseConnection.getCodigoMateriaPorNombre(nombreMateria);
-//       if (codigoMateria) {
-//         materiaAprobada.materiaCodigo = codigoMateria;
-//         materiaAprobada.alumnoPadron = padron;
-//         DatabaseConnection.saveMateriaAprobada(materiaAprobada); 
-//       }
-
-//       await interaction.followUp({
-//         content: `Tu materia aprobada se ha guardado exitosamente.`,
-//         ephemeral: true
-//       });
-//     }
-//   }
-// };

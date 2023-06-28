@@ -2,7 +2,7 @@ import { Client } from "discord.js";
 import interactionCreate from "./listeners/InteractionCreate";
 import ready from "./listeners/Ready";
 import { DatabaseConnection } from "./DBConnection";
-import { loadData } from "./LoadDB";
+
 
 const token = require("../config.json").token;
 console.log("Bot is starting...");

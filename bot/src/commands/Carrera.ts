@@ -7,7 +7,6 @@ import { padron } from '../commands/LogIn';
 const INFORMATICA = "Informatica";
 const ELECTRONICA = "Electronica";
 const SISTEMAS = "Sistemas";
-const db = DatabaseConnection.initializeDB();
 const opcionesCarrera = [
     { name: INFORMATICA, value: INFORMATICA },
     { name: ELECTRONICA, value: ELECTRONICA },

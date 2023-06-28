@@ -1,6 +1,5 @@
 import { ApplicationCommandOptionType, Client, CommandInteraction, InteractionReplyOptions } from 'discord.js';
 import { Command } from "../Command";
-import { createConnection, getRepository } from 'typeorm';
 import { Alumno } from '../entities/Entities';
 import { DatabaseConnection } from '../DBConnection';
 

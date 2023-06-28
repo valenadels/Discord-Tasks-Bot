@@ -193,21 +193,21 @@ export class DatabaseConnection {
   // }
 
   
-  
   public static async getAllMaterias(): Promise<MateriaOption[]> {
     try {
       const ds = await this.dataSrcPromise;
       const materias = await ds.manager.find(Materia);
-      const opcionesMateria = materias.map((opcion) => ({
-        name: opcion.nombre, 
+      const opcionesMateria: MateriaOption[] = materias.map((opcion) => ({
+        name: opcion.nombre,
         value: opcion.nombre,
       }));
-      return opcionesMateria;
+      return await opcionesMateria;
     } catch (error) {
       console.error("Se produjo un error al obtener todas las materias:", error);
       return [];
     }
   }
+  
   
   
 
