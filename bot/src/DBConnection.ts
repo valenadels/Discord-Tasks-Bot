@@ -181,18 +181,7 @@ export class DatabaseConnection {
     }
   }
   
-  // public static async getAllMaterias(): Promise<Materia[]> {
-  //   try {
-  //     const ds = await this.dataSrcPromise;
-  //     const materias = await ds.manager.find(Materia);
-  //     return materias;
-  //   } catch (error) {
-  //     console.error("Se produjo un error al obtener todas las materias:", error);
-  //     return [];
-  //   }
-  // }
 
-  
   public static async getAllMaterias(): Promise<MateriaOption[]> {
     try {
       const ds = await this.dataSrcPromise;
@@ -207,6 +196,36 @@ export class DatabaseConnection {
       return [];
     }
   }
+
+  public static async getCorrelativas(codigoMateria: string): Promise<string[] | null> {
+    try {
+        const ds = await this.dataSrcPromise;
+        const materia = await ds.manager.findOne(Materia, { where: { codigo: codigoMateria } });
+
+        if (materia && materia.correlativas) {
+            return materia.correlativas.split("-");
+        } else {
+            console.log("No se encontraron correlativas para la materia con ese código.");
+            return null;
+        }
+    } catch (error) {
+        console.error("Se produjo un error al obtener las correlativas de la materia:", error);
+        return null;
+    }
+}
+
+public static async getAlumnoMaterias(padron: number): Promise<string[]> {
+    try {
+        const ds = await this.dataSrcPromise;
+        const alumnoMaterias = await ds.manager.find(AlumnoMateria, { where: { alumnoPadron: padron } });
+
+        return alumnoMaterias.map(alumnoMateria => alumnoMateria.materiaCodigo);
+    } catch (error) {
+        console.error("Se produjo un error al obtener las materias del alumno:", error);
+        return [];
+    }
+}
+
   
   
   

@@ -16,7 +16,7 @@ interactionCreate(client);
 
 client.login(token);
 
-//dbConnection.close();
+
 
 
 

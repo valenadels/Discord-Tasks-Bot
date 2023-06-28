@@ -1,4 +1,4 @@
-import { CommandInteraction, Client, ApplicationCommandType, ApplicationCommandOptionType } from "discord.js";
+import { CommandInteraction, Client, ApplicationCommandType, ApplicationCommandOptionType, ApplicationCommandOptionChoiceData } from "discord.js";
 import { Command } from "../Command";
 import { MateriaAprobada } from "../entities/Entities";
 import { DatabaseConnection } from "../DBConnection";
@@ -48,7 +48,21 @@ import { padron } from './LogIn';
 //     }
 // };
 
-//esto de aca no funciona, hay que ver por que no me lo borren es de tobi
+// export async function generateAutocompleteChoices(): Promise<ApplicationCommandOptionChoiceData[]> {
+//   // Fetch subjects from the database or any other data source based on the search query
+//   const materias = (await DatabaseConnection.getAllMaterias());
+
+//   // Map the fetched subjects to autocomplete choices
+//   const autocompleteChoices: ApplicationCommandOptionChoiceData<string | number>[] = materias.map((materia) => ({
+//     name: materia.name,
+//     value: materia.name,
+//     type: ApplicationCommandOptionType.String, // Add the 'type' property here
+//   }));
+
+//   return autocompleteChoices;
+// }
+
+
 
 export async function createMateriasAprobadas(): Promise<Command> {
   const materias = (await DatabaseConnection.getAllMaterias());
@@ -65,6 +79,7 @@ export async function createMateriasAprobadas(): Promise<Command> {
         type: ApplicationCommandOptionType.String,
         required: true,
         choices: materias,
+        //autocomplete: true,
       }
     ],
     run: async (client: Client, interaction: CommandInteraction) => {

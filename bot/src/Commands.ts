@@ -1,5 +1,5 @@
 import { Command } from "./Command";
-//import { Ayuda } from "./commands/Ayuda";
+import { Ayuda } from "./commands/Ayuda";
 import { Calendario } from "./commands/Calendario";
 import { Carrera } from "./commands/Carrera";
 import { Dollyfiuba } from "./commands/DollyFiuba";
@@ -18,6 +18,7 @@ export async function loadCommands(): Promise<Command[]> {
     Calendario,
     Fiubamap,
     Dollyfiuba,
+    Ayuda,
     Fiubaplan,
     Login,
     Carrera,
