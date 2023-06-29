@@ -77,7 +77,14 @@ export class DatabaseConnection {
         ds.manager.save(alumnoCarrera);
         console.log("AlumnoCarrera guardado en la base de datos.");
       } else {
-        console.log("El alumno ya existe en la base de datos.");
+        const carrera = await ds.manager.findOne(AlumnoCarrera, {
+          where: { carreraId: alumnoCarrera.carreraId }});
+          if(!carrera){
+            ds.manager.save(alumnoCarrera);
+            console.log("AlumnoCarrera guardado en la base de datos con tu nueva carrera.");
+          } else {
+            console.log("El alumno ya existe en la base de datos.");
+          }
       }
     }catch (error) {
       console.error("Se produjo un error al guardar el alumnoCarrera:", error);

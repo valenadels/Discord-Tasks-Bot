@@ -27,16 +27,19 @@ export const Materia: Command = {
           const codigoMateria = await DatabaseConnection.getCodigoMateriaPorNombre(nombreMateria);
           if (codigoMateria) {
               const correlativas = await DatabaseConnection.getCorrelativas(codigoMateria);
+              
               if (correlativas?.includes("NULL")) {
+                
                 const nuevoAlumno = new AlumnoMateria();
-              nuevoAlumno.alumnoPadron = padron;
-              nuevoAlumno.materiaCodigo = codigoMateria;
-              DatabaseConnection.saveAlumnoMateria(nuevoAlumno);
+                nuevoAlumno.alumnoPadron = padron;
+                nuevoAlumno.materiaCodigo = codigoMateria;
+                DatabaseConnection.saveAlumnoMateria(nuevoAlumno);
   
               await interaction.followUp({
                   content: `Tu materia se ha guardado exitosamente.`,
                   ephemeral: true
               });
+              return;
             }
               if (correlativas) {
                   const alumnoMaterias = await DatabaseConnection.getAlumnoMaterias(padron);

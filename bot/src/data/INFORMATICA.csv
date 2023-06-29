@@ -1,9 +1,9 @@
 codigo;nombre;creditos;carrera;correlativas
-61.03;Análisis Matemático II A;8;1;NULL
-62.01;Física I A;8;1;NULL
+61.03;Análisis Matemático II;8;1;NULL
+62.01;Física I;8;1;NULL
 75.40;Algoritmos y Programación I;6;1;NULL
-61.08;Álgebra II A;8;1;NULL
-62.03;Física II A;8;1;61.03-62.01
+61.08;Álgebra II;8;1;NULL
+62.03;Física II;8;1;61.03-62.01
 75.41;Algoritmos y Programación II;6;1;75.40
 61.09;Probabilidad y Estadística B;6;1;61.03-61.08
 66.70;Estructura del Computador;6;1;62.03-75.41
