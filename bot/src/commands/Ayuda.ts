@@ -10,8 +10,9 @@ export const Ayuda: Command = {
     const Commands = await loadCommands();
     const commandsList = Commands.map((command) => command.name).join(", ");
     await interaction.followUp({
-        ephemeral: true,
-        content: `Estos son los comandos disponibles: ${commandsList}`});
+      ephemeral: true,
+      content: `Estos son los comandos disponibles: ${commandsList}`
+    });
   },
 };
 

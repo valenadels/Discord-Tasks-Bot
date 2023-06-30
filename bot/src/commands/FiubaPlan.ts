@@ -9,6 +9,7 @@ export const Fiubaplan: Command = {
         const url = "https://fede.dm/FIUBA-Plan/";
         await interaction.followUp({
             content: `Aquí tienes FIUBA Plan: ${url}`,
-            ephemeral: true});
+            ephemeral: true
+        });
     }
 };

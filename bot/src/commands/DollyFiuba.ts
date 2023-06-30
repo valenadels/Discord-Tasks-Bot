@@ -9,6 +9,7 @@ export const Dollyfiuba: Command = {
         const url = "https://dollyfiuba.com/";
         await interaction.followUp({
             content: `Aquí tienes Dolly Fiuba: ${url}`,
-            ephemeral: true});
+            ephemeral: true
+        });
     }
 };

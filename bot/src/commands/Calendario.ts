@@ -9,7 +9,8 @@ export const Calendario: Command = {
         const url = "https://www.fi.uba.ar/estudiantes/calendario-academico";
         await interaction.followUp({
             content: `Aquí tienes el calendario académico de la FIUBA: ${url}`,
-            ephemeral: true});
+            ephemeral: true
+        });
     }
 };
 

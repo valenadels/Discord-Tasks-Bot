@@ -25,8 +25,7 @@ export async function loadCommands(): Promise<Command[]> {
     Materia,
     materiasAprobadasCommand
   ];
-    return Commands;
+  return Commands;
 }
 
 
-  

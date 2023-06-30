@@ -20,7 +20,7 @@ export const Login: Command = {
 
     if (padronOption) {
       padron = padronOption.value as number;
-    
+
       const nuevoAlumno = new Alumno();
       nuevoAlumno.padron = padron;
       DatabaseConnection.saveAlumno(nuevoAlumno);

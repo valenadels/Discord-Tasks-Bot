@@ -20,7 +20,7 @@ export class DatabaseConnection {
     DatabaseConnection.dataSrcPromise = this.connect();
   }
 
-  public static initializeDB(){
+  public static initializeDB() {
     if (!DatabaseConnection.instance) {
       DatabaseConnection.instance = new DatabaseConnection();
     }
@@ -42,20 +42,21 @@ export class DatabaseConnection {
         await loadData(ds, './src/data/INFORMATICA.csv');
         await loadData(ds, './src/data/ELECTRONICA.csv');
         await loadData(ds, './src/data/SISTEMAS.csv');
-        newPromise = Promise.resolve(ds); 
+        newPromise = Promise.resolve(ds);
       })
       .finally(() => {
-        this.dataSrcPromise = newPromise!; 
+        this.dataSrcPromise = newPromise!;
       });
   }
-  
-  
+
+
   public static async saveAlumno(alumno: Alumno) {
     try {
       const ds = await this.dataSrcPromise;
       const existingAlumno = await ds.manager.findOne(Alumno, {
-        where: { padron: alumno.padron }});
-  
+        where: { padron: alumno.padron }
+      });
+
       if (!existingAlumno) {
         ds.manager.save(alumno);
         console.log("Alumno guardado en la base de datos.");
@@ -65,46 +66,49 @@ export class DatabaseConnection {
     } catch (error) {
       console.error("Se produjo un error al guardar el alumno:", error);
     }
-  }  
+  }
 
   public static async saveAlumnoCarrera(alumnoCarrera: AlumnoCarrera) {
     try {
       const ds = await this.dataSrcPromise;
       const existingAlumnoCarrera = await ds.manager.findOne(AlumnoCarrera, {
-      where: { alumnoPadron: alumnoCarrera.alumnoPadron }});
+        where: { alumnoPadron: alumnoCarrera.alumnoPadron }
+      });
 
-      if(!existingAlumnoCarrera){
+      if (!existingAlumnoCarrera) {
         ds.manager.save(alumnoCarrera);
         console.log("AlumnoCarrera guardado en la base de datos.");
       } else {
         const carrera = await ds.manager.findOne(AlumnoCarrera, {
-          where: { carreraId: alumnoCarrera.carreraId }});
-          if(!carrera){
-            ds.manager.save(alumnoCarrera);
-            console.log("AlumnoCarrera guardado en la base de datos con tu nueva carrera.");
-          } else {
-            console.log("El alumno ya existe en la base de datos.");
-          }
+          where: { carreraId: alumnoCarrera.carreraId }
+        });
+        if (!carrera) {
+          ds.manager.save(alumnoCarrera);
+          console.log("AlumnoCarrera guardado en la base de datos con tu nueva carrera.");
+        } else {
+          console.log("El alumno ya existe en la base de datos.");
+        }
       }
-    }catch (error) {
+    } catch (error) {
       console.error("Se produjo un error al guardar el alumnoCarrera:", error);
     }
   }
-  
+
 
   public static async saveAlumnoMateria(alumnoMateria: AlumnoMateria) {
     try {
       const ds = await this.dataSrcPromise;
       const existingAlumnoMateria = await ds.manager.findOne(AlumnoMateria, {
-      where: { alumnoPadron: alumnoMateria.alumnoPadron , materiaCodigo: alumnoMateria.materiaCodigo}});
+        where: { alumnoPadron: alumnoMateria.alumnoPadron, materiaCodigo: alumnoMateria.materiaCodigo }
+      });
 
-      if(!existingAlumnoMateria){
+      if (!existingAlumnoMateria) {
         ds.manager.save(alumnoMateria);
         console.log("AlumnoMateria guardado en la base de datos.");
       } else {
         console.log("El alumno ya existe en la base de datos.");
       }
-    }catch (error) {
+    } catch (error) {
       console.error("Se produjo un error al guardar el alumnoCarrera:", error);
     }
   }
@@ -113,33 +117,35 @@ export class DatabaseConnection {
     try {
       const ds = await this.dataSrcPromise;
       const existingMateriaAprobada = await ds.manager.findOne(AlumnoMateria, {
-      where: { alumnoPadron: materiaAprobada.alumnoPadron }});
+        where: { alumnoPadron: materiaAprobada.alumnoPadron }
+      });
 
-      if(!existingMateriaAprobada){
+      if (!existingMateriaAprobada) {
         ds.manager.save(materiaAprobada);
         console.log("Materia aprobada guardado en la base de datos.");
       } else {
         await ds.manager.remove(AlumnoMateria, existingMateriaAprobada);
         console.log("Felicitaciones! Aprobaste la materia")
       }
-    }catch (error) {
+    } catch (error) {
       console.error("Se produjo un error al guardar la materia aprobada:", error);
     }
   }
 
-  public static async darBajaMateria(materia: AlumnoMateria){
+  public static async darBajaMateria(materia: AlumnoMateria) {
     try {
       const ds = await this.dataSrcPromise;
       const existingMateria = await ds.manager.findOne(AlumnoMateria, {
-      where: { alumnoPadron: materia.alumnoPadron , materiaCodigo: materia.materiaCodigo }});
+        where: { alumnoPadron: materia.alumnoPadron, materiaCodigo: materia.materiaCodigo }
+      });
 
-      if(existingMateria){
+      if (existingMateria) {
         await ds.manager.remove(AlumnoMateria, existingMateria);
         console.log("Se ha dado de baja de la materia ingresada.");
       } else {
         console.log("La materia no fue cargada, por lo que no puede darse de baja.");
       }
-    }catch (error) {
+    } catch (error) {
       console.error("Se produjo un error al eliminar la materia:", error);
     }
 
@@ -152,30 +158,30 @@ export class DatabaseConnection {
     try {
       const ds = await this.dataSrcPromise;
       const alumnoCarreras = await ds.manager.find(AlumnoCarrera, { where: { alumnoPadron: padron } });
-      
+
       if (!alumnoCarreras || alumnoCarreras.length === 0) {
-        return undefined; 
+        return undefined;
       }
-      
+
       const carreraIds = alumnoCarreras.map((ac) => ac.carreraId);
-      
+
       const materias = await ds.manager
         .createQueryBuilder(Materia, "materia")
         .where("materia.carreraId IN (:...carreraIds)", { carreraIds })
         .getMany();
-        
+
       return materias;
     } catch (error) {
       console.error("Se produjo un error al obtener las materias:", error);
     }
   }
-  
+
 
   public static async getCodigoMateriaPorNombre(nombre: string): Promise<string | null> {
     try {
       const ds = await this.dataSrcPromise;
       const materia = await ds.manager.findOne(Materia, { where: { nombre } });
-  
+
       if (materia) {
         return materia.codigo;
       } else {
@@ -187,7 +193,7 @@ export class DatabaseConnection {
       return null;
     }
   }
-  
+
 
   public static async getAllMaterias(): Promise<MateriaOption[]> {
     try {
@@ -206,35 +212,35 @@ export class DatabaseConnection {
 
   public static async getCorrelativas(codigoMateria: string): Promise<string[] | null> {
     try {
-        const ds = await this.dataSrcPromise;
-        const materia = await ds.manager.findOne(Materia, { where: { codigo: codigoMateria } });
+      const ds = await this.dataSrcPromise;
+      const materia = await ds.manager.findOne(Materia, { where: { codigo: codigoMateria } });
 
-        if (materia && materia.correlativas) {
-            return materia.correlativas.split("-");
-        } else {
-            console.log("No se encontraron correlativas para la materia con ese código.");
-            return null;
-        }
-    } catch (error) {
-        console.error("Se produjo un error al obtener las correlativas de la materia:", error);
+      if (materia && materia.correlativas) {
+        return materia.correlativas.split("-");
+      } else {
+        console.log("No se encontraron correlativas para la materia con ese código.");
         return null;
-    }
-}
-
-public static async getAlumnoMaterias(padron: number): Promise<string[]> {
-    try {
-        const ds = await this.dataSrcPromise;
-        const alumnoMaterias = await ds.manager.find(AlumnoMateria, { where: { alumnoPadron: padron } });
-
-        return alumnoMaterias.map(alumnoMateria => alumnoMateria.materiaCodigo);
+      }
     } catch (error) {
-        console.error("Se produjo un error al obtener las materias del alumno:", error);
-        return [];
+      console.error("Se produjo un error al obtener las correlativas de la materia:", error);
+      return null;
     }
-}
+  }
 
-  
-  
-  
+  public static async getAlumnoMaterias(padron: number): Promise<string[]> {
+    try {
+      const ds = await this.dataSrcPromise;
+      const alumnoMaterias = await ds.manager.find(AlumnoMateria, { where: { alumnoPadron: padron } });
+
+      return alumnoMaterias.map(alumnoMateria => alumnoMateria.materiaCodigo);
+    } catch (error) {
+      console.error("Se produjo un error al obtener las materias del alumno:", error);
+      return [];
+    }
+  }
+
+
+
+
 
 }

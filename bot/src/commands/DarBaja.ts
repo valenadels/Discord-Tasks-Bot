@@ -7,19 +7,19 @@ import { padron } from './LogIn';
 const db = DatabaseConnection.initializeDB();
 
 export const Darbaja: Command = {
-    name: "dar-baja",
-    description: "dar de baja una materia",
-    type: ApplicationCommandType.ChatInput,
-    options: [
-      {
-        name: "materia",
-        description: "materia a dar de baja",
-        type: ApplicationCommandOptionType.String,
-        required: true,
-      },
-    ],
+  name: "dar-baja",
+  description: "dar de baja una materia",
+  type: ApplicationCommandType.ChatInput,
+  options: [
+    {
+      name: "materia",
+      description: "materia a dar de baja",
+      type: ApplicationCommandOptionType.String,
+      required: true,
+    },
+  ],
   run: async (client: Client, interaction: CommandInteraction) => {
-    if(!padron){
+    if (!padron) {
       await interaction.followUp("Debe loguearse primero. use /login <padron>");
       return;
     }
@@ -27,16 +27,17 @@ export const Darbaja: Command = {
     if (materiaOption) {
       const nombreMateria = materiaOption.value as string;
       const codigoMateria = await DatabaseConnection.getCodigoMateriaPorNombre(nombreMateria);
-      if(codigoMateria){
+      if (codigoMateria) {
         const nuevoAlumno = new AlumnoMateria();
         nuevoAlumno.alumnoPadron = padron;
         nuevoAlumno.materiaCodigo = codigoMateria;
-        DatabaseConnection.darBajaMateria(nuevoAlumno); 
+        DatabaseConnection.darBajaMateria(nuevoAlumno);
       }
 
       await interaction.followUp({
-              content: `Tu materia se ha dado de baja exitosamente.`,
-              ephemeral: true});
+        content: `Tu materia se ha dado de baja exitosamente.`,
+        ephemeral: true
+      });
     }
-  } 
+  }
 }

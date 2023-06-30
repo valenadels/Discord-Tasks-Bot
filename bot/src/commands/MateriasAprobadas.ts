@@ -40,7 +40,7 @@ import { padron } from './LogIn';
 //           materiaAprobada.alumnoPadron = padron;
 //           DatabaseConnection.saveMateriaAprobada(materiaAprobada); 
 //         }
-  
+
 //         await interaction.followUp({
 //                 content: `Tu materia aprobada se ha guardado exitosamente.`,
 //                 ephemeral: true});
@@ -66,7 +66,7 @@ import { padron } from './LogIn';
 
 export async function createMateriasAprobadas(): Promise<Command> {
   const materias = (await DatabaseConnection.getAllMaterias());
- //only preserve 25 elements of materias
+  //only preserve 25 elements of materias
   materias.splice(25, materias.length);
   const MateriasAprobadas: Command = {
     name: "materia-aprobada",
@@ -95,16 +95,16 @@ export async function createMateriasAprobadas(): Promise<Command> {
         if (codigoMateria) {
           materiaAprobada.materiaCodigo = codigoMateria;
           materiaAprobada.alumnoPadron = padron;
-          DatabaseConnection.saveMateriaAprobada(materiaAprobada); 
+          DatabaseConnection.saveMateriaAprobada(materiaAprobada);
         }
-  
+
         await interaction.followUp({
           content: `Tu materia aprobada se ha guardado exitosamente.`,
           ephemeral: true
         });
       }
     }
-  } 
+  }
   return await MateriasAprobadas;
-};
+}
 

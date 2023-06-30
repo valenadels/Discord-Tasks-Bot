@@ -8,8 +8,9 @@ export const Fiubamap: Command = {
     run: async (client: Client, interaction: CommandInteraction) => {
         const url = "https://fede.dm/FIUBA-Map/";
         await interaction.followUp({
-        content: `Aquí tienes FIUBA Map: ${url}`,
-        ephemeral: true});
+            content: `Aquí tienes FIUBA Map: ${url}`,
+            ephemeral: true
+        });
     }
 };
 
