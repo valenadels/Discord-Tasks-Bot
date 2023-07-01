@@ -7,7 +7,7 @@ import { padron } from './LogIn';
 let materiasYaMostradas: MateriaOption[] = []
 let materiasParticiones: MateriaOption[][] = [];
 
-export async function loadMateriasParticiones() {
+export async function loadMateriaParticiones() {
   let materias = (await DatabaseConnection.getAllMaterias());
   const result: MateriaOption[][] = [];
   let sizeParticion = 24;
@@ -18,7 +18,7 @@ export async function loadMateriasParticiones() {
   materiasParticiones = result;
 }
 
-export async function createMateriasAprobadas(): Promise<Command> {
+export async function createMateriasAprobada(): Promise<Command> {
 
   const particion: MateriaOption[] = materiasParticiones.pop()!;
   // materiasYaMostradas.push(...particion!);

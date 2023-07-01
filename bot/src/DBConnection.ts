@@ -1,7 +1,8 @@
 import "reflect-metadata";
-import { DataSource } from "typeorm";
+import { DataSource, FindOptionsWhere } from "typeorm";
 import { Alumno, AlumnoCarrera, AlumnoMateria, Materia, MateriaAprobada } from "./entities/Entities";
 import { loadCarreras, loadData } from "./LoadDB";
+import { padron } from "./commands/LogIn";
 
 export interface MateriaOption {
   name: string;
@@ -39,7 +40,8 @@ export class DatabaseConnection {
     this.dataSrcPromise
       .then(async (ds) => {
         await loadCarreras(ds);
-        await loadData(ds, './src/data/INFORMATICA.csv');
+        const newLocal = './src/data/INFORMATICA.csv';
+        await loadData(ds, newLocal);
         await loadData(ds, './src/data/ELECTRONICA.csv');
         await loadData(ds, './src/data/SISTEMAS.csv');
         newPromise = Promise.resolve(ds);
@@ -195,6 +197,30 @@ export class DatabaseConnection {
   }
 
 
+  public static async getAllMateriasPorCarreras(): Promise<MateriaOption[]> {
+    try {
+      const ds = await this.dataSrcPromise;
+      let carreraAlumno: AlumnoCarrera[] = await ds.manager.find(AlumnoCarrera, { where: { alumnoPadron: padron } });
+      const carreraIds = carreraAlumno.map((ac) => ac.carreraId);
+      if (carreraIds.length > 0) {
+        console.log("Carreras del alumno:", carreraIds);
+        const materias: Materia[] = await ds.manager
+          .createQueryBuilder(Materia, "materia")
+          .where("materia.carreraId IN (:...carreraIds)", { carreraIds })
+          .getMany();
+        const opcionesMateria: MateriaOption[] = materias.map((opcion) => ({
+          name: opcion.nombre,
+          value: opcion.nombre,
+        }));
+        return await opcionesMateria;
+      }
+      return [];
+    } catch (error) {
+      console.error("Se produjo un error al obtener todas las materias:", error);
+      return [];
+    }
+  }
+
   public static async getAllMaterias(): Promise<MateriaOption[]> {
     try {
       const ds = await this.dataSrcPromise;
@@ -209,7 +235,6 @@ export class DatabaseConnection {
       return [];
     }
   }
-
   public static async getCorrelativas(codigoMateria: string): Promise<string[] | null> {
     try {
       const ds = await this.dataSrcPromise;

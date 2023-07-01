@@ -7,12 +7,15 @@ import { Fiubamap } from "./commands/FiubaMap";
 import { Fiubaplan } from "./commands/FiubaPlan";
 import { Hello } from "./commands/Hello";
 import { Login } from "./commands/LogIn";
-import { createMateriasAprobadas } from "./commands/MateriasAprobadas";
+import { createMateriasAprobadas, loadMateriasParticiones } from "./commands/MateriasAprobadas";
+import { createMateriasAprobada, loadMateriaParticiones } from "./commands/MateriaAprobada";
 import { Materia } from "./commands/Materia";
 
 export async function loadCommands(): Promise<Command[]> {
+  await loadMateriasParticiones();
   const materiasAprobadasCommand = await createMateriasAprobadas();
-
+  await loadMateriaParticiones();
+  const materiaAprobadaCommand = await createMateriasAprobada();
   const Commands: Command[] = [
     Hello,
     Calendario,
@@ -23,7 +26,8 @@ export async function loadCommands(): Promise<Command[]> {
     Login,
     Carrera,
     Materia,
-    materiasAprobadasCommand
+    materiasAprobadasCommand,
+    materiaAprobadaCommand
   ];
   return Commands;
 }
