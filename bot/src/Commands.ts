@@ -12,9 +12,9 @@ import { createMateriasAprobada, loadMateriaParticiones } from "./commands/Mater
 import { Materia } from "./commands/Materia";
 
 export async function loadCommands(): Promise<Command[]> {
-  await loadMateriasParticiones();
-  const materiasAprobadasCommand = await createMateriasAprobadas();
-  await loadMateriaParticiones();
+ // await loadMateriasParticiones();
+  // const materiasAprobadasCommand = await createMateriasAprobadas();
+   await loadMateriaParticiones();
   const materiaAprobadaCommand = await createMateriasAprobada();
   const Commands: Command[] = [
     Hello,
@@ -26,7 +26,7 @@ export async function loadCommands(): Promise<Command[]> {
     Login,
     Carrera,
     Materia,
-    materiasAprobadasCommand,
+    //materiasAprobadasCommand,
     materiaAprobadaCommand
   ];
   return Commands;

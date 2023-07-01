@@ -8,7 +8,8 @@ let materiasYaMostradas: MateriaOption[] = []
 let materiasParticiones: MateriaOption[][] = [];
 
 export async function loadMateriaParticiones() {
-  let materias = (await DatabaseConnection.getAllMaterias());
+  let materias = await DatabaseConnection.getAllMaterias();
+  console.log(materias);
   const result: MateriaOption[][] = [];
   let sizeParticion = 24;
   let lengthMaterias = materias.length;
@@ -20,7 +21,8 @@ export async function loadMateriaParticiones() {
 
 export async function createMateriasAprobada(): Promise<Command> {
 
-  const particion: MateriaOption[] = materiasParticiones.pop()!;
+  const particion: MateriaOption[] = materiasParticiones.at(0)!;
+  console.log(particion);
   // materiasYaMostradas.push(...particion!);
 
   particion.push({ name: "Mostrar más", value: "Mostrar más" });
