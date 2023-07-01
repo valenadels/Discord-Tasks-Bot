@@ -48,10 +48,7 @@ export const Materia: Command = {
             const missingCodes = missingCorrelatives.join(", ");
             await interaction.followUp(`No puedes agregar esta materia. Faltan las correlativas: ${missingCodes}`);
             return;
-          }
-        }
-        else {
-
+          }else {
           const nuevoAlumno = new AlumnoMateria();
           nuevoAlumno.alumnoPadron = padron;
           nuevoAlumno.materiaCodigo = codigoMateria;
@@ -62,12 +59,13 @@ export const Materia: Command = {
             ephemeral: true
           });
         }
-      } else {
-        await interaction.followUp({
-          content: `No se ha encontrado la materia.`,
-          ephemeral: true
-        });
-      }
+      } 
+    }else {
+      await interaction.followUp({
+        content: `No se ha encontrado la materia.`,
+        ephemeral: true
+      });
     }
+   }
   }
 }

@@ -3,7 +3,7 @@ import { DataSource } from "typeorm";
 import { Alumno, AlumnoCarrera, AlumnoMateria, Materia, MateriaAprobada } from "./entities/Entities";
 import { loadCarreras, loadData } from "./LoadDB";
 
-interface MateriaOption {
+export interface MateriaOption {
   name: string;
   value: string;
 }
@@ -117,7 +117,7 @@ export class DatabaseConnection {
     try {
       const ds = await this.dataSrcPromise;
       const existingMateriaAprobada = await ds.manager.findOne(AlumnoMateria, {
-        where: { alumnoPadron: materiaAprobada.alumnoPadron }
+        where: { alumnoPadron: materiaAprobada.alumnoPadron, materiaCodigo: materiaAprobada.materiaCodigo }
       });
 
       if (!existingMateriaAprobada) {
