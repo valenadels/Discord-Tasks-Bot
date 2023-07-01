@@ -26,12 +26,12 @@ export async function createMateriasAprobada(): Promise<Command> {
   particion.push({ name: "Mostrar más", value: "Mostrar más" });
 
   const MateriasAprobadas: Command = {
-    name: "materia-aprobada",
+    name: "materias-aprobada",
     description: "Registra tus materias aprobadas",
     type: ApplicationCommandType.ChatInput,
     options: [
       {
-        name: "materia-aprobada",
+        name: "materias-aprobada",
         description: "materia aprobada",
         type: ApplicationCommandOptionType.String,
         required: true,
