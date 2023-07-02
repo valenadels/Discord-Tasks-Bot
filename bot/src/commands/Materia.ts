@@ -6,7 +6,7 @@ import { padron } from './LogIn';
 
 export const Materia: Command = {
   name: "materia",
-  description: "Add your subject",
+  description: "Agrega tu materia a cursar",
   type: ApplicationCommandType.ChatInput,
   options: [
     {
@@ -24,48 +24,64 @@ export const Materia: Command = {
     const materiaOption = interaction.options.get("materia");
     if (materiaOption) {
       const nombreMateria = materiaOption.value as string;
-      const codigoMateria = await DatabaseConnection.getCodigoMateriaPorNombre(nombreMateria);
-      if (codigoMateria) {
-        const correlativas = await DatabaseConnection.getCorrelativas(codigoMateria);
-
-        if (correlativas?.includes("NULL")) {
-
-          const nuevoAlumno = new AlumnoMateria();
-          nuevoAlumno.alumnoPadron = padron;
-          nuevoAlumno.materiaCodigo = codigoMateria;
-          DatabaseConnection.saveAlumnoMateria(nuevoAlumno);
-
+      const carreras = await DatabaseConnection.getCarreras(padron);
+      if (!carreras || carreras.length < 1) {
+        await interaction.followUp({
+          content: `No se ha encontrado la carrera.`,
+          ephemeral: true
+        });
+        return;
+      }
+      for (const carrera of carreras) {
+        const codigoMateria = await DatabaseConnection.getCodigoMateriaPorNombreYCodigo(nombreMateria, carrera);
+        if (!codigoMateria) {
           await interaction.followUp({
-            content: `Tu materia se ha guardado exitosamente.`,
-            ephemeral: true
-          });
-          return;
-        }
-        if (correlativas) {
-          const alumnoMaterias = await DatabaseConnection.getAlumnoMaterias(padron);
-          const missingCorrelatives = correlativas.filter(correlativa => !alumnoMaterias.includes(correlativa));
-          if (missingCorrelatives.length > 0) {
-            const missingCodes = missingCorrelatives.join(", ");
-            await interaction.followUp(`No puedes agregar esta materia. Faltan las correlativas: ${missingCodes}`);
-            return;
-          }else {
-          const nuevoAlumno = new AlumnoMateria();
-          nuevoAlumno.alumnoPadron = padron;
-          nuevoAlumno.materiaCodigo = codigoMateria;
-          DatabaseConnection.saveAlumnoMateria(nuevoAlumno);
-
-          await interaction.followUp({
-            content: `Tu materia se ha guardado exitosamente.`,
+            content: `No se ha encontrado la materia.`,
             ephemeral: true
           });
         }
-      } 
-    }else {
-      await interaction.followUp({
-        content: `No se ha encontrado la materia.`,
-        ephemeral: true
-      });
+            const correlativas = await DatabaseConnection.getCorrelativas(codigoMateria);
+
+            if (correlativas?.includes("NULL")) {
+
+              const nuevoAlumno = new AlumnoMateria();
+              nuevoAlumno.alumnoPadron = padron;
+              nuevoAlumno.materiaCodigo = codigoMateria;
+              DatabaseConnection.saveAlumnoMateria(nuevoAlumno);
+
+              await interaction.followUp({
+                content: `Tu materia se ha guardado exitosamente.`,
+                ephemeral: true
+              });
+
+              continue;
+            }
+            if (correlativas) {
+              const alumnoMaterias = await DatabaseConnection.getAlumnoMaterias(padron);
+              const missingCorrelatives = correlativas.filter(correlativa => !alumnoMaterias.includes(correlativa));
+              if (missingCorrelatives.length > 0) {
+                const missingCodes = missingCorrelatives.join(", ");
+                await interaction.followUp(`No puedes agregar esta materia. Faltan las correlativas: ${missingCodes}`);
+                continue;
+              } else {
+                const nuevoAlumno = new AlumnoMateria();
+                nuevoAlumno.alumnoPadron = padron;
+                nuevoAlumno.materiaCodigo = codigoMateria;
+                DatabaseConnection.saveAlumnoMateria(nuevoAlumno);
+
+                await interaction.followUp({
+                  content: `Tu materia se ha guardado exitosamente.`,
+                  ephemeral: true
+                });
+              }
+            } else {
+            await interaction.followUp({
+              content: `No se ha encontrado la materia.`,
+              ephemeral: true
+            });
+          }
+        }
+      }
     }
-   }
   }
-}
+

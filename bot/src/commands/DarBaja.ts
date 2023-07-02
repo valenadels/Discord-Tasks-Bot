@@ -26,16 +26,18 @@ export const Darbaja: Command = {
     const materiaOption = interaction.options.get("materia");
     if (materiaOption) {
       const nombreMateria = materiaOption.value as string;
-      const codigoMateria = await DatabaseConnection.getCodigoMateriaPorNombre(nombreMateria);
-      if (codigoMateria) {
-        const nuevoAlumno = new AlumnoMateria();
-        nuevoAlumno.alumnoPadron = padron;
-        nuevoAlumno.materiaCodigo = codigoMateria;
-        DatabaseConnection.darBajaMateria(nuevoAlumno);
+      const codigosMateria = await DatabaseConnection.getCodigosMateriasPorNombre(nombreMateria);
+      if (codigosMateria) {
+        for (const codigoMateria of codigosMateria) {
+          const nuevoAlumno = new AlumnoMateria();
+          nuevoAlumno.alumnoPadron = padron;
+          nuevoAlumno.materiaCodigo = codigoMateria;
+          DatabaseConnection.darBajaMateria(nuevoAlumno);
+        }
       }
 
       await interaction.followUp({
-        content: `Tu materia se ha dado de baja exitosamente.`,
+        content: "Tu materia se ha dado de baja exitosamente",
         ephemeral: true
       });
     }

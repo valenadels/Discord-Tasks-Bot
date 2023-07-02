@@ -11,7 +11,7 @@ export const Ayuda: Command = {
     const commandsList = Commands.map((command) => command.name).join(", ");
     await interaction.followUp({
       ephemeral: true,
-      content: `Estos son los comandos disponibles: ${commandsList}`
+      content: `Estos son los comandos disponibles: ${commandsList}. Para ver más, utilice /login <padron>.`
     });
   },
 };

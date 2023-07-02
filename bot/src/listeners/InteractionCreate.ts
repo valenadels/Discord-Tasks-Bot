@@ -4,7 +4,7 @@ import { loadCommands } from "../Commands";
 export default (client: Client): void => {
   client.on("interactionCreate", async (interaction: Interaction) => {
     if (interaction.isCommand() && interaction.type === InteractionType.ApplicationCommand) {
-      const slashCommands = await loadCommands();
+      const slashCommands = await loadCommands(); 
       const slashCommand = slashCommands.find((c) => c.name === interaction.commandName);
 
       if (!slashCommand) {
