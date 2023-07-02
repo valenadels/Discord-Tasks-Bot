@@ -39,22 +39,27 @@ export async function createMateriasAprobada(): Promise<Command> {
       }
     ],
     run: async (client: Client, interaction: CommandInteraction) => {
+      console.log("entre al principio");
       if (!padron) {
         await interaction.followUp("Debe loguearse primero. use /login <padron>");
         return;
       }
-      const materiaOption = interaction.options.get("materia-aprobada");
+      const materiaOption = interaction.options.get("materias-aprobada");
       if (materiaOption) {
-        if (i < materiasParticiones.length && materiaOption.value === "Mostrar más y volver a ejecutar comando") {
+        if (i < materiasParticiones.length && materiaOption.value == "Mostrar más") {
+          console.log("entre");
           particionActual = materiasParticiones.at(i)!;
           i++;
           materiasYaMostradas.push(...particionActual!);
           particionActual.push({ name: "Mostrar más y volver a ejecutar comando", value: "Mostrar más" });
+          console.log(materiasYaMostradas);
+          console.log(particionActual);
           await interaction.followUp({
             content: `Volvé a ejecutar el comando para ver más materias`,
             ephemeral: true
           });
         } else {
+          console.log("entre2");
           await guardarMateria(materiaOption, interaction);
         }
       }
@@ -67,14 +72,15 @@ async function guardarMateria(materiaOption: CommandInteractionOption<CacheType>
   const nombreMateria = materiaOption.value as string;
   const materiaAprobada = new MateriaAprobada();
   const codigoMateria = await DatabaseConnection.getCodigoMateriaPorNombre(nombreMateria);
-  if (codigoMateria) {
-    materiaAprobada.materiaCodigo = codigoMateria;
-    materiaAprobada.alumnoPadron = padron;
-    DatabaseConnection.saveMateriaAprobada(materiaAprobada);
-  }
 
-  await interaction.followUp({
-    content: `Tu materia aprobada se ha guardado exitosamente.`,
-    ephemeral: true
-  });
+    if (codigoMateria) {
+      materiaAprobada.materiaCodigo = codigoMateria;
+      materiaAprobada.alumnoPadron = padron;
+      DatabaseConnection.saveMateriaAprobada(materiaAprobada);
+    }
+
+    await interaction.followUp({
+      content: `Tu materia aprobada se ha guardado exitosamente.`,
+      ephemeral: true
+    });
 }

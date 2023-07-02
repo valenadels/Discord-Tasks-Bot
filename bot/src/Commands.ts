@@ -25,7 +25,9 @@ export async function loadCommands(): Promise<Command[]> {
   //   ];
   // } else {
     await loadMateriaParticiones();
+    console.log("entre a load commands");
     const materiaAprobadaCommand = await createMateriasAprobada();
+    console.log("termine de crear el comando");
     const Commands: Command[] = [
       Hello,
       Calendario,
