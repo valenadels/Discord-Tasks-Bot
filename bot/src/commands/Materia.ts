@@ -61,7 +61,7 @@ export const Materia: Command = {
               const missingCorrelatives = correlativas.filter(correlativa => !alumnoMaterias.includes(correlativa));
               if (missingCorrelatives.length > 0) {
                 const missingCodes = missingCorrelatives.join(", ");
-                await interaction.followUp(`No puedes agregar esta materia. Faltan las correlativas: ${missingCodes}`);
+                await interaction.followUp(`No puedes agregar esta materia. Faltan las correlativas: ${missingCodes} para la carrera: ${carrera}`);
                 continue;
               } else {
                 const nuevoAlumno = new AlumnoMateria();
