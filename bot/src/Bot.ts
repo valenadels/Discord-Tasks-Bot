@@ -2,14 +2,12 @@ import { Client } from "discord.js";
 import interactionCreate from "./listeners/InteractionCreate";
 import ready from "./listeners/Ready";
 import { DatabaseConnection } from "./DBConnection";
-import { loadMateriasParticiones } from "./commands/MateriaAprobada";
 
 async function main() {
     const token = require("../config.json").token;
     console.log("Bot is starting...");
-    DatabaseConnection.initializeDB();
-    DatabaseConnection.loadDBData();
-    loadMateriasParticiones();
+    await DatabaseConnection.initializeDB();
+    await DatabaseConnection.loadDBData();
     const client = new Client({
         intents: []
     });

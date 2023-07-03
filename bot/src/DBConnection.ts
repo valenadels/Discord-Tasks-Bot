@@ -3,6 +3,7 @@ import { DataSource } from "typeorm";
 import { Alumno, AlumnoCarrera, AlumnoMateria, Carreras, Materia, MateriaAprobada } from "./entities/Entities";
 import { loadCarreras, loadData } from "./LoadDB";
 import { padron } from "./commands/LogIn";
+import { loadMateriasParticiones } from "./commands/MateriaAprobada";
 
 export interface MateriaOption {
   name: string;
@@ -44,6 +45,7 @@ export class DatabaseConnection {
         await loadData(ds, newLocal);
         await loadData(ds, './src/data/ELECTRONICA.csv');
         await loadData(ds, './src/data/SISTEMAS.csv');
+        await loadMateriasParticiones();
         newPromise = Promise.resolve(ds);
       })
       .finally(() => {
@@ -93,7 +95,6 @@ export class DatabaseConnection {
       console.error("Se produjo un error al guardar el alumnoCarrera:", error);
     }
   }
-
 
   public static async saveAlumnoMateria(alumnoMateria: AlumnoMateria) {
     try {

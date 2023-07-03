@@ -17,7 +17,6 @@ export async function loadMateriasParticiones() {
   for (let i = 0; i < lengthMaterias; i += sizeParticion) {
     result.push(materias.slice(i, i + sizeParticion));
   }
-  console.log("en load materiaaaaaaaaaaaaaaaa");
   materiasParticiones = result;
   particionActual = materiasParticiones[i]!;
   materiasYaMostradas.push(...particionActual!);
@@ -48,10 +47,12 @@ export async function createMateriasAprobadas(): Promise<Command> {
         if (i < materiasParticiones.length && materiaOption.value == "Mostrar más") {
           console.log(materiasParticiones[i]!)
           particionActual = await [...materiasParticiones[i]];
+          console.log(particionActual);
           i++;
           console.log(i);
           materiasYaMostradas.push(...particionActual);
           particionActual.push({ name: "Mostrar más y volver a ejecutar comando", value: "Mostrar más" });
+
           await interaction.followUp({
             content: `Volvé a ejecutar el comando para ver más materias`,
             ephemeral: true
