@@ -10,6 +10,8 @@ import { Login, padron } from "./commands/LogIn";
 import { createMateriasAprobadas, loadMateriasParticiones } from "./commands/MateriaAprobada";
 import { Materia } from "./commands/Materia";
 import { LogOut } from "./commands/LogOut";
+import { MostrarMateriasAnotadas } from "./commands/Mostrarmaterias";
+import { MostrarMateriasAprobadas } from "./commands/Mostrarmateriasaprobadas";
 
 export async function loadCommands(): Promise<Command[]> {
   // const isUserLoggedIn = padron != null;
@@ -38,7 +40,9 @@ export async function loadCommands(): Promise<Command[]> {
     Carrera,
     Materia,
     materiaAprobadaCommand,
-    LogOut
+    LogOut,
+    MostrarMateriasAnotadas,
+    MostrarMateriasAprobadas,
   ];
   return Commands;
   // }
