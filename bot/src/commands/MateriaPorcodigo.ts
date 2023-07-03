@@ -1,6 +1,6 @@
 import { ApplicationCommandOptionType, Client, CommandInteraction, InteractionReplyOptions } from "discord.js";
 import { Command } from "src/Command";
-import { DatabaseConnection } from "src/DBConnection";
+import { DatabaseConnection } from "../DBConnection";
 
 export const MateriaPorCodigo: Command = {
     name: 'materia-por-codigo',
@@ -20,7 +20,7 @@ export const MateriaPorCodigo: Command = {
             const materia = await DatabaseConnection.getNombreMateriasPorCodigo([codigo]);
             if (materia) {
                 const reply: InteractionReplyOptions = {
-                    content: `Materia: ${materia} - Codigo: ${codigo}`,
+                    content: `Materia: ${materia} - Código: ${codigo}`,
                     ephemeral: true,
                 };
                 await interaction.followUp(reply);
