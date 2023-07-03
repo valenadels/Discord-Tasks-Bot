@@ -6,7 +6,7 @@ import { Dollyfiuba } from "./commands/DollyFiuba";
 import { Fiubamap } from "./commands/FiubaMap";
 import { Fiubaplan } from "./commands/FiubaPlan";
 import { Hello } from "./commands/Hello";
-import { Login, padron } from "./commands/LogIn";
+import { Login } from "./commands/LogIn";
 import { createMateriasAprobadas, loadMateriasParticiones } from "./commands/MateriaAprobada";
 import { Materia } from "./commands/Materia";
 import { LogOut } from "./commands/LogOut";
