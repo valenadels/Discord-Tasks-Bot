@@ -104,10 +104,17 @@ export class DatabaseConnection {
       });
 
       if (!existingAlumnoMateria) {
-        ds.manager.save(alumnoMateria);
-        console.log("AlumnoMateria guardado en la base de datos.");
+        const existingMateriaAprobada = await ds.manager.findOne(MateriaAprobada, {
+          where: { alumnoPadron: alumnoMateria.alumnoPadron, materiaCodigo: alumnoMateria.materiaCodigo }
+        });
+        if (!existingMateriaAprobada) {
+          ds.manager.save(alumnoMateria);
+          console.log("AlumnoMateria guardado en la base de datos.");
+        } else {
+          console.log("La materia ya fue aprobada.");
+        }
       } else {
-        console.log("El alumno ya existe en la base de datos.");
+        console.log("La materia ya fue cargada en la base de datos.");
       }
     } catch (error) {
       console.error("Se produjo un error al guardar el alumnoCarrera:", error);
