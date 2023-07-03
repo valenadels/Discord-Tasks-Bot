@@ -3,7 +3,7 @@ import { Command } from "../Command";
 import { Alumno } from '../entities/Entities';
 import { DatabaseConnection } from '../DBConnection';
 
-export let padron: number;
+export let padron: number | null = null;
 export const Login: Command = {
   name: 'login',
   description: 'Log in to the bot',
@@ -37,3 +37,6 @@ export const Login: Command = {
   }
 };
 
+export function setPadronNull() {
+  padron = null;
+}

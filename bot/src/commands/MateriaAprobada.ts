@@ -9,7 +9,7 @@ let materiasParticiones: MateriaOption[][] = [];
 let particionActual: MateriaOption[] = [];
 let i = 0;
 
-export async function loadMateriaParticiones() {
+export async function loadMateriasParticiones() {
   let materias = await DatabaseConnection.getAllMaterias();
   const result: MateriaOption[][] = [];
   let sizeParticion = 24;
@@ -17,14 +17,14 @@ export async function loadMateriaParticiones() {
   for (let i = 0; i < lengthMaterias; i += sizeParticion) {
     result.push(materias.slice(i, i + sizeParticion));
   }
+  console.log("en load materiaaaaaaaaaaaaaaaa");
   materiasParticiones = result;
-  particionActual = materiasParticiones.at(i)!;
+  particionActual = materiasParticiones[i]!;
   materiasYaMostradas.push(...particionActual!);
   particionActual.push({ name: "Mostrar más y volver a ejecutar comando", value: "Mostrar más" });
-  i++;
 }
 
-export async function createMateriasAprobada(): Promise<Command> {
+export async function createMateriasAprobadas(): Promise<Command> {
   const MateriasAprobadas: Command = {
     name: "materias-aprobada",
     description: "Registra tus materias aprobadas",
@@ -39,7 +39,6 @@ export async function createMateriasAprobada(): Promise<Command> {
       }
     ],
     run: async (client: Client, interaction: CommandInteraction) => {
-      console.log("entre al principio");
       if (!padron) {
         await interaction.followUp("Debe loguearse primero. use /login <padron>");
         return;
@@ -47,25 +46,23 @@ export async function createMateriasAprobada(): Promise<Command> {
       const materiaOption = interaction.options.get("materias-aprobada");
       if (materiaOption) {
         if (i < materiasParticiones.length && materiaOption.value == "Mostrar más") {
-          console.log("entre");
-          particionActual = materiasParticiones.at(i)!;
+          console.log(materiasParticiones[i]!)
+          particionActual = await [...materiasParticiones[i]];
           i++;
-          materiasYaMostradas.push(...particionActual!);
+          console.log(i);
+          materiasYaMostradas.push(...particionActual);
           particionActual.push({ name: "Mostrar más y volver a ejecutar comando", value: "Mostrar más" });
-          console.log(materiasYaMostradas);
-          console.log(particionActual);
           await interaction.followUp({
             content: `Volvé a ejecutar el comando para ver más materias`,
             ephemeral: true
           });
         } else {
-          console.log("entre2");
           await guardarMateria(materiaOption, interaction);
         }
       }
     }
   }
-  return await MateriasAprobadas;
+  return MateriasAprobadas;
 }
 
 async function guardarMateria(materiaOption: CommandInteractionOption<CacheType>, interaction: CommandInteraction<CacheType>) {
@@ -73,14 +70,14 @@ async function guardarMateria(materiaOption: CommandInteractionOption<CacheType>
   const materiaAprobada = new MateriaAprobada();
   const codigoMateria = await DatabaseConnection.getCodigoMateriaPorNombre(nombreMateria);
 
-    if (codigoMateria) {
-      materiaAprobada.materiaCodigo = codigoMateria;
-      materiaAprobada.alumnoPadron = padron;
-      DatabaseConnection.saveMateriaAprobada(materiaAprobada);
-    }
+  if (codigoMateria) {
+    materiaAprobada.materiaCodigo = codigoMateria;
+    materiaAprobada.alumnoPadron = padron!;
+    DatabaseConnection.saveMateriaAprobada(materiaAprobada);
+  }
 
-    await interaction.followUp({
-      content: `Tu materia aprobada se ha guardado exitosamente.`,
-      ephemeral: true
-    });
+  await interaction.followUp({
+    content: `Tu materia aprobada se ha guardado exitosamente.`,
+    ephemeral: true
+  });
 }

@@ -1,7 +1,7 @@
 import { Client, CommandInteraction, Interaction, InteractionType } from "discord.js";
 import { loadCommands } from "../Commands";
 
-export default (client: Client): void => {
+export default async (client: Client): Promise<void> => {
   client.on("interactionCreate", async (interaction: Interaction) => {
     if (interaction.isCommand() && interaction.type === InteractionType.ApplicationCommand) {
       const slashCommands = await loadCommands(); 
@@ -17,36 +17,4 @@ export default (client: Client): void => {
     }
   });
 };
-
-
-
-
-//   else if (interaction.isAutocomplete()) {
-//     const searchQuery: string | null = interaction.options.getString('materia-aprobada');
-//     if (!searchQuery) 
-//       return;
-//     const autocompleteChoices = await generateAutocompleteChoices();
-
-//     const matchingChoices = autocompleteChoices.filter((choice) =>
-//       choice.name.toLowerCase().includes(searchQuery.toLowerCase())
-//     );
-
-//     const options = matchingChoices.map((choice) => ({
-//       label: choice.name,
-//       value: choice.value.toString(),
-//     }));
-
-//     await interaction.respond({
-//       type: InteractionResponseType.ChannelMessageWithSource,
-//       data: {
-//         options,
-//       },
-//     });
-//   }
-// });
-// };
-
-
-
-
 

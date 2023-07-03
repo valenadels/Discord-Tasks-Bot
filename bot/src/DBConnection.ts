@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import { DataSource, FindOptionsWhere } from "typeorm";
+import { DataSource } from "typeorm";
 import { Alumno, AlumnoCarrera, AlumnoMateria, Materia, MateriaAprobada } from "./entities/Entities";
 import { loadCarreras, loadData } from "./LoadDB";
 import { padron } from "./commands/LogIn";
