@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
-import { Alumno, AlumnoCarrera, AlumnoMateria, Materia, MateriaAprobada } from "./entities/Entities";
+import { Alumno, AlumnoCarrera, AlumnoMateria, Carreras, Materia, MateriaAprobada } from "./entities/Entities";
 import { loadCarreras, loadData } from "./LoadDB";
 import { padron } from "./commands/LogIn";
 
@@ -194,6 +194,30 @@ export class DatabaseConnection {
     }
   }
 
+  public static async getNombreMateriasPorCodigo(codigos: string[]): Promise<string[]> {
+    try {
+      const ds = await this.dataSrcPromise;
+      const materias: string[] = [];
+  
+      for (const codigo of codigos) {
+        const materia = await ds.manager.findOne(Materia, { where: { codigo } });
+        if (materia?.nombre) {
+          materias.push(materia.nombre);
+        }
+      }
+  
+      if (materias.length === 0) {
+        console.log("No se encontró ninguna materia con ese nombre.");
+      }
+  
+      return materias;
+    } catch (error) {
+      console.error("Se produjo un error al obtener el código de la materia:", error);
+      return [];
+    }
+  }
+  
+
 
   public static async getAllMateriasPorCarreras(): Promise<MateriaOption[]> {
     try {
@@ -265,6 +289,20 @@ export class DatabaseConnection {
     }
   }
 
+   public static async getAlumnoMateriasAprobadas(padron: number): Promise<string[]> {
+    try {
+      const ds = await this.dataSrcPromise;
+      const alumnoMaterias = await ds.manager.find(MateriaAprobada, { where: { alumnoPadron: padron } });
+
+      return alumnoMaterias.map(alumnoMateria => alumnoMateria.materiaCodigo);
+    } catch (error) {
+      console.error("Se produjo un error al obtener las materias del alumno:", error);
+      return [];
+    }
+  }
+
+  
+
 
   public static async getCodigosMateriasPorNombre(nombre: string): Promise<string[]> {
     try {
@@ -315,6 +353,24 @@ export class DatabaseConnection {
     } catch (error) {
       console.error("Se produjo un error al obtener la carrera del alumno:", error);
       return [];
+    }
+  }
+
+  public static async getNombreCarreraPorCodigo(codigo: number): Promise<string> {
+    try {
+      const ds = await this.dataSrcPromise;
+      const carrera = await ds.manager.findOne(Carreras, { where: { id: codigo } });
+
+      if (!carrera) {
+        return "";
+      }
+
+      else {
+        return carrera.nombre;
+      }
+    } catch (error) {
+      console.error("Se produjo un error al obtener la carrera del alumno:", error);
+      return "";
     }
   }
 

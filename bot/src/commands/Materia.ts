@@ -57,11 +57,13 @@ export const Materia: Command = {
               continue;
             }
             if (correlativas) {
-              const alumnoMaterias = await DatabaseConnection.getAlumnoMaterias(padron);
+              const alumnoMaterias = await DatabaseConnection.getAlumnoMateriasAprobadas(padron);
               const missingCorrelatives = correlativas.filter(correlativa => !alumnoMaterias.includes(correlativa));
-              if (missingCorrelatives.length > 0) {
-                const missingCodes = missingCorrelatives.join(", ");
-                await interaction.followUp(`No puedes agregar esta materia. Faltan las correlativas: ${missingCodes} para la carrera: ${carrera}`);
+              const missingCorrelativesNames = await DatabaseConnection.getNombreMateriasPorCodigo(missingCorrelatives);
+              if (missingCorrelativesNames.length > 0) {
+                const missingCodes = missingCorrelativesNames.join(", ");
+                const nameCarrera = await DatabaseConnection.getNombreCarreraPorCodigo(carrera);
+                await interaction.followUp(`No puedes agregar esta materia. Faltan las correlativas: ${missingCodes} para la carrera: ${nameCarrera}`);
                 continue;
               } else {
                 const nuevoAlumno = new AlumnoMateria();
