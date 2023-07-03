@@ -12,6 +12,7 @@ import { Materia } from "./commands/Materia";
 import { LogOut } from "./commands/LogOut";
 import { MostrarMateriasAnotadas } from "./commands/Mostrarmaterias";
 import { MostrarMateriasAprobadas } from "./commands/Mostrarmateriasaprobadas";
+import { MateriaPorCodigo } from "./commands/MateriaPorcodigo";
 
 export async function loadCommands(): Promise<Command[]> {
   // const isUserLoggedIn = padron != null;
@@ -28,7 +29,7 @@ export async function loadCommands(): Promise<Command[]> {
   //   ];
   // } else {
   // await loadMateriaParticiones();
-  const materiaAprobadaCommand = await createMateriasAprobadas();
+  const MateriaAprobadaCommand = await createMateriasAprobadas();
   const Commands: Command[] = [
     Hello,
     Calendario,
@@ -39,10 +40,11 @@ export async function loadCommands(): Promise<Command[]> {
     Login,
     Carrera,
     Materia,
-    materiaAprobadaCommand,
+    MateriaAprobadaCommand,
     LogOut,
     MostrarMateriasAnotadas,
     MostrarMateriasAprobadas,
+    MateriaPorCodigo
   ];
   return Commands;
   // }
