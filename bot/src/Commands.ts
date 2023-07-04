@@ -10,9 +10,10 @@ import { Login } from "./commands/LogIn";
 import { createMateriasAprobadas, loadMateriasParticiones } from "./commands/MateriaAprobada";
 import { Materia } from "./commands/Materia";
 import { LogOut } from "./commands/LogOut";
-import { MostrarMateriasAnotadas } from "./commands/Mostrarmaterias";
-import { MostrarMateriasAprobadas } from "./commands/Mostrarmateriasaprobadas";
+import { MostrarMateriasAnotadas } from "./commands/MostrarMaterias";
+import { MostrarMateriasAprobadas } from "./commands/MostrarMateriasAprobadas";
 import { MateriaPorCodigo } from "./commands/MateriaPorcodigo";
+import { MateriaAprobada } from "./entities/Entities";
 
 export async function loadCommands(): Promise<Command[]> {
   // const isUserLoggedIn = padron != null;
@@ -44,7 +45,8 @@ export async function loadCommands(): Promise<Command[]> {
     LogOut,
     MostrarMateriasAnotadas,
     MostrarMateriasAprobadas,
-    MateriaPorCodigo
+    MateriaPorCodigo,
+    MateriaAprobadaPorCodigo,
   ];
   return Commands;
   // }
