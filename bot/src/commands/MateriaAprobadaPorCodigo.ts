@@ -23,10 +23,17 @@ export const MateriaAprobadaPorCodigo: Command = {
         }
     ],
     run: async (client: Client, interaction: CommandInteraction) => {
+        if (!padron) {
+            await interaction.followUp({
+                content: "No estas logueado. Utilizá el comando /login para hacerlo",
+                ephemeral: true
+            });
+            return;
+        }
         const input = interaction.options.get("codigo")?.value as string;
         const codigos = parsearCodigos(input);
         const materias = await DatabaseConnection.getNombreMateriasPorCodigo(codigos);
-        if (!materias) {
+        if (materias.length === 0) {
             await interaction.followUp({
                 content: `No se ha encontrado la/las materia/s con el codigo ${input}`,
                 ephemeral: true
@@ -39,10 +46,9 @@ export const MateriaAprobadaPorCodigo: Command = {
             materiaAprobada.materiaCodigo = codigo;
             materiaAprobada.alumnoPadron = padron!;
             await DatabaseConnection.saveMateriaAprobada(materiaAprobada);
-        }
-        );
+        });
         await interaction.followUp({
-            content: `Se ha guardado la/las materia/s con el codigo ${input}`,
+            content: `Se ha guardado la/las materia/s aprobada con el codigo ${input}`,
             ephemeral: true
         });
     }
