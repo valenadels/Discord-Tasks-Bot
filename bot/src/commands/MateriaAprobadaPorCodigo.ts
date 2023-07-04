@@ -17,7 +17,7 @@ export const MateriaAprobadaPorCodigo: Command = {
     options: [
         {
             name: "codigo",
-            description: "Codigo de la materia aprobada",
+            description: "Codigos de las materias aprobadas, separados por coma",
             type: ApplicationCommandOptionType.String,
             required: true
         }
@@ -32,24 +32,24 @@ export const MateriaAprobadaPorCodigo: Command = {
         }
         const input = interaction.options.get("codigo")?.value as string;
         const codigos = parsearCodigos(input);
-        const materias = await DatabaseConnection.getNombreMateriasPorCodigo(codigos);
-        if (materias.length === 0) {
+        try {
+            await DatabaseConnection.getNombreMateriasPorCodigo(codigos);
+            codigos.forEach(async codigo => {
+                const materiaAprobada = new MateriaAprobada();
+                materiaAprobada.materiaCodigo = codigo;
+                materiaAprobada.alumnoPadron = padron!;
+                await DatabaseConnection.saveMateriaAprobada(materiaAprobada);
+            });
             await interaction.followUp({
-                content: `No se ha encontrado la/las materia/s con el codigo ${input}`,
+                content: `Se ha guardado la/las materia/s aprobada con el codigo ${input}`,
                 ephemeral: true
             });
-            return;
-        }
 
-        codigos.forEach(async codigo => {
-            const materiaAprobada = new MateriaAprobada();
-            materiaAprobada.materiaCodigo = codigo;
-            materiaAprobada.alumnoPadron = padron!;
-            await DatabaseConnection.saveMateriaAprobada(materiaAprobada);
-        });
-        await interaction.followUp({
-            content: `Se ha guardado la/las materia/s aprobada con el codigo ${input}`,
-            ephemeral: true
-        });
+        } catch (error) {
+            await interaction.followUp({
+                content: `Ha ocurrido un error: ${error}. Asegurate de que el código de la materia sea correcto para tu carrera y/o tengas una carrera asignada.`,
+                ephemeral: true
+            });
+        }
     }
-};
+}

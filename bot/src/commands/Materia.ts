@@ -24,7 +24,7 @@ export const Materia: Command = {
     const materiaOption = interaction.options.get("materia");
     if (materiaOption) {
       const nombreMateria = materiaOption.value as string;
-      const carreras = await DatabaseConnection.getCarreras(padron);
+      const carreras = await DatabaseConnection.getCarrerasId(padron);
       if (!carreras || carreras.length < 1) {
         await interaction.followUp({
           content: `No se ha encontrado la carrera.`,
@@ -40,50 +40,51 @@ export const Materia: Command = {
             ephemeral: true
           });
         }
-            const correlativas = await DatabaseConnection.getCorrelativas(codigoMateria);
+        const correlativas = await DatabaseConnection.getCorrelativas(codigoMateria);
 
-            if (correlativas?.includes("NULL")) {
+        if (correlativas?.includes("NULL")) {
 
-              const nuevoAlumno = new AlumnoMateria();
-              nuevoAlumno.alumnoPadron = padron;
-              nuevoAlumno.materiaCodigo = codigoMateria;
-              DatabaseConnection.saveAlumnoMateria(nuevoAlumno);
+          const nuevoAlumno = new AlumnoMateria();
+          nuevoAlumno.alumnoPadron = padron;
+          nuevoAlumno.materiaCodigo = codigoMateria;
+          DatabaseConnection.saveAlumnoMateria(nuevoAlumno);
 
-              await interaction.followUp({
-                content: `Tu materia se ha guardado exitosamente.`,
-                ephemeral: true
-              });
+          await interaction.followUp({
+            content: `Tu materia se ha guardado exitosamente.`,
+            ephemeral: true
+          });
 
-              continue;
-            }
-            if (correlativas) {
-              const alumnoMaterias = await DatabaseConnection.getAlumnoMateriasAprobadas(padron);
-              const missingCorrelatives = correlativas.filter(correlativa => !alumnoMaterias.includes(correlativa));
-              const missingCorrelativesNames = await DatabaseConnection.getNombreMateriasPorCodigo(missingCorrelatives);
-              if (missingCorrelativesNames.length > 0) {
-                const missingCodes = missingCorrelativesNames.join(", ");
-                const nameCarrera = await DatabaseConnection.getNombreCarreraPorCodigo(carrera);
-                await interaction.followUp(`No puedes agregar esta materia. Faltan las correlativas: ${missingCodes} para la carrera: ${nameCarrera}`);
-                continue;
-              } else {
-                const nuevoAlumno = new AlumnoMateria();
-                nuevoAlumno.alumnoPadron = padron;
-                nuevoAlumno.materiaCodigo = codigoMateria;
-                DatabaseConnection.saveAlumnoMateria(nuevoAlumno);
+          continue;
+        }
+        if (correlativas) {
+          const alumnoMaterias = await DatabaseConnection.getAlumnoMateriasAprobadas(padron);
+          const missingCorrelatives = correlativas.filter(correlativa => !alumnoMaterias.includes(correlativa));
+          const missingCorrelativesNames = await DatabaseConnection.getNombreMateriasPorCodigo(missingCorrelatives);
 
-                await interaction.followUp({
-                  content: `Tu materia se ha guardado exitosamente.`,
-                  ephemeral: true
-                });
-              }
-            } else {
+          if (!(missingCorrelativesNames instanceof Error)) {
+            const missingCodes = missingCorrelativesNames.join(", ");
+            const nameCarrera = await DatabaseConnection.getNombreCarreraPorCodigo(carrera);
+            await interaction.followUp(`No puedes agregar esta materia. Faltan las correlativas: ${missingCodes} para la carrera: ${nameCarrera}`);
+            continue;
+          } else {
+            const nuevoAlumno = new AlumnoMateria();
+            nuevoAlumno.alumnoPadron = padron;
+            nuevoAlumno.materiaCodigo = codigoMateria;
+            DatabaseConnection.saveAlumnoMateria(nuevoAlumno);
+
             await interaction.followUp({
-              content: `No se ha encontrado la materia.`,
+              content: `Tu materia se ha guardado exitosamente.`,
               ephemeral: true
             });
           }
+        } else {
+          await interaction.followUp({
+            content: `No se ha encontrado la materia.`,
+            ephemeral: true
+          });
         }
       }
     }
   }
+}
 

@@ -1,9 +1,10 @@
 import "reflect-metadata";
-import { DataSource } from "typeorm";
+import { DataSource, In } from "typeorm";
 import { Alumno, AlumnoCarrera, AlumnoMateria, Carreras, Materia, MateriaAprobada } from "./entities/Entities";
 import { loadCarreras, loadData } from "./LoadDB";
 import { padron } from "./commands/LogIn";
 import { loadMateriasParticiones } from "./commands/MateriaAprobada";
+import { Carrera } from "./commands/Carrera";
 
 export interface MateriaOption {
   name: string;
@@ -220,29 +221,36 @@ export class DatabaseConnection {
     }
   }
 
-  public static async getNombreMateriasPorCodigo(codigos: string[]): Promise<string[]> {
+  public static async getNombreMateriasPorCodigo(codigos: string[]): Promise<string[] | Error> {
     try {
       const ds = await this.dataSrcPromise;
       const materias: string[] = [];
-
+      const carrerasDelAlumno = await this.getCarrerasId(padron!);
+      if (carrerasDelAlumno.length === 0) {
+        throw new Error("No se encontró ninguna carrera para el alumno.");
+      }
       for (const codigo of codigos) {
-        const materia = await ds.manager.findOne(Materia, { where: { codigo } });
+        const materia = await ds.manager.findOne(Materia, {
+          where: {
+            codigo: codigo,
+            carrera: In(carrerasDelAlumno)
+          }
+        });
         if (materia?.nombre) {
           materias.push(materia.nombre);
         }
       }
 
       if (materias.length === 0) {
-        console.log("No se encontró ninguna materia con ese nombre.");
+        throw new Error("No se encontró ninguna materia con ese nombre.");
       }
 
       return materias;
     } catch (error) {
       console.error("Se produjo un error al obtener el código de la materia:", error);
-      return [];
+      throw new Error("Se produjo un error al obtener el código de la materia: " + error);
     }
   }
-
 
 
   public static async getAllMateriasPorCarreras(): Promise<MateriaOption[]> {
@@ -363,7 +371,7 @@ export class DatabaseConnection {
     }
   }
 
-  public static async getCarreras(padron: number): Promise<number[]> {
+  public static async getCarrerasId(padron: number): Promise<number[]> {
     try {
       const ds = await this.dataSrcPromise;
       const alumnoCarreras = await ds.manager.find(AlumnoCarrera, { where: { alumnoPadron: padron } });
