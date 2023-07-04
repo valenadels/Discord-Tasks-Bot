@@ -1,0 +1,450 @@
+Análisis Matemático II - 61.03
+Matemática Discreta - 61.07
+Álgebra II - 61.08
+Probabilidad y Estadística B - 61.09
+Análisis Matemático III A - 61.10
+Ecuaciones Diferenciales Ordinarias - 61.18
+Análisis Funcional - 61.19
+Física I - 62.01
+Física II - 62.03
+Mecánica Racional - 62.11
+Física III D - 62.15
+Química - 63.01
+Estática y Resistencia de Materiales B - 64.05
+Laboratorio - 66.02
+Análisis de Circuitos - 66.06
+Circuitos Electrónicos I - 66.08
+Laboratorio de Microcomputadoras - 66.09
+Sistemas Digitales - 66.17
+Teoría de Control I - 66.18
+Circuitos de Pulsos - 66.19
+Organización de Computadoras - 66.20
+Teoría de la Información y Codificación - 66.24
+Arquitecturas Paralelas - 66.26
+Robótica - 66.32
+Técnica Digital Avanzada - 66.35
+Procesamiento del Habla - 66.46
+Procesamiento de Imágenes - 66.47
+Sistemas Biológicos - 66.49
+Simulación de Sistemas de Control - 66.55
+Redes Neuronales - 66.63
+Criptografía y Seguridad Informática - 66.69
+Estructura del Computador - 66.70
+Sistemas Gráficos - 66.71
+Señales y Sistemas - 66.74
+Procesos Estocásticos - 66.75
+Fundamentos Matemáticos de la Visión en Robótica - 67.61
+Estructura de las Organizaciones - 71.12
+Información en las Organizaciones - 71.13
+Modelos y Optimización I - 71.14
+Modelos y Optimización II - 71.15
+Estructura Económica Argentina - 71.18
+Modelos y Optimización III - 71.20
+Legislación y Ejercicio Profesional de la Ingeniería en Informática - 71.40
+Análisis y Resolución de Problemas - 71.41
+Circuitos de Información en la Empresa - 71.42
+Recursos Humanos - 71.44
+Ingeniería Económica - 71.46
+Materiales Industriales I - 72.01
+Tesis - 75.00
+Organización de Datos - 75.06
+Algoritmos y Programación III - 75.07
+Sistemas Operativos - 75.08
+Análisis de la Información - 75.09
+Técnicas de Diseño - 75.10
+Análisis Numérico I - 75.12
+Lenguajes Formales - 75.14
+Base de Datos - 75.15
+Lenguajes de Programación - 75.16
+Simulación - 75.26
+Teoría de Algoritmos I - 75.29
+Teoría de Algoritmos II - 75.30
+Teoría de Lenguaje - 75.31
+Análisis Numérico II A - 75.38
+Algoritmos y Programación I - 75.40
+Algoritmos y Programación II - 75.41
+Taller de Programación I - 75.42
+Introducción a los Sistemas - 75.43
+Administración y Control de Proyectos Informáticos I - 75.44
+Taller de Desarrollo de Proyectos I - 75.45
+Administración y Control de Proyectos Informáticos II - 75.46
+Taller de Desarrollo de Proyectos II - 75.47
+Calidad en Desarrollo de Sistemas - 75.48
+Introducción a los Sistemas Inteligentes - 75.50
+Técnicas de Producción de Software I - 75.51
+Taller de Programación II - 75.52
+Técnicas de Producción de Software II - 75.53
+Técnicas de Producción de Software III - 75.54
+Taller de Desarrollo de Proyectos III - 75.55
+Organización de la Implantación y el Mantenimiento - 75.56
+Modelos de Proceso de Desarrollo - 75.57
+Evaluación de Proyectos y Manejo de Riesgos - 75.58
+Técnicas de Programación Concurrente I - 75.59
+Taller de Programación III - 75.61
+Técnicas de Programación Concurrente II - 75.62
+Sistemas Distribuidos II - 75.63
+Sistemas Multimediales - 75.64
+Manufactura Integrada por Computadora (CIM) I - 75.65
+Manufactura Integrada por Computadora (CIM) II - 75.66
+Sistemas Automáticos de Diagnóstico y Detección de Fallas I - 75.67
+Sistemas de Soporte para Celdas de Producción Flexibles - 75.68
+Sistemas Automáticos de Diagnóstico y Detección de Fallas II - 75.69
+Sistemas de Programación no convencional de Robots - 75.70
+Seminario de Ingeniería en Informática I - 75.71
+Seminario de Ingeniería en Informática II - 75.72
+Arquitectura de Software - 75.73
+Sistemas Distribuidos I - 75.74
+Trabajo Profesional - 75.99
+Idioma Inglés - 78.01
+Idioma Alemán - 78.02
+Idioma Francés - 78.03
+Idioma Italiano - 78.04
+Idioma Portugués - 78.05
+Análisis Matemático II A - 81.01
+Análisis Matemático II - 81.010
+Álgebra II A - 81.02
+Álgebra II - 81.020
+Probabilidad y Estadística B - 81.04
+Probabilidad y Estadística B - 81.040
+Análisis Matemático III A - 81.05
+Análisis Funcional - 81.07
+Análisis Matricial y Métodos Numéricos - 81.08
+Matemática Discreta - 81.11
+Física I A - 82.01
+Física II A - 82.02
+Física III - 82.03
+Mecánica Racional - 82.04
+Física del Estado Sólido - 82.05
+Electromagnetismo - 82.06
+Química - 83.01
+Máquinas Eléctricas - 85.36
+Laboratorio de Instalaciones Eléctricas - 85.37
+Tesis de Ingeniería Electrónica - 86.00
+Técnica Digital - 86.01
+Introducción a la Ingeniería Electrónica - 86.02
+Dispositivos Semiconductores - 86.03
+Análisis de Circuitos - 86.04
+señales y Sistemas - 86.05
+Circuitos Electrónicos - 86.06
+Laboratorio de Microprocesadores - 86.07
+Control Automático I - 86.08
+Procesos Estocásticos - 86.09
+Diseño de Circuitos Electrónicos - 86.10
+Teoría de la Información Codificación - 86.11
+Comunicación de Datos - 86.12
+Introducción a Proyectos - 86.14
+Robótica - 86.15
+Control Automático II - 86.16
+Control Automático III - 86.17
+Control Industrial Distribuido - 86.18
+Control Robusto - 86.19
+Identificación y Control Adaptativo - 86.20
+Instrumentación y Control de Procesos - 86.21
+Laboratorio de Control Automático - 86.22
+Accionamientos Variables - 86.23
+Electrónica de Potencia - 86.24
+Comunicaciones Digitales I - 86.25
+Comunicaciones Digitales II - 86.26
+Infraestructura de Redes Fijas - 86.27
+Laboratorio de Comunicaciones - 86.28
+Propagación y Sistemas Irradiantes - 86.29
+Comunicaciones Digitales III - 86.30
+Servicios y Redes de Comunicaciones - 86.31
+Sistemas Inalámbricos - 86.32
+Transmisores y Receptores de Comunicaciones - 86.34
+Video Digital - 86.35
+Criptografía y Seguridad Informática - 86.36
+Organización de Computadoras - 86.37
+Arquitecturas Paralelas - 86.38
+Redes de Computadoras - 86.39
+Laboratorio de Redes de Computadoras - 86.40
+Sistemas Digitales - 86.41
+Laboratorio de Sistemas Digitales - 86.42
+Sistemas Gráficos - 86.43
+Técnica Digital Avanzada - 86.44
+Industrias y Productos de Electrónica - 86.45
+Microelectrónica - 86.46
+Optoelectrónica - 86.47
+Seminario de Electrónica - 86.48
+Seminario de Electrónica II - 86.49
+Tecnología de los Componentes - 86.50
+Procesamiento de Señales I - 86.51
+Procesamiento de Señales II - 86.52
+Procesamiento del Habla - 86.53
+Redes Neuronales - 86.54
+Teoría de Detección y Estimación - 86.55
+Procesamiento de Imágenes - 86.56
+Acústica - 86.57
+Electroacústica - 86.58
+Audio Profesional - 86.59
+Ingeniería Biomédica - 86.61
+Equipamiento para Diagnóstico y Tratamiento Biomédico - 86.62
+Procesamiento y Análisis de Señales e Imágenes En Bioingeniería - 86.63
+Compatibilidad Electromagnética - 86.64
+Sistemas Embebidos - 86.65
+Laboratorio de Microelectrónica - 86.66
+Comunicaciones Radioeléctricas y Radioenlaces - 86.67
+Control no Lineal - 86.68
+Instrumentos y Mediciones Electrónicas - 86.69
+Introducción al Diseño Asistido por Computadora para Electrónica - 86.70
+Trabajo Profesional de Ingeniería Electrónica - 86.99
+Modelos y Optimización I - 91.04
+Modelos y Optimización II - 91.05
+Modelos y Optimización III - 91.06
+Legislación y Ejercicio Profesional de la Ingeniería Electrónica - 91.11
+Introducción a la Economía y Organización de la Empresa - 91.19
+Macroeconomía y Estructura Económica Argentina - 91.24
+Análisis de Casos - 91.35
+Emprendimientos en Ingeniería - 91.37
+Estructuras y Procesos Organizacionales - 91.39
+Legislación y Ejercicio Profesional en Sistemas e Informática - 91.40
+Economía de las Organizaciones - 91.41
+Administración de las Organizaciones - 91.42
+Algoritmos y Programación III - 95.02
+Sistemas Operativos - 95.03
+Análisis Numérico I - 95.04
+Base de Datos - 95.05
+Teoría de Algoritmos I - 95.06
+Teoría de Lenguajes de Programación - 95.07
+Taller de Programación - 95.08
+Técnicas de Programación Concurrente I - 95.09
+Algoritmos y Programación I - 95.11
+Algoritmos y Programación II - 95.12
+Algoritmos y Programación I - 95.14
+Algoritmos y Programación II - 95.15
+Simulación - 95.19
+Métodos y Modelos en la Ingeniería de Software I - 95.20
+Métodos y Modelos en la Ingeniería de Software II - 95.21
+Administración y Control de Proyectos Informáticos I - 95.24
+Estándares de Calidad y Modelos de Referencia - 95.30
+Organización del Computador - 95.57
+Organización de Datos - 95.58
+Diseño, Operación y Gestión de Servicios Informáticos - 95.59
+Redes y Aplicaciones Distribuidas - 95.60
+Trabajo Profesional de Licenciatura en Análisis de Sistemas - 95.61
+Seguridad Ambiental y del Trabajo - 97.04
+Análisis Matemático II - 61.03
+Matemática Discreta - 61.07
+Álgebra II - 61.08
+Probabilidad y Estadística B - 61.09
+Análisis Matemático III A - 61.10
+Ecuaciones Diferenciales Ordinarias - 61.18
+Análisis Funcional - 61.19
+Física I - 62.01
+Física II - 62.03
+Mecánica Racional - 62.11
+Física III D - 62.15
+Química - 63.01
+Estática y Resistencia de Materiales B - 64.05
+Laboratorio - 66.02
+Análisis de Circuitos - 66.06
+Circuitos Electrónicos I - 66.08
+Laboratorio de Microcomputadoras - 66.09
+Sistemas Digitales - 66.17
+Teoría de Control I - 66.18
+Circuitos de Pulsos - 66.19
+Organización de Computadoras - 66.20
+Teoría de la Información y Codificación - 66.24
+Arquitecturas Paralelas - 66.26
+Robótica - 66.32
+Técnica Digital Avanzada - 66.35
+Procesamiento del Habla - 66.46
+Procesamiento de Imágenes - 66.47
+Sistemas Biológicos - 66.49
+Simulación de Sistemas de Control - 66.55
+Redes Neuronales - 66.63
+Criptografía y Seguridad Informática - 66.69
+Estructura del Computador - 66.70
+Sistemas Gráficos - 66.71
+Señales y Sistemas - 66.74
+Procesos Estocásticos - 66.75
+Fundamentos Matemáticos de la Visión en Robótica - 67.61
+Estructura de las Organizaciones - 71.12
+Información en las Organizaciones - 71.13
+Modelos y Optimización I - 71.14
+Modelos y Optimización II - 71.15
+Estructura Económica Argentina - 71.18
+Modelos y Optimización III - 71.20
+Legislación y Ejercicio Profesional de la Ingeniería en Informática - 71.40
+Análisis y Resolución de Problemas - 71.41
+Circuitos de Información en la Empresa - 71.42
+Recursos Humanos - 71.44
+Ingeniería Económica - 71.46
+Materiales Industriales I - 72.01
+Tesis - 75.00
+Organización de Datos - 75.06
+Algoritmos y Programación III - 75.07
+Sistemas Operativos - 75.08
+Análisis de la Información - 75.09
+Técnicas de Diseño - 75.10
+Análisis Numérico I - 75.12
+Lenguajes Formales - 75.14
+Base de Datos - 75.15
+Lenguajes de Programación - 75.16
+Simulación - 75.26
+Teoría de Algoritmos I - 75.29
+Teoría de Algoritmos II - 75.30
+Teoría de Lenguaje - 75.31
+Análisis Numérico II A - 75.38
+Algoritmos y Programación I - 75.40
+Algoritmos y Programación II - 75.41
+Taller de Programación I - 75.42
+Introducción a los Sistemas - 75.43
+Administración y Control de Proyectos Informáticos I - 75.44
+Taller de Desarrollo de Proyectos I - 75.45
+Administración y Control de Proyectos Informáticos II - 75.46
+Taller de Desarrollo de Proyectos II - 75.47
+Calidad en Desarrollo de Sistemas - 75.48
+Introducción a los Sistemas Inteligentes - 75.50
+Técnicas de Producción de Software I - 75.51
+Taller de Programación II - 75.52
+Técnicas de Producción de Software II - 75.53
+Técnicas de Producción de Software III - 75.54
+Taller de Desarrollo de Proyectos III - 75.55
+Organización de la Implantación y el Mantenimiento - 75.56
+Modelos de Proceso de Desarrollo - 75.57
+Evaluación de Proyectos y Manejo de Riesgos - 75.58
+Técnicas de Programación Concurrente I - 75.59
+Taller de Programación III - 75.61
+Técnicas de Programación Concurrente II - 75.62
+Sistemas Distribuidos II - 75.63
+Sistemas Multimediales - 75.64
+Manufactura Integrada por Computadora (CIM) I - 75.65
+Manufactura Integrada por Computadora (CIM) II - 75.66
+Sistemas Automáticos de Diagnóstico y Detección de Fallas I - 75.67
+Sistemas de Soporte para Celdas de Producción Flexibles - 75.68
+Sistemas Automáticos de Diagnóstico y Detección de Fallas II - 75.69
+Sistemas de Programación no convencional de Robots - 75.70
+Seminario de Ingeniería en Informática I - 75.71
+Seminario de Ingeniería en Informática II - 75.72
+Arquitectura de Software - 75.73
+Sistemas Distribuidos I - 75.74
+Trabajo Profesional - 75.99
+Idioma Inglés - 78.01
+Idioma Alemán - 78.02
+Idioma Francés - 78.03
+Idioma Italiano - 78.04
+Idioma Portugués - 78.05
+Análisis Matemático II A - 81.01
+Análisis Matemático II - 81.010
+Álgebra II A - 81.02
+Álgebra II - 81.020
+Probabilidad y Estadística B - 81.04
+Probabilidad y Estadística B - 81.040
+Análisis Matemático III A - 81.05
+Análisis Funcional - 81.07
+Análisis Matricial y Métodos Numéricos - 81.08
+Matemática Discreta - 81.11
+Física I A - 82.01
+Física II A - 82.02
+Física III - 82.03
+Mecánica Racional - 82.04
+Física del Estado Sólido - 82.05
+Electromagnetismo - 82.06
+Química - 83.01
+Máquinas Eléctricas - 85.36
+Laboratorio de Instalaciones Eléctricas - 85.37
+Tesis de Ingeniería Electrónica - 86.00
+Técnica Digital - 86.01
+Introducción a la Ingeniería Electrónica - 86.02
+Dispositivos Semiconductores - 86.03
+Análisis de Circuitos - 86.04
+señales y Sistemas - 86.05
+Circuitos Electrónicos - 86.06
+Laboratorio de Microprocesadores - 86.07
+Control Automático I - 86.08
+Procesos Estocásticos - 86.09
+Diseño de Circuitos Electrónicos - 86.10
+Teoría de la Información Codificación - 86.11
+Comunicación de Datos - 86.12
+Introducción a Proyectos - 86.14
+Robótica - 86.15
+Control Automático II - 86.16
+Control Automático III - 86.17
+Control Industrial Distribuido - 86.18
+Control Robusto - 86.19
+Identificación y Control Adaptativo - 86.20
+Instrumentación y Control de Procesos - 86.21
+Laboratorio de Control Automático - 86.22
+Accionamientos Variables - 86.23
+Electrónica de Potencia - 86.24
+Comunicaciones Digitales I - 86.25
+Comunicaciones Digitales II - 86.26
+Infraestructura de Redes Fijas - 86.27
+Laboratorio de Comunicaciones - 86.28
+Propagación y Sistemas Irradiantes - 86.29
+Comunicaciones Digitales III - 86.30
+Servicios y Redes de Comunicaciones - 86.31
+Sistemas Inalámbricos - 86.32
+Transmisores y Receptores de Comunicaciones - 86.34
+Video Digital - 86.35
+Criptografía y Seguridad Informática - 86.36
+Organización de Computadoras - 86.37
+Arquitecturas Paralelas - 86.38
+Redes de Computadoras - 86.39
+Laboratorio de Redes de Computadoras - 86.40
+Sistemas Digitales - 86.41
+Laboratorio de Sistemas Digitales - 86.42
+Sistemas Gráficos - 86.43
+Técnica Digital Avanzada - 86.44
+Industrias y Productos de Electrónica - 86.45
+Microelectrónica - 86.46
+Optoelectrónica - 86.47
+Seminario de Electrónica - 86.48
+Seminario de Electrónica II - 86.49
+Tecnología de los Componentes - 86.50
+Procesamiento de Señales I - 86.51
+Procesamiento de Señales II - 86.52
+Procesamiento del Habla - 86.53
+Redes Neuronales - 86.54
+Teoría de Detección y Estimación - 86.55
+Procesamiento de Imágenes - 86.56
+Acústica - 86.57
+Electroacústica - 86.58
+Audio Profesional - 86.59
+Ingeniería Biomédica - 86.61
+Equipamiento para Diagnóstico y Tratamiento Biomédico - 86.62
+Procesamiento y Análisis de Señales e Imágenes En Bioingeniería - 86.63
+Compatibilidad Electromagnética - 86.64
+Sistemas Embebidos - 86.65
+Laboratorio de Microelectrónica - 86.66
+Comunicaciones Radioeléctricas y Radioenlaces - 86.67
+Control no Lineal - 86.68
+Instrumentos y Mediciones Electrónicas - 86.69
+Introducción al Diseño Asistido por Computadora para Electrónica - 86.70
+Trabajo Profesional de Ingeniería Electrónica - 86.99
+Modelos y Optimización I - 91.04
+Modelos y Optimización II - 91.05
+Modelos y Optimización III - 91.06
+Legislación y Ejercicio Profesional de la Ingeniería Electrónica - 91.11
+Introducción a la Economía y Organización de la Empresa - 91.19
+Macroeconomía y Estructura Económica Argentina - 91.24
+Análisis de Casos - 91.35
+Emprendimientos en Ingeniería - 91.37
+Estructuras y Procesos Organizacionales - 91.39
+Legislación y Ejercicio Profesional en Sistemas e Informática - 91.40
+Economía de las Organizaciones - 91.41
+Administración de las Organizaciones - 91.42
+Algoritmos y Programación III - 95.02
+Sistemas Operativos - 95.03
+Análisis Numérico I - 95.04
+Base de Datos - 95.05
+Teoría de Algoritmos I - 95.06
+Teoría de Lenguajes de Programación - 95.07
+Taller de Programación - 95.08
+Técnicas de Programación Concurrente I - 95.09
+Algoritmos y Programación I - 95.11
+Algoritmos y Programación II - 95.12
+Algoritmos y Programación I - 95.14
+Algoritmos y Programación II - 95.15
+Simulación - 95.19
+Métodos y Modelos en la Ingeniería de Software I - 95.20
+Métodos y Modelos en la Ingeniería de Software II - 95.21
+Administración y Control de Proyectos Informáticos I - 95.24
+Estándares de Calidad y Modelos de Referencia - 95.30
+Organización del Computador - 95.57
+Organización de Datos - 95.58
+Diseño, Operación y Gestión de Servicios Informáticos - 95.59
+Redes y Aplicaciones Distribuidas - 95.60
+Trabajo Profesional de Licenciatura en Análisis de Sistemas - 95.61
+Seguridad Ambiental y del Trabajo - 97.04

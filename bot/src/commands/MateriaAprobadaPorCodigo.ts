@@ -5,7 +5,7 @@ import { MateriaAprobada } from "../entities/Entities";
 import { padron } from "./LogIn";
 
 
-function parsearCodigos(input: string): string[] {
+export function parsearCodigos(input: string): string[] {
     const codigos = input.split(",");
     return codigos.map(codigo => codigo.trim());
 }

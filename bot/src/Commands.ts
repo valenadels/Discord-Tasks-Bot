@@ -7,7 +7,6 @@ import { Fiubamap } from "./commands/FiubaMap";
 import { Fiubaplan } from "./commands/FiubaPlan";
 import { Hello } from "./commands/Hello";
 import { Login } from "./commands/LogIn";
-import { createMateriasAprobadas, loadMateriasParticiones } from "./commands/MateriaAprobada";
 import { Materia } from "./commands/Materia";
 import { LogOut } from "./commands/LogOut";
 import { MostrarMateriasAnotadas } from "./commands/MostrarMaterias";
@@ -17,21 +16,6 @@ import { MateriaAprobadaPorCodigo } from "./commands/MateriaAprobadaPorCodigo";
 import { CodigosDeMaterias } from "./commands/CodigosDeMaterias";
 
 export async function loadCommands(): Promise<Command[]> {
-  // const isUserLoggedIn = padron != null;
-
-  // if (!isUserLoggedIn) {
-  //   return [
-  //     Hello,
-  //     Calendario,
-  //     Fiubamap,
-  //     Dollyfiuba,
-  //     Ayuda,
-  //     Fiubaplan,
-  //     Login,
-  //   ];
-  // } else {
-  // await loadMateriaParticiones();
-  const MateriaAprobadaCommand = await createMateriasAprobadas();
   const Commands: Command[] = [
     Hello,
     Calendario,
@@ -42,16 +26,14 @@ export async function loadCommands(): Promise<Command[]> {
     Login,
     Carrera,
     Materia,
-    MateriaAprobadaCommand,
     LogOut,
     MostrarMateriasAnotadas,
     MostrarMateriasAprobadas,
     MateriaPorCodigo,
     MateriaAprobadaPorCodigo,
-    CodigosDeMaterias
+    CodigosDeMaterias,
   ]
   return Commands;
-  // }
 }
 
 

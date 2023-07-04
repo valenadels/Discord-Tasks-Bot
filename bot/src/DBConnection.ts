@@ -3,8 +3,6 @@ import { DataSource, In } from "typeorm";
 import { Alumno, AlumnoCarrera, AlumnoMateria, Carreras, Materia, MateriaAprobada } from "./entities/Entities";
 import { loadCarreras, loadData } from "./LoadDB";
 import { padron } from "./commands/LogIn";
-import { loadMateriasParticiones } from "./commands/MateriaAprobada";
-import { Carrera } from "./commands/Carrera";
 
 export interface MateriaOption {
   name: string;
@@ -46,7 +44,6 @@ export class DatabaseConnection {
         await loadData(ds, newLocal);
         await loadData(ds, './src/data/ELECTRONICA.csv');
         await loadData(ds, './src/data/SISTEMAS.csv');
-        await loadMateriasParticiones();
         newPromise = Promise.resolve(ds);
       })
       .finally(() => {
@@ -164,7 +161,6 @@ export class DatabaseConnection {
     } catch (error) {
       console.error("Se produjo un error al eliminar la materia:", error);
     }
-
   }
 
 
@@ -187,6 +183,7 @@ export class DatabaseConnection {
 
   public static async getNombreMateriasPorCodigo(codigos: string[]): Promise<string[] | Error> {
     try {
+      console.log("Obteniendo materias: ", codigos);
       const ds = await this.dataSrcPromise;
       const materias: string[] = [];
       const carrerasDelAlumno = await this.getCarrerasId(padron!);
