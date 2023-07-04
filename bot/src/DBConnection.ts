@@ -122,25 +122,6 @@ export class DatabaseConnection {
     }
   }
 
-  // public static async saveMateriaAprobada(materiaAprobada: MateriaAprobada) {
-  //   try {
-  //     const ds = await this.dataSrcPromise;
-  //     const existingMateriaAprobada = await ds.manager.findOne(AlumnoMateria, {
-  //       where: { alumnoPadron: materiaAprobada.alumnoPadron, materiaCodigo: materiaAprobada.materiaCodigo }
-  //     });
-
-  //     if (!existingMateriaAprobada) {
-  //       ds.manager.save(materiaAprobada);
-  //       console.log("Materia aprobada guardado en la base de datos.");
-  //     } else {
-  //       await ds.manager.remove(AlumnoMateria, existingMateriaAprobada);
-  //       console.log("Felicitaciones! Aprobaste la materia")
-  //     }
-  //   } catch (error) {
-  //     console.error("Se produjo un error al guardar la materia aprobada:", error);
-  //   }
-  // }
-
   public static async saveMateriaAprobada(materiaAprobada: MateriaAprobada) {
     try {
       const ds = await this.dataSrcPromise;
