@@ -13,7 +13,7 @@ import { LogOut } from "./commands/LogOut";
 import { MostrarMateriasAnotadas } from "./commands/MostrarMaterias";
 import { MostrarMateriasAprobadas } from "./commands/MostrarMateriasAprobadas";
 import { MateriaPorCodigo } from "./commands/MateriaPorcodigo";
-import { MateriaAprobada } from "./entities/Entities";
+import { MateriaAprobadaPorCodigo } from "./commands/MateriaAprobadaPorCodigo";
 
 export async function loadCommands(): Promise<Command[]> {
   // const isUserLoggedIn = padron != null;

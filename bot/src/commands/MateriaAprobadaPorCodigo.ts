@@ -1,7 +1,7 @@
 import { ApplicationCommandOptionType, ApplicationCommandType, Client, CommandInteraction } from "discord.js";
-import { Command } from "src/Command";
-import { DatabaseConnection } from "src/DBConnection";
-import { MateriaAprobada } from "src/entities/Entities";
+import { Command } from "../Command";
+import { DatabaseConnection } from "../DBConnection";
+import { MateriaAprobada } from "../entities/Entities";
 import { padron } from "./LogIn";
 
 
