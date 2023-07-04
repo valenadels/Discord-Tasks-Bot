@@ -179,31 +179,6 @@ export class DatabaseConnection {
   }
 
 
-  // Obtiene la carrera del alumnoMateria con el padron y
-  // luego todas las materias de la tabla Materias correspondientes a esa carrera
-  public static async getMateriasPorCarrera(padron: number): Promise<Materia[] | undefined> {
-    try {
-      const ds = await this.dataSrcPromise;
-      const alumnoCarreras = await ds.manager.find(AlumnoCarrera, { where: { alumnoPadron: padron } });
-
-      if (!alumnoCarreras || alumnoCarreras.length === 0) {
-        return undefined;
-      }
-
-      const carreraIds = alumnoCarreras.map((ac) => ac.carreraId);
-
-      const materias = await ds.manager
-        .createQueryBuilder(Materia, "materia")
-        .where("materia.carreraId IN (:...carreraIds)", { carreraIds })
-        .getMany();
-
-      return materias;
-    } catch (error) {
-      console.error("Se produjo un error al obtener las materias:", error);
-    }
-  }
-
-
   public static async getCodigoMateriaPorNombre(nombre: string): Promise<string | null> {
     try {
       const ds = await this.dataSrcPromise;
@@ -267,7 +242,7 @@ export class DatabaseConnection {
             .getMany();
           const opcionesMateria: MateriaOption[] = materias.map((opcion) => ({
             name: opcion.nombre,
-            value: opcion.nombre,
+            value: opcion.codigo,
           }));
           return await opcionesMateria;
         }

@@ -14,6 +14,7 @@ import { MostrarMateriasAnotadas } from "./commands/MostrarMaterias";
 import { MostrarMateriasAprobadas } from "./commands/MostrarMateriasAprobadas";
 import { MateriaPorCodigo } from "./commands/MateriaPorcodigo";
 import { MateriaAprobadaPorCodigo } from "./commands/MateriaAprobadaPorCodigo";
+import { CodigosDeMaterias } from "./commands/CodigosDeMaterias";
 
 export async function loadCommands(): Promise<Command[]> {
   // const isUserLoggedIn = padron != null;
@@ -47,7 +48,8 @@ export async function loadCommands(): Promise<Command[]> {
     MostrarMateriasAprobadas,
     MateriaPorCodigo,
     MateriaAprobadaPorCodigo,
-  ];
+    CodigosDeMaterias
+  ]
   return Commands;
   // }
 }

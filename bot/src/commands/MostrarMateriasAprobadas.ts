@@ -4,7 +4,7 @@ import { DatabaseConnection } from "../DBConnection";
 import { padron } from './LogIn';
 
 export const MostrarMateriasAprobadas: Command = {
-  name: "mostrar-materiasaprobadas",
+  name: "mostrar-materias-aprobadas",
   description: "Materias aprobadas",
   type: ApplicationCommandType.ChatInput,
   run: async (client: Client, interaction: CommandInteraction) => {
