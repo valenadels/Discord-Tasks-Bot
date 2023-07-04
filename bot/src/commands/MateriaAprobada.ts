@@ -45,14 +45,11 @@ export async function createMateriasAprobadas(): Promise<Command> {
       const materiaOption = interaction.options.get("materias-aprobada");
       if (materiaOption) {
         if (i < materiasParticiones.length && materiaOption.value == "Mostrar más") {
-          console.log(materiasParticiones[i]!)
-          particionActual = await [...materiasParticiones[i]];
-          console.log(particionActual);
+          particionActual = materiasParticiones[i]!;
           i++;
-          console.log(i);
           materiasYaMostradas.push(...particionActual);
           particionActual.push({ name: "Mostrar más y volver a ejecutar comando", value: "Mostrar más" });
-
+        
           await interaction.followUp({
             content: `Volvé a ejecutar el comando para ver más materias`,
             ephemeral: true
@@ -60,6 +57,7 @@ export async function createMateriasAprobadas(): Promise<Command> {
         } else {
           await guardarMateria(materiaOption, interaction);
         }
+        
       }
     }
   }

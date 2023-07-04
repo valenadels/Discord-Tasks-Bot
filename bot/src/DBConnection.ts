@@ -130,8 +130,16 @@ export class DatabaseConnection {
       });
 
       if (!existingMateriaAprobada) {
+        const existingMateria = await ds.manager.findOne(AlumnoMateria, {
+          where: { alumnoPadron: materiaAprobada.alumnoPadron, materiaCodigo: materiaAprobada.materiaCodigo }
+        });
+        if (!existingMateria) {
         ds.manager.save(materiaAprobada);
         console.log("Materia aprobada guardada en la base de datos.");
+        } else {
+          await ds.manager.remove(AlumnoMateria, existingMateria);
+          console.log("Felicitaciones! Aprobaste la materia");
+        }
       } else {
         console.log("La materia ya fue aprobada.");
       }

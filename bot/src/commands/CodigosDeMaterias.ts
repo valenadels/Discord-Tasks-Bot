@@ -21,9 +21,11 @@ export const CodigosDeMaterias: Command = {
             return;
         }
 
+        const carrerasNombres = carreras.map((carrera) => carrera.name);
         interaction.followUp({
-            content: `Las carreras disponibles son: ${carreras.join(", ")}`,
-            ephemeral: true
-        });       
+          content: `Las materias disponibles son: ${carrerasNombres.join(", ")}`,
+          ephemeral: true
+        });
+               
     }
 };
