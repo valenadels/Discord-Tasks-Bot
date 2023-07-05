@@ -71,7 +71,7 @@ async function handleMateriaInteraction(
     const missingCorrelatives = correlativas.filter((correlativa) => !alumnoMaterias.includes(correlativa));
     const missingCorrelativesNames = await DatabaseConnection.getNombreMateriasPorCodigo(missingCorrelatives);
 
-    if (!(missingCorrelativesNames instanceof Error)) {
+    if (missingCorrelativesNames.length !== 0) {
       const missingCodes = missingCorrelativesNames.join(", ");
       const nameCarrera = await DatabaseConnection.getNombreCarreraPorCodigo(carrera);
       await interaction.followUp(
