@@ -1,19 +1,20 @@
 import { Client, CommandInteraction, Interaction, InteractionType } from "discord.js";
 import { loadCommands } from "../Commands";
+import { autocompletarMaterias } from "../commands/MateriaAprobada";
 
 export default async (client: Client): Promise<void> => {
   client.on("interactionCreate", async (interaction: Interaction) => {
 
     if (interaction.isAutocomplete()) {
-      // respond to the request
-      interaction.respond([
-        {
-          // What is shown to the user
-          name: 'Command Help',
-          // What is actually used as the option.
-          value: 'help'
+      const commandInteraction = interaction as unknown as CommandInteraction;
+      const value = commandInteraction.options.get("codigo")?.value as string;
+      if (value.length > 2) {
+        try {
+          await autocompletarMaterias(interaction);
+        } catch (error) {
+          console.error(error);
         }
-      ]);
+      }
     } else {
       if (interaction.isCommand() && interaction.type === InteractionType.ApplicationCommand) {
         const slashCommands = await loadCommands();

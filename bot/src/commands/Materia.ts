@@ -3,7 +3,7 @@ import { Command } from "../Command";
 import { AlumnoMateria } from "../entities/Entities";
 import { DatabaseConnection } from "../DBConnection";
 import { padron } from './LogIn';
-import { parsearCodigos } from "./MateriaAprobadaPorCodigo";
+import { parsearCodigos } from "./MateriaAprobada";
 
 export const Materia: Command = {
   name: "materia",

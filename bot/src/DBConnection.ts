@@ -3,6 +3,7 @@ import { DataSource, In } from "typeorm";
 import { Alumno, AlumnoCarrera, AlumnoMateria, Carreras, Materia, MateriaAprobada } from "./entities/Entities";
 import { loadCarreras, loadData } from "./LoadDB";
 import { padron } from "./commands/LogIn";
+import { loadMateriasPorCarrera } from "./MateriasAutocomplete";
 
 export interface MateriaOption {
   name: string;
@@ -44,6 +45,7 @@ export class DatabaseConnection {
         await loadData(ds, newLocal);
         await loadData(ds, './src/data/ELECTRONICA.csv');
         await loadData(ds, './src/data/SISTEMAS.csv');
+        await loadMateriasPorCarrera();
         newPromise = Promise.resolve(ds);
       })
       .finally(() => {
@@ -131,8 +133,8 @@ export class DatabaseConnection {
           where: { alumnoPadron: materiaAprobada.alumnoPadron, materiaCodigo: materiaAprobada.materiaCodigo }
         });
         if (!existingMateria) {
-        ds.manager.save(materiaAprobada);
-        console.log("Materia aprobada guardada en la base de datos.");
+          ds.manager.save(materiaAprobada);
+          console.log("Materia aprobada guardada en la base de datos.");
         } else {
           await ds.manager.remove(AlumnoMateria, existingMateria);
           console.log("Felicitaciones! Aprobaste la materia");
@@ -162,7 +164,6 @@ export class DatabaseConnection {
       console.error("Se produjo un error al eliminar la materia:", error);
     }
   }
-
 
   public static async getCodigoMateriaPorNombre(nombre: string): Promise<string | null> {
     try {
@@ -213,8 +214,7 @@ export class DatabaseConnection {
     }
   }
 
-
-  public static async getAllMateriasPorCarreras(): Promise<MateriaOption[]> {
+  public static async getAllMateriasCodigoPorCarreras(): Promise<MateriaOption[]> {
     try {
       const ds = await this.dataSrcPromise;
       if (padron) {
@@ -240,14 +240,14 @@ export class DatabaseConnection {
     }
   }
 
-  public static async getAllMaterias(): Promise<MateriaOption[]> {
+
+  //TODO: que filtre por carrera
+  public static async getAllMateriasPorCarrera(): Promise<string[]> {
     try {
       const ds = await this.dataSrcPromise;
       const materias = await ds.manager.find(Materia);
-      const opcionesMateria: MateriaOption[] = materias.map((opcion) => ({
-        name: opcion.nombre,
-        value: opcion.nombre,
-      }));
+      const opcionesMateria: string[] = materias.map((opcion) => opcion.nombre);
+      console.log("Materias: ", opcionesMateria);
       return await opcionesMateria;
     } catch (error) {
       console.error("Se produjo un error al obtener todas las materias:", error);

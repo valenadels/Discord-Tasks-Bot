@@ -31,7 +31,7 @@ export async function loadData(connection: DataSource, materiasCarreraCsvFilePat
   for await (const row of streamMaterias) {
     const materia = new Materia();
     materia.codigo = row.codigo;
-    materia.nombre = row.nombre;
+    materia.nombre = row.nombre.toUpperCase();
     materia.creditos = row.creditos;
     materia.carrera = row.carrera;
     materia.correlativas = row.correlativas;
