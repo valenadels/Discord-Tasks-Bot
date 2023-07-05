@@ -19,7 +19,8 @@ export const MateriaAprobadaPorCodigo: Command = {
             name: "codigo",
             description: "Codigos de las materias aprobadas, separados por coma",
             type: ApplicationCommandOptionType.String,
-            required: true
+            required: true,
+            autocomplete: true
         }
     ],
     run: async (client: Client, interaction: CommandInteraction) => {
