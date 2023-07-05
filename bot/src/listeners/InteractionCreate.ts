@@ -7,7 +7,7 @@ export default async (client: Client): Promise<void> => {
 
     if (interaction.isAutocomplete()) {
       const commandInteraction = interaction as unknown as CommandInteraction;
-      const value = commandInteraction.options.get("codigo")?.value as string;
+      const value = commandInteraction.options.get("nombre")?.value as string;
       if (value.length > 2) {
         try {
           await autocompletarMaterias(interaction);

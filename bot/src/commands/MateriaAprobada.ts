@@ -3,17 +3,11 @@ import { Command } from "../Command";
 import { padron } from "./LogIn";
 import { materiasPorCarrerasDelAlumno } from "../MateriasAutocomplete";
 
-
-export function parsearCodigos(input: string): string[] {
-    const codigos = input.split(",");
-    return codigos.map(codigo => codigo.trim());
-}
-
 export async function autocompletarMaterias(interaction: { options: { getFocused: () => any; }; respond: (arg0: { name: string; value: string; }[]) => any; }) {
     const focusedValue = interaction.options.getFocused();
     console.log(focusedValue);
     console.log(materiasPorCarrerasDelAlumno);
-    const filtered = materiasPorCarrerasDelAlumno.filter(choice => choice.startsWith(focusedValue.toUpperCase()));
+    const filtered = materiasPorCarrerasDelAlumno.filter(choice => choice.includes(focusedValue.toUpperCase()));
     console.log(filtered);
     await interaction.respond(
         filtered.map(choice => ({ name: choice, value: choice })),

@@ -7,7 +7,7 @@ import { Fiubamap } from "./commands/FiubaMap";
 import { Fiubaplan } from "./commands/FiubaPlan";
 import { Hello } from "./commands/Hello";
 import { Login } from "./commands/LogIn";
-import { Materia } from "./commands/Materia";
+//import { Materia } from "./commands/Materia";
 import { LogOut } from "./commands/LogOut";
 import { MostrarMateriasAnotadas } from "./commands/MostrarMaterias";
 import { MostrarMateriasAprobadas } from "./commands/MostrarMateriasAprobadas";
@@ -25,7 +25,7 @@ export async function loadCommands(): Promise<Command[]> {
     Fiubaplan,
     Login,
     Carrera,
-    Materia,
+    //Materia,
     LogOut,
     MostrarMateriasAnotadas,
     MostrarMateriasAprobadas,
