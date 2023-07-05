@@ -80,12 +80,7 @@ async function handleMateriaInteraction(
     } else {
       await saveMateriaInteraction(interaction, padron, codigoMateria);
     }
-  } else {
-    await interaction.followUp({
-      content: `No se ha encontrado la materia.`,
-      ephemeral: true,
-    });
-  }
+  } 
 }
 
 async function saveMateriaInteraction(interaction: CommandInteraction, padron: number, codigoMateria: string) {

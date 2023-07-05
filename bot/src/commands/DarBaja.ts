@@ -12,7 +12,7 @@ export const Darbaja: Command = {
   type: ApplicationCommandType.ChatInput,
   options: [
     {
-      name: "materia",
+      name: "nombre",
       description: "materia a dar de baja",
       type: ApplicationCommandOptionType.String,
       required: true,
