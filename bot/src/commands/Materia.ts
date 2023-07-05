@@ -10,7 +10,7 @@ export const Materia: Command = {
   type: ApplicationCommandType.ChatInput,
   options: [
     {
-      name: "materia",
+      name: "nombre",
       description: "tu materia",
       type: ApplicationCommandOptionType.String,
       required: true,
@@ -23,7 +23,7 @@ export const Materia: Command = {
       return;
     }
 
-    const materiaOption = interaction.options.get("materia");
+    const materiaOption = interaction.options.get("nombre");
     if (materiaOption) {
       const nombreMateria = materiaOption.value as string;
       const carreras = await DatabaseConnection.getCarrerasId(padron);
@@ -49,11 +49,11 @@ async function handleMateriaInteraction(
   nombreMateria: string,
   carrera: number
 ) {
-  const codigoMateria = await DatabaseConnection.getCodigoMateriaPorNombreYCodigo(nombreMateria, carrera);
+  const codigoMateria = await DatabaseConnection.getCodigoMateriaPorNombreYCarrera(nombreMateria, carrera);
 
   if (!codigoMateria) {
     await interaction.followUp({
-      content: `No se ha encontrado la materia.`,
+      content: `No se ha encontrado la materia para la carrera ${await DatabaseConnection.getNombreCarreraPorCodigo(carrera)}.`,
       ephemeral: true,
     });
     return;

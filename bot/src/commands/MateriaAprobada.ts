@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionType, ApplicationCommandType, Client, CommandInteraction} from "discord.js";
+import { ApplicationCommandOptionType, ApplicationCommandType, Client, CommandInteraction } from "discord.js";
 import { Command } from "../Command";
 import { padron } from "./LogIn";
 import { DatabaseConnection } from "../DBConnection";
@@ -25,32 +25,32 @@ export const MateriasAprobadas: Command = {
             });
             return;
         }
-        const materiaOption = interaction.options.get("materias-aprobada");
+        const materiaOption = interaction.options.get("nombre");
         if (materiaOption) {
             const nombreMateria = materiaOption.value as string;
             const carreras = await DatabaseConnection.getCarrerasId(padron);
             if (!carreras || carreras.length < 1) {
                 await interaction.followUp({
-                content: `No se ha encontrado la carrera.`,
-                ephemeral: true
+                    content: `No se ha encontrado la carrera.`,
+                    ephemeral: true
                 });
                 return;
             }
             for (const carrera of carreras) {
-                const codigoMateria = await DatabaseConnection.getCodigoMateriaPorNombreYCodigo(nombreMateria, carrera);
+                const codigoMateria = await DatabaseConnection.getCodigoMateriaPorNombreYCarrera(nombreMateria, carrera);
                 if (!codigoMateria) {
-                await interaction.followUp({
-                    content: `No se ha encontrado la materia.`,
-                    ephemeral: true
-                });
+                    await interaction.followUp({
+                        content: `No se ha encontrado la materia para la carrera ${await DatabaseConnection.getNombreCarreraPorCodigo(carrera)}.`,
+                        ephemeral: true
+                    });
                 }
 
                 let mensaje = "";
-                if (codigoMateria){
+                if (codigoMateria) {
                     const materiaAprobada = new MateriaAprobada();
                     materiaAprobada.materiaCodigo = codigoMateria;
                     materiaAprobada.alumnoPadron = padron!;
-                    try{
+                    try {
                         mensaje = await DatabaseConnection.saveMateriaAprobada(materiaAprobada);
                     }
                     catch (error) {
@@ -64,6 +64,6 @@ export const MateriasAprobadas: Command = {
                 }
             }
         }
-   
+
     }
 }

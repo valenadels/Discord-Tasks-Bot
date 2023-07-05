@@ -65,7 +65,7 @@ export class DatabaseConnection {
         ds.manager.save(alumno);
         return "Alumno guardado correctamente.";
       } else {
-        return "El alumno ya fue cargado anteriormente.";
+        return "Tu padrón ya fue cargado anteriormente.";
       }
     } catch (error) {
       console.error("Se produjo un error al guardar el alumno:", error);
@@ -79,7 +79,7 @@ export class DatabaseConnection {
       const existingAlumnoCarrera = await ds.manager.findOne(AlumnoCarrera, {
         where: { alumnoPadron: alumnoCarrera.alumnoPadron }
       });
-  
+
       if (!existingAlumnoCarrera) {
         ds.manager.save(alumnoCarrera);
         return "Tu carrera se ha guardado exitosamente.";
@@ -96,7 +96,7 @@ export class DatabaseConnection {
       return "Se produjo un error al guardar el alumnoCarrera.";
     }
   }
-  
+
 
   public static async saveAlumnoMateria(alumnoMateria: AlumnoMateria): Promise<string> {
     try {
@@ -157,7 +157,7 @@ export class DatabaseConnection {
       const existingMateria = await ds.manager.findOne(AlumnoMateria, {
         where: { alumnoPadron: materia.alumnoPadron, materiaCodigo: materia.materiaCodigo }
       });
-  
+
       if (existingMateria) {
         await ds.manager.remove(AlumnoMateria, existingMateria);
         return "Se ha dado de baja de la materia ingresada.";
@@ -169,7 +169,7 @@ export class DatabaseConnection {
       return "Se produjo un error al eliminar la materia.";
     }
   }
-  
+
   public static async getNombreMateriasPorCodigo(codigos: string[]): Promise<string[]> {
     try {
       const ds = await this.dataSrcPromise;
@@ -213,7 +213,7 @@ export class DatabaseConnection {
   //           .createQueryBuilder(Materia, "materia")
   //           .where("materia.carreraId IN (:...carreraIds)", { carreraIds })
   //           .getMany();
-      
+
   //       const opcionesMateria: string[] = materias.map((opcion) => opcion.nombre);
   //       console.log("Materias: ", opcionesMateria);
   //       return opcionesMateria;
@@ -296,7 +296,7 @@ export class DatabaseConnection {
     }
   }
 
-  public static async getCodigoMateriaPorNombreYCodigo(nombre: string, carrera: number): Promise<string> {
+  public static async getCodigoMateriaPorNombreYCarrera(nombre: string, carrera: number): Promise<string> {
     try {
       const ds = await this.dataSrcPromise;
       const materia = await ds.manager.findOne(Materia, { where: { nombre, carrera: { id: carrera } } });
