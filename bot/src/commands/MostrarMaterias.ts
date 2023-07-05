@@ -25,9 +25,9 @@ export const MostrarMateriasAnotadas: Command = {
       const codigos = await DatabaseConnection.getAlumnoMaterias(padron);
       const materias = await DatabaseConnection.getNombreMateriasPorCodigo(codigos);
 
-      if (!materias || materias instanceof Error) {
+      if (!materias || materias instanceof Error || materias.length < 1) {
         await interaction.followUp({
-          content: `No se ha encontrado la materia: ${materias}`,
+          content: `No tienes materias anotadas`,
           ephemeral: true
         });
         return;

@@ -1,20 +1,8 @@
-import { ApplicationCommandOptionType, ApplicationCommandType, CacheType, Client, CommandInteraction, CommandInteractionOption } from "discord.js";
+import { ApplicationCommandOptionType, ApplicationCommandType, Client, CommandInteraction} from "discord.js";
 import { Command } from "../Command";
 import { padron } from "./LogIn";
-import { materiasPorCarrerasDelAlumno } from "../MateriasAutocomplete";
 import { DatabaseConnection } from "../DBConnection";
-import { MateriaAprobada } from "src/entities/Entities";
-
-export async function autocompletarMaterias(interaction: { options: { getFocused: () => any; }; respond: (arg0: { name: string; value: string; }[]) => any; }) {
-    const focusedValue = interaction.options.getFocused();
-    console.log(focusedValue);
-    console.log(materiasPorCarrerasDelAlumno);
-    const filtered = materiasPorCarrerasDelAlumno.filter(choice => choice.includes(focusedValue.toUpperCase()));
-    console.log(filtered);
-    await interaction.respond(
-        filtered.map(choice => ({ name: choice, value: choice })),
-    );
-}
+import { MateriaAprobada } from "../entities/Entities";
 
 export const MateriasAprobadas: Command = {
     name: "materia-aprobada",

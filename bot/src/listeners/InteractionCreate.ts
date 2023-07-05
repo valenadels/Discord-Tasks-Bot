@@ -1,6 +1,8 @@
 import { Client, CommandInteraction, Interaction, InteractionType } from "discord.js";
 import { loadCommands } from "../Commands";
-import { autocompletarMaterias } from "../commands/MateriaAprobada";
+import { autocompletarMaterias } from "../AutocompleteMaterias";
+
+
 
 export default async (client: Client): Promise<void> => {
   client.on("interactionCreate", async (interaction: Interaction) => {

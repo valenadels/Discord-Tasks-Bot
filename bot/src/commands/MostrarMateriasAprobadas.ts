@@ -25,9 +25,9 @@ export const MostrarMateriasAprobadas: Command = {
       const codigos = await DatabaseConnection.getAlumnoMateriasAprobadas(padron);
       const materias = await DatabaseConnection.getNombreMateriasPorCodigo(codigos);
 
-      if (!materias || materias instanceof Error) {
+      if (!materias || materias instanceof Error || materias.length < 1) {
         await interaction.followUp({
-          content: `No se ha encontrado la materia.`,
+          content: `No tienes materias aprobadas.`,
           ephemeral: true
         });
         return;

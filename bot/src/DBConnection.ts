@@ -3,7 +3,7 @@ import { DataSource, In } from "typeorm";
 import { Alumno, AlumnoCarrera, AlumnoMateria, Carreras, Materia, MateriaAprobada } from "./entities/Entities";
 import { loadCarreras, loadData } from "./LoadDB";
 import { padron } from "./commands/LogIn";
-import { loadMateriasPorCarrera } from "./MateriasAutocomplete";
+import { loadMateriasPorCarrera } from "./loadMaterias";
 
 export interface MateriaOption {
   name: string;
@@ -170,13 +170,13 @@ export class DatabaseConnection {
     }
   }
   
-  public static async getNombreMateriasPorCodigo(codigos: string[]): Promise<string[] | Error> {
+  public static async getNombreMateriasPorCodigo(codigos: string[]): Promise<string[]> {
     try {
       const ds = await this.dataSrcPromise;
       const materias: string[] = [];
       const carrerasDelAlumno = await this.getCarrerasId(padron!);
       if (carrerasDelAlumno.length === 0) {
-        throw new Error("No se encontró ninguna carrera para el alumno.");
+        return [];
       }
       for (const codigo of codigos) {
         const materia = await ds.manager.findOne(Materia, {
@@ -191,7 +191,7 @@ export class DatabaseConnection {
       }
 
       if (materias.length === 0) {
-        throw new Error("No se encontró ninguna materia con ese nombre.");
+        return [];
       }
 
       return materias;
@@ -201,26 +201,38 @@ export class DatabaseConnection {
     }
   }
 
-  public static async getAllMateriasPorCarrera(): Promise<string[]> {
+  // public static async getAllMateriasPorCarrera(): Promise<string[]> {
+  //   try {
+  //     const ds = await this.dataSrcPromise;
+  //     if(padron){
+  //       let carreraAlumno: AlumnoCarrera[] = await ds.manager.find(AlumnoCarrera, { where: { alumnoPadron: padron } });
+  //       const carreraIds = carreraAlumno.map((ac) => ac.carreraId);
+  //       if (carreraIds.length > 0) {
+  //         console.log("Carreras del alumno:", carreraIds);
+  //         const materias: Materia[] = await ds.manager
+  //           .createQueryBuilder(Materia, "materia")
+  //           .where("materia.carreraId IN (:...carreraIds)", { carreraIds })
+  //           .getMany();
+      
+  //       const opcionesMateria: string[] = materias.map((opcion) => opcion.nombre);
+  //       console.log("Materias: ", opcionesMateria);
+  //       return opcionesMateria;
+  //       }
+  //   }
+  //   return [];
+  //  } catch (error) {
+  //     console.error("Se produjo un error al obtener todas las materias:", error);
+  //     return [];
+  //   }
+  // }
+
+  public static async getAllMaterias(): Promise<string[]> {
     try {
       const ds = await this.dataSrcPromise;
-      if(padron){
-        let carreraAlumno: AlumnoCarrera[] = await ds.manager.find(AlumnoCarrera, { where: { alumnoPadron: padron } });
-        const carreraIds = carreraAlumno.map((ac) => ac.carreraId);
-        if (carreraIds.length > 0) {
-          console.log("Carreras del alumno:", carreraIds);
-          const materias: Materia[] = await ds.manager
-            .createQueryBuilder(Materia, "materia")
-            .where("materia.carreraId IN (:...carreraIds)", { carreraIds })
-            .getMany();
-      
-        const opcionesMateria: string[] = materias.map((opcion) => opcion.nombre);
-        console.log("Materias: ", opcionesMateria);
-        return opcionesMateria;
-        }
-    }
-    return [];
-   } catch (error) {
+      const materias = await ds.manager.find(Materia);
+      const opcionesMateria: string[] = materias.map((opcion) => opcion.nombre);
+      return opcionesMateria;
+    } catch (error) {
       console.error("Se produjo un error al obtener todas las materias:", error);
       return [];
     }
@@ -266,9 +278,6 @@ export class DatabaseConnection {
       return [];
     }
   }
-
-
-
 
   public static async getCodigosMateriasPorNombre(nombre: string): Promise<string[]> {
     try {

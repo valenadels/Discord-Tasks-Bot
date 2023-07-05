@@ -16,6 +16,7 @@ export const Darbaja: Command = {
       description: "materia a dar de baja",
       type: ApplicationCommandOptionType.String,
       required: true,
+      autocomplete: true,
     },
   ],
   run: async (client: Client, interaction: CommandInteraction) => {
