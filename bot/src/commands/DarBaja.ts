@@ -4,7 +4,7 @@ import { Alumno, AlumnoCarrera, AlumnoMateria, Carreras } from "../entities/Enti
 import { DatabaseConnection } from "../DBConnection";
 import { padron } from './LogIn';
 
-const db = DatabaseConnection.initializeDB();
+
 
 export const Darbaja: Command = {
   name: "dar-baja",
@@ -23,23 +23,34 @@ export const Darbaja: Command = {
       await interaction.followUp("Debe loguearse primero. use /login <padron>");
       return;
     }
+  
     const materiaOption = interaction.options.get("materia");
+  
     if (materiaOption) {
       const nombreMateria = materiaOption.value as string;
       const codigosMateria = await DatabaseConnection.getCodigosMateriasPorNombre(nombreMateria);
+  
       if (codigosMateria) {
         for (const codigoMateria of codigosMateria) {
           const nuevoAlumno = new AlumnoMateria();
           nuevoAlumno.alumnoPadron = padron;
           nuevoAlumno.materiaCodigo = codigoMateria;
-          DatabaseConnection.darBajaMateria(nuevoAlumno);
+  
+          let mensaje = ""; 
+  
+          try {
+            mensaje = await DatabaseConnection.darBajaMateria(nuevoAlumno);
+          } catch (error) {
+            console.error("Se produjo un error al eliminar la materia:", error);
+            mensaje = "Se produjo un error al eliminar la materia.";
+          }
+  
+          await interaction.followUp({
+            content: mensaje,
+            ephemeral: true,
+          });
         }
       }
-
-      await interaction.followUp({
-        content: "Tu materia se ha dado de baja exitosamente",
-        ephemeral: true
-      });
     }
-  }
+  }  
 }

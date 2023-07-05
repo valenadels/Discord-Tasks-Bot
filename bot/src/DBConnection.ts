@@ -72,31 +72,32 @@ export class DatabaseConnection {
     }
   }
 
-  public static async saveAlumnoCarrera(alumnoCarrera: AlumnoCarrera) {
+  public static async saveAlumnoCarrera(alumnoCarrera: AlumnoCarrera): Promise<string> {
     try {
       const ds = await this.dataSrcPromise;
       const existingAlumnoCarrera = await ds.manager.findOne(AlumnoCarrera, {
         where: { alumnoPadron: alumnoCarrera.alumnoPadron }
       });
-
+  
       if (!existingAlumnoCarrera) {
         ds.manager.save(alumnoCarrera);
-        console.log("AlumnoCarrera guardado en la base de datos.");
+        return "Tu carrera se ha guardado exitosamente.";
       } else {
-
-        if (existingAlumnoCarrera?.carreraId != alumnoCarrera.carreraId) {
+        if (existingAlumnoCarrera?.carreraId !== alumnoCarrera.carreraId) {
           ds.manager.save(alumnoCarrera);
-          console.log("AlumnoCarrera guardado en la base de datos con tu nueva carrera.");
+          return "Tu carrera se ha guardado exitosamente con tu nueva carrera.";
         } else {
-          console.log("La carrera ya fue guardada.");
+          return "La carrera ya fue guardada.";
         }
       }
     } catch (error) {
       console.error("Se produjo un error al guardar el alumnoCarrera:", error);
+      return "Se produjo un error al guardar el alumnoCarrera.";
     }
   }
+  
 
-  public static async saveAlumnoMateria(alumnoMateria: AlumnoMateria) {
+  public static async saveAlumnoMateria(alumnoMateria: AlumnoMateria): Promise<string> {
     try {
       const ds = await this.dataSrcPromise;
       const existingAlumnoMateria = await ds.manager.findOne(AlumnoMateria, {
@@ -109,19 +110,20 @@ export class DatabaseConnection {
         });
         if (!existingMateriaAprobada) {
           ds.manager.save(alumnoMateria);
-          console.log("AlumnoMateria guardado en la base de datos.");
+          return "Materia guardada en la base de datos.";
         } else {
-          console.log("La materia ya fue aprobada.");
+          return "La materia ya fue aprobada.";
         }
       } else {
-        console.log("La materia ya fue cargada en la base de datos.");
+        return "La materia ya fue cargada en la base de datos.";
       }
     } catch (error) {
       console.error("Se produjo un error al guardar el alumnoCarrera:", error);
+      return "Se produjo un error al guardar la materia.";
     }
   }
 
-  public static async saveMateriaAprobada(materiaAprobada: MateriaAprobada) {
+  public static async saveMateriaAprobada(materiaAprobada: MateriaAprobada): Promise<string> {
     try {
       const ds = await this.dataSrcPromise;
       const existingMateriaAprobada = await ds.manager.findOne(MateriaAprobada, {
@@ -134,36 +136,39 @@ export class DatabaseConnection {
         });
         if (!existingMateria) {
           ds.manager.save(materiaAprobada);
-          console.log("Materia aprobada guardada en la base de datos.");
+          return "Materia aprobada guardada en la base de datos.";
         } else {
           await ds.manager.remove(AlumnoMateria, existingMateria);
-          console.log("Felicitaciones! Aprobaste la materia");
+          return "Felicitaciones! Aprobaste la materia";
         }
       } else {
-        console.log("La materia ya fue aprobada.");
+        return "La materia ya fue aprobada.";
       }
     } catch (error) {
       console.error("Se produjo un error al guardar la materia aprobada:", error);
+      return "Se produjo un error al guardar la materia aprobada.";
     }
   }
 
-  public static async darBajaMateria(materia: AlumnoMateria) {
+  public static async darBajaMateria(materia: AlumnoMateria): Promise<string> {
     try {
       const ds = await this.dataSrcPromise;
       const existingMateria = await ds.manager.findOne(AlumnoMateria, {
         where: { alumnoPadron: materia.alumnoPadron, materiaCodigo: materia.materiaCodigo }
       });
-
+  
       if (existingMateria) {
         await ds.manager.remove(AlumnoMateria, existingMateria);
-        console.log("Se ha dado de baja de la materia ingresada.");
+        return "Se ha dado de baja de la materia ingresada.";
       } else {
-        console.log("La materia no fue cargada, por lo que no puede darse de baja.");
+        return "La materia no fue cargada, por lo que no puede darse de baja.";
       }
     } catch (error) {
       console.error("Se produjo un error al eliminar la materia:", error);
+      return "Se produjo un error al eliminar la materia.";
     }
   }
+  
 
   public static async getCodigoMateriaPorNombre(nombre: string): Promise<string | null> {
     try {
@@ -240,16 +245,26 @@ export class DatabaseConnection {
     }
   }
 
-
-  //TODO: que filtre por carrera
   public static async getAllMateriasPorCarrera(): Promise<string[]> {
     try {
       const ds = await this.dataSrcPromise;
-      const materias = await ds.manager.find(Materia);
-      const opcionesMateria: string[] = materias.map((opcion) => opcion.nombre);
-      console.log("Materias: ", opcionesMateria);
-      return await opcionesMateria;
-    } catch (error) {
+      if(padron){
+        let carreraAlumno: AlumnoCarrera[] = await ds.manager.find(AlumnoCarrera, { where: { alumnoPadron: padron } });
+        const carreraIds = carreraAlumno.map((ac) => ac.carreraId);
+        if (carreraIds.length > 0) {
+          console.log("Carreras del alumno:", carreraIds);
+          const materias: Materia[] = await ds.manager
+            .createQueryBuilder(Materia, "materia")
+            .where("materia.carreraId IN (:...carreraIds)", { carreraIds })
+            .getMany();
+      
+        const opcionesMateria: string[] = materias.map((opcion) => opcion.nombre);
+        console.log("Materias: ", opcionesMateria);
+        return opcionesMateria;
+        }
+    }
+    return [];
+   } catch (error) {
       console.error("Se produjo un error al obtener todas las materias:", error);
       return [];
     }

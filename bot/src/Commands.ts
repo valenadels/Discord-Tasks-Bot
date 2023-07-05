@@ -7,13 +7,13 @@ import { Fiubamap } from "./commands/FiubaMap";
 import { Fiubaplan } from "./commands/FiubaPlan";
 import { Hello } from "./commands/Hello";
 import { Login } from "./commands/LogIn";
-//import { Materia } from "./commands/Materia";
+import { Materia } from "./commands/Materia";
 import { LogOut } from "./commands/LogOut";
 import { MostrarMateriasAnotadas } from "./commands/MostrarMaterias";
 import { MostrarMateriasAprobadas } from "./commands/MostrarMateriasAprobadas";
 import { MateriaPorCodigo } from "./commands/MateriaPorcodigo";
-import { MateriaAprobada } from "./commands/MateriaAprobada";
-import { CodigosDeMaterias } from "./commands/CodigosDeMaterias";
+import { MateriasAprobadas } from "./commands/MateriaAprobada";
+
 
 export async function loadCommands(): Promise<Command[]> {
   const Commands: Command[] = [
@@ -25,13 +25,12 @@ export async function loadCommands(): Promise<Command[]> {
     Fiubaplan,
     Login,
     Carrera,
-    //Materia,
+    Materia,
     LogOut,
     MostrarMateriasAnotadas,
     MostrarMateriasAprobadas,
     MateriaPorCodigo,
-    MateriaAprobada,
-    CodigosDeMaterias,
+    MateriasAprobadas,
   ]
   return Commands;
 }

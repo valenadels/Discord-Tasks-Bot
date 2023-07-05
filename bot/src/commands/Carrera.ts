@@ -35,13 +35,13 @@ export const Carrera: Command = {
       await interaction.followUp("Debe loguearse primero. use /login <padron>");
       return;
     }
-
+  
     const carreraOpcion = interaction.options.get("carrera");
-
+  
     if (carreraOpcion) {
       const carrera = carreraOpcion.value as string;
       let id = 0;
-
+  
       switch (carrera) {
         case INFORMATICA:
           id = 1;
@@ -53,18 +53,27 @@ export const Carrera: Command = {
           id = 3;
           break;
       }
-
+  
       const nuevoAlumno = new AlumnoCarrera();
       nuevoAlumno.alumnoPadron = padron;
       nuevoAlumno.carreraId = id;
-      await DatabaseConnection.saveAlumnoCarrera(nuevoAlumno);
-
+  
+      let mensaje = ""; 
+  
+      try {
+        mensaje = await DatabaseConnection.saveAlumnoCarrera(nuevoAlumno);
+      } catch (error) {
+        console.error("Se produjo un error al guardar el alumnoCarrera:", error);
+        mensaje = "Se produjo un error al guardar el alumnoCarrera.";
+      }
+  
       await interaction.followUp({
-        content: `Tu carrera se ha guardado exitosamente.`,
+        content: mensaje,
         ephemeral: true,
       });
     }
   }
+  
 
 };
 
