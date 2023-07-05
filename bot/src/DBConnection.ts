@@ -54,7 +54,7 @@ export class DatabaseConnection {
   }
 
 
-  public static async saveAlumno(alumno: Alumno) {
+  public static async saveAlumno(alumno: Alumno): Promise<string> {
     try {
       const ds = await this.dataSrcPromise;
       const existingAlumno = await ds.manager.findOne(Alumno, {
@@ -63,12 +63,13 @@ export class DatabaseConnection {
 
       if (!existingAlumno) {
         ds.manager.save(alumno);
-        console.log("Alumno guardado en la base de datos.");
+        return "Alumno guardado correctamente.";
       } else {
-        console.log("El alumno ya existe en la base de datos.");
+        return "El alumno ya fue cargado anteriormente.";
       }
     } catch (error) {
       console.error("Se produjo un error al guardar el alumno:", error);
+      return "Se produjo un error al guardar el alumno.";
     }
   }
 
@@ -110,15 +111,15 @@ export class DatabaseConnection {
         });
         if (!existingMateriaAprobada) {
           ds.manager.save(alumnoMateria);
-          return "Materia guardada en la base de datos.";
+          return "Materia guardada.";
         } else {
           return "La materia ya fue aprobada.";
         }
       } else {
-        return "La materia ya fue cargada en la base de datos.";
+        return "La materia ya fue cargada anteriormente.";
       }
     } catch (error) {
-      console.error("Se produjo un error al guardar el alumnoCarrera:", error);
+      console.error("Se produjo un error al guardar la materia:", error);
       return "Se produjo un error al guardar la materia.";
     }
   }
@@ -136,7 +137,7 @@ export class DatabaseConnection {
         });
         if (!existingMateria) {
           ds.manager.save(materiaAprobada);
-          return "Materia aprobada guardada en la base de datos.";
+          return "Materia aprobada guardada.";
         } else {
           await ds.manager.remove(AlumnoMateria, existingMateria);
           return "Felicitaciones! Aprobaste la materia";
@@ -169,27 +170,8 @@ export class DatabaseConnection {
     }
   }
   
-
-  public static async getCodigoMateriaPorNombre(nombre: string): Promise<string | null> {
-    try {
-      const ds = await this.dataSrcPromise;
-      const materia = await ds.manager.findOne(Materia, { where: { nombre } });
-
-      if (materia) {
-        return materia.codigo;
-      } else {
-        console.log("No se encontró ninguna materia con ese nombre.");
-        return null;
-      }
-    } catch (error) {
-      console.error("Se produjo un error al obtener el código de la materia:", error);
-      return null;
-    }
-  }
-
   public static async getNombreMateriasPorCodigo(codigos: string[]): Promise<string[] | Error> {
     try {
-      console.log("Obteniendo materias: ", codigos);
       const ds = await this.dataSrcPromise;
       const materias: string[] = [];
       const carrerasDelAlumno = await this.getCarrerasId(padron!);
@@ -216,32 +198,6 @@ export class DatabaseConnection {
     } catch (error) {
       console.error("Se produjo un error al obtener el código de la materia:", error);
       throw new Error("Se produjo un error al obtener el código de la materia: " + error);
-    }
-  }
-
-  public static async getAllMateriasCodigoPorCarreras(): Promise<MateriaOption[]> {
-    try {
-      const ds = await this.dataSrcPromise;
-      if (padron) {
-        let carreraAlumno: AlumnoCarrera[] = await ds.manager.find(AlumnoCarrera, { where: { alumnoPadron: padron } });
-        const carreraIds = carreraAlumno.map((ac) => ac.carreraId);
-        if (carreraIds.length > 0) {
-          console.log("Carreras del alumno:", carreraIds);
-          const materias: Materia[] = await ds.manager
-            .createQueryBuilder(Materia, "materia")
-            .where("materia.carreraId IN (:...carreraIds)", { carreraIds })
-            .getMany();
-          const opcionesMateria: MateriaOption[] = materias.map((opcion) => ({
-            name: opcion.nombre,
-            value: opcion.codigo,
-          }));
-          return await opcionesMateria;
-        }
-      }
-      return [];
-    } catch (error) {
-      console.error("Se produjo un error al obtener todas las materias:", error);
-      return [];
     }
   }
 
@@ -383,14 +339,5 @@ export class DatabaseConnection {
       return "";
     }
   }
-
-
-
-
-
-
-
-
-
 
 }

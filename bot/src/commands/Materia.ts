@@ -19,83 +19,95 @@ export const Materia: Command = {
   ],
   run: async (client: Client, interaction: CommandInteraction) => {
     if (!padron) {
-      await interaction.followUp("Debe loguearse primero. use /login <padron>");
+      await interaction.followUp("Debe loguearse primero. Use /login <padron>");
       return;
     }
+
     const materiaOption = interaction.options.get("materia");
     if (materiaOption) {
       const nombreMateria = materiaOption.value as string;
       const carreras = await DatabaseConnection.getCarrerasId(padron);
+
       if (!carreras || carreras.length < 1) {
         await interaction.followUp({
           content: `No se ha encontrado la carrera.`,
-          ephemeral: true
+          ephemeral: true,
         });
         return;
       }
+
       for (const carrera of carreras) {
-        const codigoMateria = await DatabaseConnection.getCodigoMateriaPorNombreYCodigo(nombreMateria, carrera);
-        if (!codigoMateria) {
-          await interaction.followUp({
-            content: `No se ha encontrado la materia.`,
-            ephemeral: true
-          });
-        }
-
-        let mensaje = "";
-
-        const correlativas = await DatabaseConnection.getCorrelativas(codigoMateria);
-
-        if (correlativas?.includes("NULL")) {
-
-          const nuevoAlumno = new AlumnoMateria();
-          nuevoAlumno.alumnoPadron = padron;
-          nuevoAlumno.materiaCodigo = codigoMateria;
-          try{
-          mensaje = await DatabaseConnection.saveAlumnoMateria(nuevoAlumno);
-          } catch (error) {
-            console.error("Se produjo un error al guardar la materia:", error);
-            mensaje = "Se produjo un error al guardar la materia.";
-          }
-
-          await interaction.followUp({
-            content: mensaje,
-            ephemeral: true
-          });
-
-          continue;
-        }
-        if (correlativas) {
-          const alumnoMaterias = await DatabaseConnection.getAlumnoMateriasAprobadas(padron);
-          const missingCorrelatives = correlativas.filter(correlativa => !alumnoMaterias.includes(correlativa));
-          const missingCorrelativesNames = await DatabaseConnection.getNombreMateriasPorCodigo(missingCorrelatives);
-
-          if (!(missingCorrelativesNames instanceof Error)) {
-            const missingCodes = missingCorrelativesNames.join(", ");
-            const nameCarrera = await DatabaseConnection.getNombreCarreraPorCodigo(carrera);
-            await interaction.followUp(`No puedes agregar esta materia. Faltan las correlativas: ${missingCodes} para la carrera: ${nameCarrera}`);
-            continue;
-          } else {
-            const nuevoAlumno = new AlumnoMateria();
-            nuevoAlumno.alumnoPadron = padron;
-            nuevoAlumno.materiaCodigo = codigoMateria;
-            try{
-              mensaje = await DatabaseConnection.saveAlumnoMateria(nuevoAlumno);
-              } catch (error) {
-                console.error("Se produjo un error al guardar la materia:", error);
-                mensaje = "Se produjo un error al guardar la materia.";
-    
-              await interaction.followUp({
-                content: mensaje,
-                ephemeral: true
-              });
-              }
-            } 
-          }
-        }
+        await handleMateriaInteraction(interaction, padron, nombreMateria, carrera);
       }
     }
- }
+  },
+};
+
+async function handleMateriaInteraction(
+  interaction: CommandInteraction,
+  padron: number,
+  nombreMateria: string,
+  carrera: number
+) {
+  const codigoMateria = await DatabaseConnection.getCodigoMateriaPorNombreYCodigo(nombreMateria, carrera);
+
+  if (!codigoMateria) {
+    await interaction.followUp({
+      content: `No se ha encontrado la materia.`,
+      ephemeral: true,
+    });
+    return;
+  }
+
+  const correlativas = await DatabaseConnection.getCorrelativas(codigoMateria);
+
+  if (correlativas?.includes("NULL")) {
+    await saveMateriaInteraction(interaction, padron, codigoMateria);
+    return;
+  }
+
+  if (correlativas) {
+    const alumnoMaterias = await DatabaseConnection.getAlumnoMateriasAprobadas(padron);
+    const missingCorrelatives = correlativas.filter((correlativa) => !alumnoMaterias.includes(correlativa));
+    const missingCorrelativesNames = await DatabaseConnection.getNombreMateriasPorCodigo(missingCorrelatives);
+
+    if (!(missingCorrelativesNames instanceof Error)) {
+      const missingCodes = missingCorrelativesNames.join(", ");
+      const nameCarrera = await DatabaseConnection.getNombreCarreraPorCodigo(carrera);
+      await interaction.followUp(
+        `No puedes agregar esta materia. Faltan las correlativas: ${missingCodes} para la carrera: ${nameCarrera}`
+      );
+    } else {
+      await saveMateriaInteraction(interaction, padron, codigoMateria);
+    }
+  } else {
+    await interaction.followUp({
+      content: `No se ha encontrado la materia.`,
+      ephemeral: true,
+    });
+  }
+}
+
+async function saveMateriaInteraction(interaction: CommandInteraction, padron: number, codigoMateria: string) {
+  let mensaje = "";
+
+  const nuevoAlumno = new AlumnoMateria();
+  nuevoAlumno.alumnoPadron = padron;
+  nuevoAlumno.materiaCodigo = codigoMateria;
+
+  try {
+    mensaje = await DatabaseConnection.saveAlumnoMateria(nuevoAlumno);
+  } catch (error) {
+    console.error("Se produjo un error al guardar la materia:", error);
+    mensaje = "Se produjo un error al guardar la materia.";
+  }
+
+  await interaction.followUp({
+    content: mensaje,
+    ephemeral: true,
+  });
+}
+
 
 
 

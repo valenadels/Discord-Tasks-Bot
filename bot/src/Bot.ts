@@ -6,8 +6,8 @@ import { DatabaseConnection } from "./DBConnection";
 async function main() {
     const token = require("../config.json").token;
     console.log("Bot is starting...");
-    await DatabaseConnection.initializeDB();
-    await DatabaseConnection.loadDBData();
+    DatabaseConnection.initializeDB();
+    DatabaseConnection.loadDBData();
     const client = new Client({
         intents: []
     });

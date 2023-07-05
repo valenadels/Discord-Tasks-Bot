@@ -21,12 +21,18 @@ export const Login: Command = {
     if (padronOption) {
       padron = padronOption.value as number;
 
+      let mensaje = '';
       const nuevoAlumno = new Alumno();
       nuevoAlumno.padron = padron;
-      DatabaseConnection.saveAlumno(nuevoAlumno);
+      try{
+        mensaje = await DatabaseConnection.saveAlumno(nuevoAlumno);
+      } catch (error) {
+        console.error('Se produjo un error al guardar el alumno:', error);
+        mensaje = 'Se produjo un error al guardar el alumno.';
+      }
 
       const reply: InteractionReplyOptions = {
-        content: `¡Bienvenido, ${user.username}! has iniciado sesión correctamente.`,
+        content: `¡Bienvenido, ${user.username}!` + '\n' + mensaje,
         ephemeral: true,
       };
 

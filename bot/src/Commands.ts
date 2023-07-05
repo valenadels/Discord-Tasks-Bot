@@ -13,6 +13,7 @@ import { MostrarMateriasAnotadas } from "./commands/MostrarMaterias";
 import { MostrarMateriasAprobadas } from "./commands/MostrarMateriasAprobadas";
 import { MateriaPorCodigo } from "./commands/MateriaPorcodigo";
 import { MateriasAprobadas } from "./commands/MateriaAprobada";
+import { Darbaja } from "./commands/DarBaja";
 
 
 export async function loadCommands(): Promise<Command[]> {
@@ -31,6 +32,7 @@ export async function loadCommands(): Promise<Command[]> {
     MostrarMateriasAprobadas,
     MateriaPorCodigo,
     MateriasAprobadas,
+    Darbaja,
   ]
   return Commands;
 }

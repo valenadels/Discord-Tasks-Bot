@@ -26,7 +26,7 @@ export default async (client: Client): Promise<void> => {
         }
 
         await interaction.deferReply();
-        await slashCommand.run(client, interaction as CommandInteraction);
+        slashCommand.run(client, interaction as CommandInteraction);
       }
     }
   });
