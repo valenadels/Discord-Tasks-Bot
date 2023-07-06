@@ -139,6 +139,7 @@ export class DatabaseConnection {
           ds.manager.save(materiaAprobada);
           return "Materia aprobada guardada.";
         } else {
+          ds.manager.save(materiaAprobada);
           await ds.manager.remove(AlumnoMateria, existingMateria);
           return "Felicitaciones! Aprobaste la materia";
         }

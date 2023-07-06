@@ -66,7 +66,7 @@ async function handleMateriaInteraction(
     return;
   }
 
-  if (correlativas) {
+  else if (correlativas) {
     const alumnoMaterias = await DatabaseConnection.getAlumnoMateriasAprobadas(padron);
     const missingCorrelatives = correlativas.filter((correlativa) => !alumnoMaterias.includes(correlativa));
     const missingCorrelativesNames = await DatabaseConnection.getNombreMateriasPorCodigo(missingCorrelatives);
