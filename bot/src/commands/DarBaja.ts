@@ -25,7 +25,7 @@ export const Darbaja: Command = {
       return;
     }
   
-    const materiaOption = interaction.options.get("materia");
+    const materiaOption = interaction.options.get("nombre");
   
     if (materiaOption) {
       const nombreMateria = materiaOption.value as string;
@@ -40,7 +40,9 @@ export const Darbaja: Command = {
           let mensaje = ""; 
   
           try {
+          
             mensaje = await DatabaseConnection.darBajaMateria(nuevoAlumno);
+        
           } catch (error) {
             console.error("Se produjo un error al eliminar la materia:", error);
             mensaje = "Se produjo un error al eliminar la materia.";
