@@ -86,7 +86,7 @@ export class DatabaseConnection {
       } else {
         if (existingAlumnoCarrera?.carreraId !== alumnoCarrera.carreraId) {
           ds.manager.save(alumnoCarrera);
-          return "Tu carrera se ha guardado exitosamente con tu nueva carrera.";
+          return "Tu carrera se ha guardado exitosamente como nueva carrera.";
         } else {
           return "La carrera ya fue guardada.";
         }
