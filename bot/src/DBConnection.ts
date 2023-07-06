@@ -202,31 +202,6 @@ export class DatabaseConnection {
     }
   }
 
-  // public static async getAllMateriasPorCarrera(): Promise<string[]> {
-  //   try {
-  //     const ds = await this.dataSrcPromise;
-  //     if(padron){
-  //       let carreraAlumno: AlumnoCarrera[] = await ds.manager.find(AlumnoCarrera, { where: { alumnoPadron: padron } });
-  //       const carreraIds = carreraAlumno.map((ac) => ac.carreraId);
-  //       if (carreraIds.length > 0) {
-  //         console.log("Carreras del alumno:", carreraIds);
-  //         const materias: Materia[] = await ds.manager
-  //           .createQueryBuilder(Materia, "materia")
-  //           .where("materia.carreraId IN (:...carreraIds)", { carreraIds })
-  //           .getMany();
-
-  //       const opcionesMateria: string[] = materias.map((opcion) => opcion.nombre);
-  //       console.log("Materias: ", opcionesMateria);
-  //       return opcionesMateria;
-  //       }
-  //   }
-  //   return [];
-  //  } catch (error) {
-  //     console.error("Se produjo un error al obtener todas las materias:", error);
-  //     return [];
-  //   }
-  // }
-
   public static async getAllMaterias(): Promise<string[]> {
     try {
       const ds = await this.dataSrcPromise;
@@ -346,6 +321,24 @@ export class DatabaseConnection {
       }
     } catch (error) {
       console.error("Se produjo un error al obtener la carrera del alumno:", error);
+      return "";
+    }
+  }
+
+  public static async getNombreMateriaPorCodigo(codigo: string): Promise<string> {
+    try {
+      const ds = await this.dataSrcPromise;
+      const materia = await ds.manager.findOne(Materia, { where: { codigo } });
+
+      if (!materia) {
+        return "";
+      }
+
+      else {
+        return materia.nombre;
+      }
+    } catch (error) {
+      console.error("Se produjo un error al obtener la materia:", error);
       return "";
     }
   }

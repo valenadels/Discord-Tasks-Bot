@@ -17,7 +17,7 @@ export const MateriaPorCodigo: Command = {
         const codigoOption = interaction.options.get('codigo');
         if (codigoOption) {
             const codigo = codigoOption.value as string;
-            const materia = await DatabaseConnection.getNombreMateriasPorCodigo([codigo]);
+            const materia = await DatabaseConnection.getNombreMateriaPorCodigo(codigo);
             if (materia) {
                 const reply: InteractionReplyOptions = {
                     content: `Materia: ${materia} - Código: ${codigo}`,
