@@ -50,7 +50,6 @@ async function handleMateriaInteraction(
   carrera: number
 ) {
   const codigoMateria = await DatabaseConnection.getCodigoMateriaPorNombreYCarrera(nombreMateria, carrera);
-  console.log(codigoMateria); 
   
   if (!codigoMateria) {
     await interaction.followUp({
@@ -69,16 +68,14 @@ async function handleMateriaInteraction(
 
   else if (correlativas) {
     const alumnoMaterias = await DatabaseConnection.getAlumnoMateriasAprobadas(padron, carrera);
-    console.log(alumnoMaterias); 
-    const missingCorrelatives = correlativas.filter((correlativa) => !alumnoMaterias.includes(correlativa));
-    const missingCorrelativesNames = await DatabaseConnection.getNombreMateriasPorCodigo(missingCorrelatives);
-    console.log(missingCorrelativesNames); 
+    const correlativasFaltantes = correlativas.filter((correlativa) => !alumnoMaterias.includes(correlativa));
+    const correlativasFaltantesNombres = await DatabaseConnection.getNombreMateriasPorCodigo(correlativasFaltantes);
 
-    if (missingCorrelativesNames.length !== 0) {
-      const missingCodes = missingCorrelativesNames.join(", ");
-      const nameCarrera = await DatabaseConnection.getNombreCarreraPorCodigo(carrera);
+    if (correlativasFaltantesNombres.length !== 0) {
+      const codigosFaltantes = correlativasFaltantesNombres.join(", ");
+      const nombreCarrera = await DatabaseConnection.getNombreCarreraPorCodigo(carrera);
       await interaction.followUp(
-        `No puedes agregar esta materia. Faltan las correlativas: ${missingCodes} para la carrera: ${nameCarrera}`
+        `No puedes agregar esta materia. Faltan las correlativas: ${codigosFaltantes} para la carrera: ${nombreCarrera}`
       );
     } else {
       await saveMateriaInteraction(interaction, padron, codigoMateria);
