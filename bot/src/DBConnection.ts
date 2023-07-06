@@ -231,17 +231,44 @@ export class DatabaseConnection {
     }
   }
 
-  public static async getAlumnoMaterias(padron: number): Promise<string[]> {
+  public static async materiaPerteneACarrera(codigoMateria: string, idCarrera: number): Promise<boolean> {
+    try {
+      const ds = await this.dataSrcPromise;
+      const materia = await ds.manager.findOne(Materia, {
+        where: { codigo: codigoMateria },
+        relations: ['carrera']
+      });
+  
+      return materia?.carrera?.id === idCarrera;
+    } catch (error) {
+      console.error("Error al verificar si la materia pertenece a la carrera:", error);
+      return false;
+    }
+  }
+
+
+  public static async getAlumnoMaterias(padron: number, idCarrera: number): Promise<string[]> {
     try {
       const ds = await this.dataSrcPromise;
       const alumnoMaterias = await ds.manager.find(AlumnoMateria, { where: { alumnoPadron: padron } });
-
-      return alumnoMaterias.map(alumnoMateria => alumnoMateria.materiaCodigo);
+  
+      const materiasCoincidentes: string[] = [];
+      for (const materia of alumnoMaterias) {
+        const pertenece = await DatabaseConnection.materiaPerteneACarrera(materia.materiaCodigo, idCarrera);
+        if (pertenece) {
+          materiasCoincidentes.push(materia.materiaCodigo);
+        }
+      }
+  
+      return materiasCoincidentes;
     } catch (error) {
       console.error("Se produjo un error al obtener las materias del alumno:", error);
       return [];
     }
   }
+  
+
+
 
   public static async getAlumnoMateriasAprobadas(padron: number): Promise<string[]> {
     try {
@@ -342,5 +369,8 @@ export class DatabaseConnection {
       return "";
     }
   }
-
+  
 }
+
+
+

@@ -22,7 +22,7 @@ export const MostrarMateriasAnotadas: Command = {
       return;
     }
     for (const carrera of carreras) {
-      const codigos = await DatabaseConnection.getAlumnoMaterias(padron);
+      const codigos = await DatabaseConnection.getAlumnoMaterias(padron, carrera);
       const materias = await DatabaseConnection.getNombreMateriasPorCodigo(codigos);
 
       if (!materias || materias instanceof Error || materias.length < 1) {
