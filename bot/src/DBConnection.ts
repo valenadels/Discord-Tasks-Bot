@@ -279,7 +279,7 @@ export class DatabaseConnection {
           materiasCoincidentes.push(materia.materiaCodigo);
         }
       }
-  
+      
       return materiasCoincidentes;
     } catch (error) {
       console.error("Se produjo un error al obtener las materias del alumno:", error);

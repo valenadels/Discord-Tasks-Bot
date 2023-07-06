@@ -3,7 +3,7 @@ codigo;nombre;creditos;carrera;correlativas
 82.01;Física I;8;2;NULL
 95.11;Algoritmos y Programación I;6;2;NULL
 81.02;Álgebra II;8;2;NULL
-82.02;Física II;8;2;61.03-62.01
+82.02;Física II;8;2;81.01-82.01
 86.02;Introducción a la Ingeniería Electrónica;6;2;782.01
 86.70;Introducción al Diseño Asistido por Computadora para Electrónica;6;2;82.01
 81.05;Análisis Matemático III;6;2;81.01-81.02

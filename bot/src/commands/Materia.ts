@@ -50,7 +50,8 @@ async function handleMateriaInteraction(
   carrera: number
 ) {
   const codigoMateria = await DatabaseConnection.getCodigoMateriaPorNombreYCarrera(nombreMateria, carrera);
-
+  console.log(codigoMateria); 
+  
   if (!codigoMateria) {
     await interaction.followUp({
       content: `No se ha encontrado la materia para la carrera ${await DatabaseConnection.getNombreCarreraPorCodigo(carrera)}.`,
@@ -68,8 +69,10 @@ async function handleMateriaInteraction(
 
   else if (correlativas) {
     const alumnoMaterias = await DatabaseConnection.getAlumnoMateriasAprobadas(padron, carrera);
+    console.log(alumnoMaterias); 
     const missingCorrelatives = correlativas.filter((correlativa) => !alumnoMaterias.includes(correlativa));
     const missingCorrelativesNames = await DatabaseConnection.getNombreMateriasPorCodigo(missingCorrelatives);
+    console.log(missingCorrelativesNames); 
 
     if (missingCorrelativesNames.length !== 0) {
       const missingCodes = missingCorrelativesNames.join(", ");
