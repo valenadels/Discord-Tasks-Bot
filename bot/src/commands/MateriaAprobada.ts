@@ -38,29 +38,40 @@ export const MateriasAprobadas: Command = {
             }
             for (const carrera of carreras) {
                 const codigoMateria = await DatabaseConnection.getCodigoMateriaPorNombreYCarrera(nombreMateria, carrera);
+                const nombreCarrera = await DatabaseConnection.getNombreCarreraPorCodigo(carrera);
                 if (!codigoMateria) {
                     await interaction.followUp({
-                        content: `No se ha encontrado la materia para la carrera ${await DatabaseConnection.getNombreCarreraPorCodigo(carrera)}.`,
+                        content: `No se ha encontrado la materia para la carrera ${nombreCarrera}.`,
                         ephemeral: true
                     });
                 }
 
                 let mensaje = "";
                 if (codigoMateria) {
-                    const materiaAprobada = new MateriaAprobada();
-                    materiaAprobada.materiaCodigo = codigoMateria;
-                    materiaAprobada.alumnoPadron = padron!;
-                    try {
-                        mensaje = await DatabaseConnection.saveMateriaAprobada(materiaAprobada);
+                    const correlativas = await DatabaseConnection.getCorrelativas(codigoMateria);
+                    const correlativasAprobadas = await DatabaseConnection.getAlumnoMateriasAprobadas(padron, carrera);
+                    const correlativasFaltantes = correlativas?.filter(correlativa => !correlativasAprobadas?.includes(correlativa) && correlativa !== "NULL");
+                    if (correlativasFaltantes?.length === 0 || !correlativas) {
+                        const materiaAprobada = new MateriaAprobada();
+                        materiaAprobada.materiaCodigo = codigoMateria;
+                        materiaAprobada.alumnoPadron = padron!;
+                        try {
+                            mensaje = await DatabaseConnection.saveMateriaAprobada(materiaAprobada);
+                        }
+                        catch (error) {
+                            console.error("Se produjo un error al guardar la materia:", error);
+                            mensaje = "Se produjo un error al guardar la materia.";
+                        }
+                        await interaction.followUp({
+                            content: mensaje,
+                            ephemeral: true
+                        });
+                    }else{
+                        await interaction.followUp({
+                            content: `No se puede guardar la materia porque no se han aprobado todas las correlativas. Faltan: ${correlativasFaltantes} para la carrera ${nombreCarrera}.`,
+                            ephemeral: true
+                        });
                     }
-                    catch (error) {
-                        console.error("Se produjo un error al guardar la materia:", error);
-                        mensaje = "Se produjo un error al guardar la materia.";
-                    }
-                    await interaction.followUp({
-                        content: mensaje,
-                        ephemeral: true
-                    });
                 }
             }
         }
