@@ -30,7 +30,7 @@ export const MostrarMateriasAprobadas: Command = {
           content: `No tienes materias aprobadas.`,
           ephemeral: true
         });
-        return;
+        continue;
       }
       const materiasAprobadas = materias.join(", ");
       const nameCarrera = await DatabaseConnection.getNombreCarreraPorCodigo(carrera);

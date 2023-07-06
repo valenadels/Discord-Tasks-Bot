@@ -30,7 +30,7 @@ export const MostrarMateriasAnotadas: Command = {
           content: `No tienes materias anotadas`,
           ephemeral: true
         });
-        return;
+        continue;
       }
       const materiasAnotadas = materias.join(", ");
       const nameCarrera = await DatabaseConnection.getNombreCarreraPorCodigo(carrera);
