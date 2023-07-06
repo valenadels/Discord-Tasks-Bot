@@ -56,7 +56,7 @@ async function aprobarMateriasSegunCarrera(carreras: number[], nombreMateria: st
         let mensaje = "";
         if (codigoMateria) {
             const correlativas = await DatabaseConnection.getCorrelativas(codigoMateria);
-            const correlativasAprobadas = await DatabaseConnection.getAlumnoMateriasAprobadas(padron, carrera);
+            const correlativasAprobadas = await DatabaseConnection.getAlumnoMateriasAprobadas(padron!, carrera);
             const correlativasFaltantes = correlativas?.filter(correlativa => !correlativasAprobadas?.includes(correlativa) && correlativa !== "NULL");
             if (correlativasFaltantes?.length === 0 || !correlativas) {
                 mensaje = await aprobarMateria(codigoMateria, mensaje, interaction);
