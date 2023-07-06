@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionType, ApplicationCommandType, Client, CommandInteraction } from "discord.js";
+import { ApplicationCommandOptionType, ApplicationCommandType, CacheType, Client, CommandInteraction } from "discord.js";
 import { Command } from "../Command";
 import { padron } from "./LogIn";
 import { DatabaseConnection } from "../DBConnection";
@@ -36,45 +36,55 @@ export const MateriasAprobadas: Command = {
                 });
                 return;
             }
-            for (const carrera of carreras) {
-                const codigoMateria = await DatabaseConnection.getCodigoMateriaPorNombreYCarrera(nombreMateria, carrera);
-                const nombreCarrera = await DatabaseConnection.getNombreCarreraPorCodigo(carrera);
-                if (!codigoMateria) {
-                    await interaction.followUp({
-                        content: `No se ha encontrado la materia para la carrera ${nombreCarrera}.`,
-                        ephemeral: true
-                    });
-                }
-
-                let mensaje = "";
-                if (codigoMateria) {
-                    const correlativas = await DatabaseConnection.getCorrelativas(codigoMateria);
-                    const correlativasAprobadas = await DatabaseConnection.getAlumnoMateriasAprobadas(padron, carrera);
-                    const correlativasFaltantes = correlativas?.filter(correlativa => !correlativasAprobadas?.includes(correlativa) && correlativa !== "NULL");
-                    if (correlativasFaltantes?.length === 0 || !correlativas) {
-                        const materiaAprobada = new MateriaAprobada();
-                        materiaAprobada.materiaCodigo = codigoMateria;
-                        materiaAprobada.alumnoPadron = padron!;
-                        try {
-                            mensaje = await DatabaseConnection.saveMateriaAprobada(materiaAprobada);
-                        }
-                        catch (error) {
-                            console.error("Se produjo un error al guardar la materia:", error);
-                            mensaje = "Se produjo un error al guardar la materia.";
-                        }
-                        await interaction.followUp({
-                            content: mensaje,
-                            ephemeral: true
-                        });
-                    }else{
-                        await interaction.followUp({
-                            content: `No se puede guardar la materia porque no se han aprobado todas las correlativas. Faltan: ${correlativasFaltantes} para la carrera ${nombreCarrera}.`,
-                            ephemeral: true
-                        });
-                    }
-                }
-            }
+            await aprobarMateriasSegunCarrera(carreras, nombreMateria, interaction);
         }
 
     }
 }
+
+async function aprobarMateriasSegunCarrera(carreras: number[], nombreMateria: string, interaction: CommandInteraction<CacheType>) {
+    for (const carrera of carreras) {
+        const codigoMateria = await DatabaseConnection.getCodigoMateriaPorNombreYCarrera(nombreMateria, carrera);
+        const nombreCarrera = await DatabaseConnection.getNombreCarreraPorCodigo(carrera);
+        if (!codigoMateria) {
+            await interaction.followUp({
+                content: `No se ha encontrado la materia para la carrera ${nombreCarrera}.`,
+                ephemeral: true
+            });
+        }
+
+        let mensaje = "";
+        if (codigoMateria) {
+            const correlativas = await DatabaseConnection.getCorrelativas(codigoMateria);
+            const correlativasAprobadas = await DatabaseConnection.getAlumnoMateriasAprobadas(padron, carrera);
+            const correlativasFaltantes = correlativas?.filter(correlativa => !correlativasAprobadas?.includes(correlativa) && correlativa !== "NULL");
+            if (correlativasFaltantes?.length === 0 || !correlativas) {
+                mensaje = await aprobarMateria(codigoMateria, mensaje, interaction);
+            } else {
+                await interaction.followUp({
+                    content: `No se puede guardar la materia porque no se han aprobado todas las correlativas. Faltan: ${correlativasFaltantes} para la carrera ${nombreCarrera}.`,
+                    ephemeral: true
+                });
+            }
+        }
+    }
+}
+
+async function aprobarMateria(codigoMateria: string, mensaje: string, interaction: CommandInteraction<CacheType>) {
+    const materiaAprobada = new MateriaAprobada();
+    materiaAprobada.materiaCodigo = codigoMateria;
+    materiaAprobada.alumnoPadron = padron!;
+    try {
+        mensaje = await DatabaseConnection.saveMateriaAprobada(materiaAprobada);
+    }
+    catch (error) {
+        console.error("Se produjo un error al guardar la materia:", error);
+        mensaje = "Se produjo un error al guardar la materia.";
+    }
+    await interaction.followUp({
+        content: mensaje,
+        ephemeral: true
+    });
+    return mensaje;
+}
+
