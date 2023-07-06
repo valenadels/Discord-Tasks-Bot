@@ -267,20 +267,27 @@ export class DatabaseConnection {
     }
   }
   
-
-
-
-  public static async getAlumnoMateriasAprobadas(padron: number): Promise<string[]> {
+  public static async getAlumnoMateriasAprobadas(padron: number, idCarrera: number): Promise<string[]> {
     try {
       const ds = await this.dataSrcPromise;
       const alumnoMaterias = await ds.manager.find(MateriaAprobada, { where: { alumnoPadron: padron } });
-
-      return alumnoMaterias.map(alumnoMateria => alumnoMateria.materiaCodigo);
+  
+      const materiasCoincidentes: string[] = [];
+      for (const materia of alumnoMaterias) {
+        const pertenece = await DatabaseConnection.materiaPerteneACarrera(materia.materiaCodigo, idCarrera);
+        if (pertenece) {
+          materiasCoincidentes.push(materia.materiaCodigo);
+        }
+      }
+  
+      return materiasCoincidentes;
     } catch (error) {
       console.error("Se produjo un error al obtener las materias del alumno:", error);
       return [];
     }
   }
+
+
 
   public static async getCodigosMateriasPorNombre(nombre: string): Promise<string[]> {
     try {
