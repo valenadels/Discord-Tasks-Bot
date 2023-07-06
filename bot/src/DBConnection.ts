@@ -79,14 +79,19 @@ export class DatabaseConnection {
       const existingAlumnoCarrera = await ds.manager.findOne(AlumnoCarrera, {
         where: { alumnoPadron: alumnoCarrera.alumnoPadron }
       });
-
+  
       if (!existingAlumnoCarrera) {
         ds.manager.save(alumnoCarrera);
         return "Tu carrera se ha guardado exitosamente.";
       } else {
         if (existingAlumnoCarrera?.carreraId !== alumnoCarrera.carreraId) {
-          ds.manager.save(alumnoCarrera);
-          return "Tu carrera se ha guardado exitosamente como nueva carrera.";
+          if (padron !== null) {
+            DatabaseConnection.otorgarEquivalenciasAutomaticamente(padron, alumnoCarrera.carreraId);
+            ds.manager.save(alumnoCarrera);
+            return "Tu carrera se ha guardado exitosamente como nueva carrera.";
+          } else {
+            return "Recuerda loguearte.";
+          }
         } else {
           return "La carrera ya fue guardada.";
         }
@@ -96,6 +101,42 @@ export class DatabaseConnection {
       return "Se produjo un error al guardar el alumnoCarrera.";
     }
   }
+  
+
+  public static async otorgarEquivalenciasAutomaticamente(alumnoPadron: number, carreraID: number): Promise<string> {
+    try {
+      const ds = await this.dataSrcPromise;
+  
+      if (alumnoPadron !== null) {
+        const alumnoMaterias = await ds.manager.find(MateriaAprobada, { where: { alumnoPadron } });
+  
+        for (const materia of alumnoMaterias) {
+          const materiaConNombre = await ds.manager.findOne(Materia, { where: { codigo: materia.materiaCodigo } });
+          const materiaPorCarrera = await ds.manager.findOne(Materia, { where: { nombre: materiaConNombre?.nombre, carrera: { id: carreraID } } });
+  
+          const materiaAprobada = new MateriaAprobada();
+          materiaAprobada.alumnoPadron = alumnoPadron;
+  
+          if (materiaPorCarrera) {
+            materiaAprobada.materiaCodigo = materiaPorCarrera.codigo;
+          } else {
+            console.error("No se encontró una materia por carrera para el código:", materia.materiaCodigo);
+            continue;
+          }
+  
+          this.saveMateriaAprobada(materiaAprobada);
+        }
+  
+        return "Las equivalencias fueron otorgadas para tu nueva carrera";
+      } else {
+        return "El valor de alumnoPadron es nulo.";
+      }
+    } catch (error) {
+      console.error("Se produjo un error al otorgar las equivalencias automáticas:", error);
+      return "Se produjo un error al otorgar las equivalencias automáticas.";
+    }
+  }
+  
 
 
   public static async saveAlumnoMateria(alumnoMateria: AlumnoMateria): Promise<string> {
