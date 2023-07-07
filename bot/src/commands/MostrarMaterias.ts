@@ -1,4 +1,4 @@
-import { CommandInteraction, Client, ApplicationCommandType, ApplicationCommandOptionType } from "discord.js";
+import { CommandInteraction, Client, ApplicationCommandType } from "discord.js";
 import { Command } from "../Command";
 import { DatabaseConnection } from "../DBConnection";
 import { padron } from './LogIn';
