@@ -1,5 +1,5 @@
 # FIUBITO_TDL
-Desarollo de un bot que brinda ayuda academica en la carrera de Ing. Informática, Electrónica y Sistemas de Fiuba.
+Desarollo de un bot de discord que brinda ayuda academica en la carrera de Ing. Informática, Electrónica y Sistemas de Fiuba.
 
 Te permite llevar un registro de tus materias aprobadas, registrar materias para cursar y detectar las correlativas necesarias. Si estás cursando más de una carrera, también podés registrarla y llevar control de ella.
 Además provee links a herramientas útiles para tu cursada.
