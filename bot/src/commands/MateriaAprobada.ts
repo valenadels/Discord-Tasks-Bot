@@ -54,17 +54,23 @@ async function aprobarMateriasSegunCarrera(carreras: number[], nombreMateria: st
         }
 
         let mensaje = "";
-        if (codigoMateria) {
-            const correlativas = await DatabaseConnection.getCorrelativas(codigoMateria);
-            const correlativasAprobadas = await DatabaseConnection.getAlumnoMateriasAprobadas(padron!, carrera);
-            const correlativasFaltantes = correlativas?.filter(correlativa => !correlativasAprobadas?.includes(correlativa) && correlativa !== "NULL");
-            if (correlativasFaltantes?.length === 0 || !correlativas) {
-                mensaje = await aprobarMateria(codigoMateria, mensaje, interaction);
+        const correlativas = await DatabaseConnection.getCorrelativas(codigoMateria);
+
+        if (correlativas?.includes("NULL")) {
+            mensaje = await aprobarMateria(codigoMateria, mensaje, interaction);
+        } else if (correlativas) {
+            const alumnoMaterias = await DatabaseConnection.getAlumnoMateriasAprobadas(padron!, carrera);
+            const correlativasFaltantes = correlativas.filter((correlativa) => !alumnoMaterias.includes(correlativa));
+            const correlativasFaltantesNombres = await DatabaseConnection.getNombreMateriasPorCodigo(correlativasFaltantes);
+
+            if (correlativasFaltantesNombres.length > 0) {
+                const codigosFaltantes = correlativasFaltantesNombres.join(", ");
+                const nombreCarrera = await DatabaseConnection.getNombreCarreraPorCodigo(carrera);
+                await interaction.followUp(
+                    `No puedes agregar esta materia. Faltan las correlativas: ${codigosFaltantes} para la carrera: ${nombreCarrera}`
+                );
             } else {
-                await interaction.followUp({
-                    content: `No se puede guardar la materia porque no se han aprobado todas las correlativas. Faltan: ${correlativasFaltantes} para la carrera ${nombreCarrera}.`,
-                    ephemeral: true
-                });
+                mensaje = await aprobarMateria(codigoMateria, mensaje, interaction);
             }
         }
     }

@@ -63,15 +63,12 @@ async function handleMateriaInteraction(
 
   if (correlativas?.includes("NULL")) {
     await saveMateriaInteraction(interaction, padron, codigoMateria);
-    return;
-  }
-
-  else if (correlativas) {
+  }else if (correlativas) {
     const alumnoMaterias = await DatabaseConnection.getAlumnoMateriasAprobadas(padron, carrera);
     const correlativasFaltantes = correlativas.filter((correlativa) => !alumnoMaterias.includes(correlativa));
     const correlativasFaltantesNombres = await DatabaseConnection.getNombreMateriasPorCodigo(correlativasFaltantes);
 
-    if (correlativasFaltantesNombres.length !== 0) {
+    if (correlativasFaltantesNombres.length > 0) {
       const codigosFaltantes = correlativasFaltantesNombres.join(", ");
       const nombreCarrera = await DatabaseConnection.getNombreCarreraPorCodigo(carrera);
       await interaction.followUp(
