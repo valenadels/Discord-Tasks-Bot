@@ -2,6 +2,7 @@ import { CommandInteraction, Client, ApplicationCommandType } from "discord.js";
 import { Command } from "../Command";
 import { DatabaseConnection } from "../DBConnection";
 import { padron } from './LogIn';
+import { DBError } from "../DBError";
 
 export const MostrarMateriasAprobadas: Command = {
   name: "mostrar-materias-aprobadas",
@@ -25,7 +26,7 @@ export const MostrarMateriasAprobadas: Command = {
       const codigos = await DatabaseConnection.getAlumnoMateriasAprobadas(padron, carrera);
       const materias = await DatabaseConnection.getNombreMateriasPorCodigo(codigos);
 
-      if (!materias || materias instanceof Error || materias.length < 1) {
+      if (!materias || materias instanceof DBError || materias.length < 1) {
         await interaction.followUp({
           content: `No tienes materias aprobadas.`,
           ephemeral: true
