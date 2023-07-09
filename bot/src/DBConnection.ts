@@ -38,8 +38,7 @@ export class DatabaseConnection {
     this.dataSrcPromise
       .then(async (ds) => {
         await loadCarreras(ds);
-        const newLocal = './src/data/INFORMATICA.csv';
-        await loadData(ds, newLocal);
+        await loadData(ds, './src/data/INFORMATICA.csv');
         await loadData(ds, './src/data/ELECTRONICA.csv');
         await loadData(ds, './src/data/SISTEMAS.csv');
         await loadMateriasPorCarrera();
