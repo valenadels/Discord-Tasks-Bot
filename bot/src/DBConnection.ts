@@ -4,11 +4,8 @@ import { Alumno, AlumnoCarrera, AlumnoMateria, Carreras, Materia, MateriaAprobad
 import { loadCarreras, loadData } from "./LoadDB";
 import { padron } from "./commands/LogIn";
 import { loadMateriasPorCarrera } from "./loadMaterias";
+import { DBError } from "./DBError";
 
-export interface MateriaOption {
-  name: string;
-  value: string;
-}
 
 export class DatabaseConnection {
   private static instance: DatabaseConnection;
@@ -41,8 +38,7 @@ export class DatabaseConnection {
     this.dataSrcPromise
       .then(async (ds) => {
         await loadCarreras(ds);
-        const newLocal = './src/data/INFORMATICA.csv';
-        await loadData(ds, newLocal);
+        await loadData(ds, './src/data/INFORMATICA.csv');
         await loadData(ds, './src/data/ELECTRONICA.csv');
         await loadData(ds, './src/data/SISTEMAS.csv');
         await loadMateriasPorCarrera();
@@ -212,7 +208,7 @@ export class DatabaseConnection {
     }
   }
 
-  public static async getNombreMateriasPorCodigo(codigos: string[]): Promise<string[]> {
+  public static async getNombreMateriasPorCodigo(codigos: string[]): Promise<string[] | DBError> {
     try {
       const ds = await this.dataSrcPromise;
       const materias: string[] = [];
@@ -239,7 +235,7 @@ export class DatabaseConnection {
       return materias;
     } catch (error) {
       console.error("Se produjo un error al obtener el código de la materia:", error);
-      throw new Error("Se produjo un error al obtener el código de la materia: " + error);
+      throw new DBError("Se produjo un error al obtener el código de la materia: " + error);
     }
   }
 

@@ -3,6 +3,7 @@ import { Command } from "../Command";
 import { AlumnoMateria } from "../entities/Entities";
 import { DatabaseConnection } from "../DBConnection";
 import { padron } from './LogIn';
+import { DBError } from "../DBError";
 
 export const Materia: Command = {
   name: "materia",
@@ -66,9 +67,18 @@ async function handleMateriaInteraction(
   }else if (correlativas) {
     const alumnoMaterias = await DatabaseConnection.getAlumnoMateriasAprobadas(padron, carrera);
     const correlativasFaltantes = correlativas.filter((correlativa) => !alumnoMaterias.includes(correlativa));
-    const correlativasFaltantesNombres = await DatabaseConnection.getNombreMateriasPorCodigo(correlativasFaltantes);
-
-    if (correlativasFaltantesNombres.length > 0) {
+    let correlativasFaltantesNombres;
+    try{
+      correlativasFaltantesNombres = await DatabaseConnection.getNombreMateriasPorCodigo(correlativasFaltantes);
+    }catch(error){
+      console.error("Se produjo un error al obtener las correlativas:", error);
+      await interaction.followUp({
+        content: `Se produjo un error al obtener las correlativas.`,
+        ephemeral: true,
+      });
+      return;
+    }
+    if (!(correlativasFaltantesNombres instanceof DBError) && correlativasFaltantesNombres.length > 0) {
       const codigosFaltantes = correlativasFaltantesNombres.join(", ");
       const nombreCarrera = await DatabaseConnection.getNombreCarreraPorCodigo(carrera);
       await interaction.followUp(
