@@ -8,9 +8,9 @@
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.3.16"
   },
-  "name": "FIUBITO",
+  "name": "discord-tasks-bot",
   "version": "1.0.0",
-  "description": "bot de la materia tdl",
+  "description": "Task bot for discord",
   "main": "index.js",
   "devDependencies": {
     "@types/node": "^20.1.3",
@@ -27,12 +27,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/Saibot19/FIUBITO_TDL.git"
+    "url": "https://github.com/valenadels/Discord-Tasks-Bot"
   },
-  "author": "serpa-adelsflugel-schiffer",
+  "author": "valenadels",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Saibot19/FIUBITO_TDL/issues"
-  },
-  "homepage": "https://github.com/Saibot19/FIUBITO_TDL#readme"
+  "homepage": "https://github.com/valenadels/Discord-Tasks-Bot"
 }

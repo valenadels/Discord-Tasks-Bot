@@ -13,14 +13,13 @@ export const Create: Command = {
       description: "task name",
       type: ApplicationCommandOptionType.String,
       required: true,
-      autocomplete: true,
     },
     {
       name: "Description",
       description: "task description",
       type: ApplicationCommandOptionType.String,
-      required: true,
-    }
+      required: false,
+    },
   ],
   run: async (_: Client, interaction: CommandInteraction) => {
     const name = interaction.options.get("Name")?.value as string;

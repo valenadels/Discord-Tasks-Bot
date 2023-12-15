@@ -6,9 +6,9 @@ import { Create } from "./commands/Create";
 // import { List } from "./commands/List";
 
 
-export async function loadCommands(): Promise<Command[]> {
-  const Commands: Command[] = [
-    Create,
+export function loadCommands(): Command[] {
+  let Commands: Command[] = [
+    Create
     // Edit,
     // Delete,
     // Finish,

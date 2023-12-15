@@ -7,7 +7,7 @@ export default async (client: Client): Promise<void> => {
             return;
         }
 
-        await client.application.commands.set(await loadCommands());
+        await client.application.commands.set(loadCommands());
 
         console.log(`${client.user.username} is online`);
     });
