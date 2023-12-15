@@ -1,7 +1,7 @@
 import { CommandInteraction, Client, ApplicationCommandType, ApplicationCommandOptionType, CacheType } from "discord.js";
 import { Command } from "../Command";
 import { DatabaseConnection } from "../DBConnection";
-import { Task } from "src/entities/Entities";
+import { Task } from "../entities/Entities";
 
 export const Create: Command = {
   name: "create",

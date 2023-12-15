@@ -11,6 +11,7 @@ async function main() {
         intents: []
     });
     ready(client);
+    await client.login(token);
 }
 
 main().catch((error) => {
